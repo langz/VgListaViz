@@ -13,7 +13,8 @@ angular
 'ngAnimate',
 'ngResource',
 'ngRoute',
-'mongolabResourceHttp'
+'mongolabResourceHttp',
+'highcharts-ng'
 ])
 .config(function ($routeProvider) {
   $routeProvider
