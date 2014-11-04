@@ -9,5 +9,5 @@
 */
 angular.module('vgListaVizApp')
 .factory('songs', function ($mongolabResourceHttp) {
-  return $mongolabResourceHttp('charts');
+  return $mongolabResourceHttp('songs');
 });
