@@ -22,4 +22,18 @@ angular.module('vgListaVizApp')
   //   $scope.songs = s;
   //   console.log($scope.songs);
   // });
+
+    $scope.data = [
+      {name: "Greg", score: 9},
+      {name: "Ari", score: 2},
+      {name: 'Q', score: 6},
+      {name: "Loser", score: 1}
+    ];
+$scope.myData = [
+    {name: 'AngularJS', count: 300},
+    {name: 'D3.JS', count: 150},
+    {name: 'jQuery', count: 400},
+    {name: 'Backbone.js', count: 300},
+    {name: 'Ember.js', count: 100}
+];
 });
