@@ -8,7 +8,8 @@
 * Controller of the vgListaVizApp
 */
 angular.module('vgListaVizApp')
-.controller('MainCtrl', function ($scope, charts, songs) {
+.controller('MainCtrl', function ($scope, charts, songs, summaryDecade) {
+  var year = 1960;
   // charts.query({"year": "1960"}).then(function(s){
   //   $scope.charts = s;
   //   console.log($scope.charts);
@@ -24,37 +25,119 @@ angular.module('vgListaVizApp')
   // });
 
   $scope.item = {};
-  $scope.sizes = [
+  $scope.choices = [
   {
-    name:1,
-    data:[1, 2, 3, 4, 5]
+    name:'danceability'
   },
   {
-    name:2,
-    data:[5, 4, 3, 2, 1]
+    name:'duration'
   },
   {
-    name:3,
-    data:[12, 11, 1, 16, 8]
+    name:'energy'
+  },
+  {
+    name:'loudness'
+  },
+  {
+    name:'mode'
+  },
+  {
+    name:'tempo'
   }
   ];
 
-  $scope.update = function(){
-    $scope.try.series = [{data: $scope.item.data}];
+
+
+  summaryDecade.all().then(function(res){
+    $scope.summaryDecade = res;
+    console.log(res);
+    $scope.update('danceability');
+    $scope.safeToChange = true;
+    $scope.try.loading = false;
+
+  });
+
+  $scope.getValue = function(string){
+    var values = [];
+    for(var i = 0; i< $scope.summaryDecade.length; i++){
+
+      values.push($scope.summaryDecade[i][string]);
+    }
+    return values;
   };
+
+
+
+  $scope.update = function(string){
+    var suffix = null;
+    var suffixString = '';
+    $scope.try.options.tooltip.valueSuffix=suffix;
+    if(string==='loudness'){
+      suffix = ' db';
+      suffixString = ' (Decibel)';
+      $scope.try.options.tooltip.valueSuffix=suffix;
+
+    }
+    else if(string==='duration'){
+      suffix = ' s';
+      suffixString = ' (Seconds)';
+      $scope.try.options.tooltip.valueSuffix=suffix;
+
+    }
+
+    $scope.try.series[0].name = string;
+    $scope.try.series[0].data = $scope.getValue(string);
+    $scope.try.yAxis.title.text = string + suffixString;
+  };
+
+
   $scope.try = {
     options: {
       chart: {
         type: 'line'
+      },
+      tooltip: {
+        valueDecimals:2,
+        valueSuffix:' ha',
+        headerFormat: '<b>{series.name}</b><br/>',
+        pointFormat: '{point.y}'
+      },
+
+      plotOptions: {
+        series: {
+          marker: {
+            fillColor: '#FFFFFF',
+            lineWidth: 2,
+            lineColor: '#dd2027',
+            symbol:'circle'
+          }
+        }
       }
     },
-    series: [{
-      data: [10, 15, 12, 8, 7]
-    }],
-    title: {
-      text: 'Hello'
+    xAxis: {
+      categories: [1960, 1970, 1980, 1990, 2000, 2010]
+    },
+    yAxis:{
+      labels: {
+        enabled: true
+      },
+      title: {
+        text: null
+      }
     },
 
-    loading: false
+    series: [{
+      name:'',
+      data:'',
+      lineColor: '#dd2027',
+      fillColor: '#dd2027',
+      showInLegend: false
+    }
+    ],
+    title: {
+      text: 'Vglista Topp 20 Summary'
+    },
+
+    loading: true
   }
 });
