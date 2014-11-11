@@ -8,11 +8,23 @@
 * Controller of the vgListaVizApp
 */
 angular.module('vgListaVizApp')
-.controller('ArtistsCtrl', function ($scope, summaryArtist) {
+.controller('ArtistsCtrl', function ($scope, summaryArtistTopAntall) {
   console.log('hei');
 
-  summaryArtist.all().then(function(s){
+  summaryArtistTopAntall.all({ sort: {"antall": -1} }).then(function(s){
     console.log(s);
+    $scope.summaryArtistTopAntall = s;
+    var mainArray = [];
+    for(var i=0;i<$scope.summaryArtistTopAntall.length;i++){
+      var tempArray = [];
+      tempArray.push($scope.summaryArtistTopAntall[i].artist);
+      tempArray.push($scope.summaryArtistTopAntall[i].antall);
+      mainArray.push(tempArray);
+    }
+$scope.try.loading = false;
+$scope.try.series[0].data = mainArray;
+
+
   });
 
   $scope.try = {
@@ -21,27 +33,18 @@ angular.module('vgListaVizApp')
         type: 'column'
       },
       tooltip: {
-        valueDecimals:2,
-        valueSuffix:'',
-        headerFormat: '<b>{series.name}</b><br/>',
-        pointFormat: '{point.y}'
+        pointFormat: 'Antall ganger listet: <b>{point.y}</b>',
       },
 
       plotOptions: {
-        series: {
-          marker: {
-            fillColor: '#FFFFFF',
-            lineWidth: 2,
-            lineColor: '#dd2027',
-            symbol:'circle'
-          }
+        column:{
+          color:'#dd2027'
         }
       },
       legend: {
         enabled: false
       }
     },
-
     xAxis: {
       type: 'category',
       labels: {
@@ -51,7 +54,7 @@ angular.module('vgListaVizApp')
           fontFamily: 'Verdana, sans-serif'
         },
         formatter: function () {
-          return '<a href="#/artist/' + this.value + '">' + this.value +
+          return '<a href="#/artist/' + this.value + '"style="color:black;">' + this.value +
           '</a>';
         },
         useHTML:true
@@ -61,37 +64,14 @@ angular.module('vgListaVizApp')
     yAxis: {
       min: 0,
       title: {
-        text: 'Population (millions)'
+        text: 'Times Listed'
       }
     },
-    tooltip: {
-      pointFormat: 'Population in 2008: <b>{point.y:.1f} millions</b>'
-    },
+
 
     series: [{
       name: 'Population',
-      data: [
-      ['Shanghai', 23.7],
-      ['Lagos', 16.1],
-      ['Instanbul', 14.2],
-      ['Karachi', 14.0],
-      ['Mumbai', 12.5],
-      ['Moscow', 12.1],
-      ['São Paulo', 11.8],
-      ['Beijing', 11.7],
-      ['Guangzhou', 11.1],
-      ['Delhi', 11.1],
-      ['Shenzhen', 10.5],
-      ['Seoul', 10.4],
-      ['Jakarta', 10.0],
-      ['Kinshasa', 9.3],
-      ['Tianjin', 9.3],
-      ['Tokyo', 9.0],
-      ['Cairo', 8.9],
-      ['Dhaka', 8.9],
-      ['Mexico City', 8.9],
-      ['Lima', 8.9]
-      ],
+      data:[],
       dataLabels: {
         enabled: true,
         rotation: -90,
@@ -107,9 +87,9 @@ angular.module('vgListaVizApp')
       }
     }],
     title: {
-      text: 'Vglista Topp 20 Summary'
+      text: 'Vglista Topp 20 Top Listed Artists'
     },
 
-    loading: false
+    loading: true
   }
 });

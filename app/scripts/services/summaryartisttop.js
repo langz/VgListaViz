@@ -8,6 +8,6 @@
 * Factory in the vgListaVizApp.
 */
 angular.module('vgListaVizApp')
-.factory('summaryArtistTop', function ($mongolabResourceHttp) {
-  return $mongolabResourceHttp('summaryArtistTop');
+.factory('summaryArtistTopAntall', function ($mongolabResourceHttp) {
+  return $mongolabResourceHttp('summaryArtistTopAntall');
 });

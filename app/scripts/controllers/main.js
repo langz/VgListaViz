@@ -19,10 +19,33 @@ angular.module('vgListaVizApp')
   //   console.log($scope.charts);
   // });
 
-  // songs.all({ limit: 10000 }).then(function(s){
-  //   $scope.songs = s;
-  //   console.log($scope.songs);
-  // });
+  songs.query( {soundSummary: {$not: {$size: 0}}}, { limit: 10000 }).then(function(s){
+    $scope.songs = s;
+    var danc = [];
+    var duration = [];
+    var energy = [];
+    var loudness = [];
+    var mode = [];
+    var tempo = [];
+    for(var i = 0; i<s.length;i++){
+
+      danc.push(s[i].soundSummary[0].danceability)
+      duration.push(s[i].soundSummary[1].duration)
+      energy.push(s[i].soundSummary[2].energy)
+      loudness.push(s[i].soundSummary[4].loudness)
+      mode.push(s[i].soundSummary[5].mode)
+      tempo.push(s[i].soundSummary[6].tempo)
+    }
+
+
+    console.log("danceabaility max = " + Math.max.apply( Math, danc ));
+console.log("duration max = " + Math.max.apply( Math, duration ));
+console.log("energy max = " + Math.max.apply( Math, energy ));
+console.log("loudness max = " + Math.min.apply( null, loudness ));
+console.log("mode max = " + Math.max.apply( Math, mode ));
+console.log("tempo max = " + Math.max.apply( Math, tempo ));
+  });
+
 
   $scope.item = {};
   $scope.choices = [
@@ -50,7 +73,6 @@ angular.module('vgListaVizApp')
 
   summaryDecade.all().then(function(res){
     $scope.summaryDecade = res;
-    console.log(res);
     $scope.update('danceability');
     $scope.safeToChange = true;
     $scope.try.loading = false;
