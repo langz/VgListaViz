@@ -14,18 +14,18 @@ angular.module('vgListaVizApp')
     if(viewLocation === $location.path()){
       return true;
     }
-    if(viewLocation==='/charts/'){
-      if($location.path().indexOf(/honorar/) >-1){
+    if(viewLocation==='/chart/'){
+      if($location.path().indexOf(/chart/) >-1){
         return true;
       }
     }
-    if(viewLocation==='/artists'){
-      if($location.path().indexOf(/adminhonorarinfo/) >-1){
+    if(viewLocation==='/artist/'){
+      if($location.path().indexOf(/artist/) >-1){
         return true;
       }
     }
-    if(viewLocation==='/songs'){
-      if($location.path().indexOf(/adminedit/) >-1){
+    if(viewLocation==='/song/'){
+      if($location.path().indexOf(/song/) >-1){
         return true;
       }
     }
