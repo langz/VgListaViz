@@ -107,7 +107,7 @@ console.log("tempo max = " + Math.max.apply( Math, tempo ));
 
     }
 
-    $scope.try.series[0].name = string;
+    $scope.try.series[0].name = string.charAt(0).toUpperCase() + string.slice(1);;
     $scope.try.series[0].data = $scope.getValue(string);
     $scope.try.yAxis.title.text = string + suffixString;
   };
@@ -120,9 +120,8 @@ console.log("tempo max = " + Math.max.apply( Math, tempo ));
       },
       tooltip: {
         valueDecimals:2,
-        valueSuffix:' ha',
-        headerFormat: '<b>{series.name}</b><br/>',
-        pointFormat: '{point.y}'
+        valueSuffix:'',
+        pointFormat: '{series.name}: {point.y}'
       },
 
       plotOptions: {
