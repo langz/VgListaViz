@@ -42,6 +42,10 @@ angular
     templateUrl: 'views/chart.html',
     controller: 'ChartCtrl'
   })
+  .when('/discover', {
+    templateUrl: 'views/discover.html',
+    controller: 'DiscoverCtrl'
+  })
   .otherwise({
     redirectTo: '/'
   });
