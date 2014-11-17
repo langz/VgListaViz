@@ -39,11 +39,11 @@ angular.module('vgListaVizApp')
 
 
     console.log("danceabaility max = " + Math.max.apply( Math, danc ));
-console.log("duration max = " + Math.max.apply( Math, duration ));
-console.log("energy max = " + Math.max.apply( Math, energy ));
-console.log("loudness max = " + Math.min.apply( null, loudness ));
-console.log("mode max = " + Math.max.apply( Math, mode ));
-console.log("tempo max = " + Math.max.apply( Math, tempo ));
+    console.log("duration max = " + Math.max.apply( Math, duration ));
+    console.log("energy max = " + Math.max.apply( Math, energy ));
+    console.log("loudness max = " + Math.min.apply( null, loudness ));
+    console.log("mode max = " + Math.max.apply( Math, mode ));
+    console.log("tempo max = " + Math.max.apply( Math, tempo ));
   });
 
 
