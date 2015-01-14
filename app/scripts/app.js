@@ -14,7 +14,8 @@ angular
 'ngResource',
 'ngRoute',
 'mongolabResourceHttp',
-'highcharts-ng'
+'highcharts-ng',
+'ui.bootstrap'
 ])
 .config(function ($routeProvider) {
   $routeProvider
