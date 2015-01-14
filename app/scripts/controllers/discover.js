@@ -112,7 +112,7 @@ angular.module('vgListaVizApp')
 }
   ];
 
-  songs.query( {soundSummary: {$not: {$size: 0}}}, { limit: 100 }).then(function(res){
+  songs.query( {soundSummary: {$not: {$size: 0}}}).then(function(res){
     $scope.songs = res;
     console.log(res);
     $scope.update($scope.itemX, $scope.itemY);

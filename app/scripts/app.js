@@ -46,6 +46,10 @@ angular
     templateUrl: 'views/discover.html',
     controller: 'DiscoverCtrl'
   })
+  .when('/compare', {
+    templateUrl: 'views/compare.html',
+    controller: 'CompareCtrl'
+  })
   .otherwise({
     redirectTo: '/'
   });
