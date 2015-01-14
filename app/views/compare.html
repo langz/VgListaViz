@@ -1,14 +1,34 @@
-<p>This is the compare view.</p>
 
+
+<div class="btn-group col-xs-12" data-toggle="buttons">
+  <label class="btn btn-primary active col-xs-4" ng-click="changeCompType('Artist');">
+    <input type="radio" name="options"> Artist
+  </label>
+  <label class="btn btn-primary col-xs-4" ng-click="changeCompType('Chart');">
+    <input type="radio" name="options"> Chart
+  </label>
+  <label class="btn btn-primary col-xs-4"  ng-click="changeCompType('Song');">
+    <input type="radio" name="options"> Song
+  </label>
+</div>
 <div class="col-xs-12">
 <div class="col-xs-6">
-  <h4>Sang 1</h4>
-  <input type="text" ng-model="asyncSelected1" placeholder="Locations loaded via $http" typeahead="address for address in song1($viewValue)" typeahead-loading="loadingLocations1" class="form-control">
+  <h4>{{compType}} 1</h4>
+  <input type="text" ng-model="asyncSelected1" placeholder="Locations loaded via $http" typeahead="address.info for address in song1($viewValue)" typeahead-loading="loadingLocations1" typeahead-on-select="onSelect($item, 1)" typeahead-template-url="customTemplate.html" class="form-control">
   <i ng-show="loadingLocations1" class="glyphicon glyphicon-refresh"></i>
 </div>
 <div class="col-xs-6">
-  <h4>Sang 2</h4>
-  <input type="text" ng-model="asyncSelected2" placeholder="Locations loaded via $http" typeahead="address for address in song1($viewValue)" typeahead-loading="loadingLocations2" class="form-control">
+  <h4>{{compType}} 2</h4>
+  <input type="text" ng-model="asyncSelected2" placeholder="Locations loaded via $http" typeahead="address.info for address in song1($viewValue)" typeahead-loading="loadingLocations2" typeahead-on-select="onSelect($item, 2)" typeahead-template-url="customTemplate.html" class="form-control">
   <i ng-show="loadingLocations2" class="glyphicon glyphicon-refresh"></i>
 </div>
 </div>
+
+
+  <highchart id="compareChart" config="compareConfig" data-highcharts-chart="0" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto;"></highchart>
+
+<script type="text/ng-template" id="customTemplate.html">
+<a>
+<span bind-html-unsafe="match.label | typeaheadHighlight:query"></span>
+</a>
+</script>
