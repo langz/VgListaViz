@@ -12,20 +12,35 @@
   </label>
 </div>
 <div class="col-xs-12">
-<div class="col-xs-6">
-  <h4>{{compType}} 1</h4>
-  <input type="text" ng-model="asyncSelected1" placeholder="Locations loaded via $http" typeahead="address.info for address in song1($viewValue)" typeahead-loading="loadingLocations1" typeahead-on-select="onSelect($item, 1)" typeahead-template-url="customTemplate.html" class="form-control">
-  <i ng-show="loadingLocations1" class="glyphicon glyphicon-refresh"></i>
-</div>
-<div class="col-xs-6">
-  <h4>{{compType}} 2</h4>
-  <input type="text" ng-model="asyncSelected2" placeholder="Locations loaded via $http" typeahead="address.info for address in song1($viewValue)" typeahead-loading="loadingLocations2" typeahead-on-select="onSelect($item, 2)" typeahead-template-url="customTemplate.html" class="form-control">
-  <i ng-show="loadingLocations2" class="glyphicon glyphicon-refresh"></i>
-</div>
+  <div class="col-xs-6" ng-hide="compType==='Chart'">
+    <h4>{{compType}} 1</h4>
+    <input type="text" ng-model="asyncSelected1" placeholder="Locations loaded via $http" typeahead="address.info for address in song1($viewValue)" typeahead-loading="loadingLocations1" typeahead-on-select="onSelect($item, 0)" typeahead-template-url="customTemplate.html" class="form-control">
+    <i ng-show="loadingLocations1" class="glyphicon glyphicon-refresh"></i>
+  </div>
+  <div class="col-xs-6" ng-hide="compType==='Chart'">
+    <h4>{{compType}} 2</h4>
+    <input type="text" ng-model="asyncSelected2" placeholder="Locations loaded via $http" typeahead="address.info for address in song1($viewValue)" typeahead-loading="loadingLocations2" typeahead-on-select="onSelect($item, 1)" typeahead-template-url="customTemplate.html" class="form-control">
+    <i ng-show="loadingLocations2" class="glyphicon glyphicon-refresh"></i>
+  </div>
+  <div class="col-xs-6" ng-hide="compType!='Chart'">
+    <h4>{{compType}} 1</h4>
+    <select ng-init="selectedYear = years[0];" ng-options="year as year for year in years"
+    ng-model="selectedYear" ng-change="getChart(selectedYear, selectedWeek, 0)"></select>
+    <select ng-init="selectedWeek = weeks[0];" ng-options="week as week for week in weeks"
+    ng-model="selectedWeek" ng-change="getChart(selectedYear, selectedWeek, 0)"></select>
+
+  </div>
+  <div class="col-xs-6" ng-hide="compType!='Chart'">
+    <h4>{{compType}} 2</h4>
+    <select ng-init="selectedYear1 = years[0];" ng-options="year as year for year in years"
+    ng-model="selectedYear1" ng-change="getChart(selectedYear1, selectedWeek1, 1)"></select>
+    <select ng-init="selectedWeek1 = weeks[0];" ng-options="week as week for week in weeks"
+    ng-model="selectedWeek1" ng-change="getChart(selectedYear1, selectedWeek1, 1)"></select>
+  </div>
 </div>
 
 
-  <highchart id="compareChart" config="compareConfig" data-highcharts-chart="0" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto;"></highchart>
+<highchart ng-hide="hideValue" id="compareChart" config="compareConfig" data-highcharts-chart="0" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto;"></highchart>
 
 <script type="text/ng-template" id="customTemplate.html">
 <a>
