@@ -128,3 +128,22 @@ color: black;
       background-color: white;
       border-color: black;
     }
+
+    select.soflow, select.soflow-color {
+      background-color: white;
+      -webkit-appearance: button;
+      -webkit-border-radius: 2px;
+      -webkit-padding-end: 20px;
+      -webkit-padding-start: 2px;
+      -webkit-user-select: none;
+      background-image: url(http://i62.tinypic.com/15xvbd5.png);
+      background-position: 92% center;
+      background-repeat: no-repeat;
+      border: 1px solid #AAA;
+      font-size: inherit;
+      overflow: hidden;
+      padding: 5px 10px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: 100%;
+    }

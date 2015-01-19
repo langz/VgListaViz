@@ -390,5 +390,8 @@ angular.module('vgListaVizApp')
     else{
       return '';
     }
-  }
+  };
+
+
+
 });
