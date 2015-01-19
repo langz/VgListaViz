@@ -45,77 +45,18 @@ angular.module('vgListaVizApp')
 
 
   $scope.getChart = function(year, week, number){
-    charts.query({ $and: [{"year": ""+year+""}, {"week": "Uke " +week}]}).then(function(s){
-      s[0].title = s[0].year + " - " + s[0].week;
-      $scope.changeComparison(s[0], number);
+    charts.query({ $and: [{"year": ""+year+""}, {"week": "Uke " +week}, {soundSummary: {$not: {$size: 0}}}]}).then(function(s){
+      if(s.length===0){
+        alert('There is unfortunately not published a chart on this week');
+      }
+      else{
+        s[0].title = s[0].year + " - " + s[0].week;
+        $scope.changeComparison(s[0], number);
+      }
+
     });
 
   };
-  // songs.all({limit: 10000000}).then(function(s){
-  //   for(var a = 0; a < s.length ; a++){
-  //     if(s[a].soundSummary.length!=0){
-  //
-  //       if(s[a].soundSummary[1].duration>durationMax){
-  //         durationMax = s[a].soundSummary[1].duration;
-  //       }
-  //       if(s[a].soundSummary[1].duration<durationMin){
-  //         durationMin = s[a].soundSummary[1].duration;
-  //       }
-  //       if(s[a].soundSummary[2].energy<energyMin){
-  //         energyMin = s[a].soundSummary[2].energy;
-  //       }
-  //       if(s[a].soundSummary[2].energy>energyMax){
-  //         energyMax = s[a].soundSummary[2].energy;
-  //       }
-  //       if(s[a].soundSummary[3].key>keyMax){
-  //         keyMax = s[a].soundSummary[3].key;
-  //       }
-  //       if(s[a].soundSummary[3].key<keyMin){
-  //         keyMin = s[a].soundSummary[3].key;
-  //       }
-  //       if(s[a].soundSummary[4].loudness>loudnessMax){
-  //         loudnessMax = s[a].soundSummary[4].loudness;
-  //       }
-  //       if(s[a].soundSummary[4].loudness<loudnessMin){
-  //         loudnessMin = s[a].soundSummary[4].loudness;
-  //       }
-  //       if(s[a].soundSummary[5].mode<modeMin){
-  //         modeMin = s[a].soundSummary[5].mode;
-  //       }
-  //       if(s[a].soundSummary[5].mode>modeMax){
-  //         modeMax = s[a].soundSummary[5].mode;
-  //       }
-  //       if(s[a].soundSummary[6].tempo>tempoMax){
-  //         tempoMax = s[a].soundSummary[6].tempo;
-  //       }
-  //       if(s[a].soundSummary[6].tempo<tempoMin){
-  //         tempoMin = s[a].soundSummary[6].tempo;
-  //       }
-  //       if(s[a].soundSummary[7].timesignature<timesignatureMin){
-  //         timesignatureMin = s[a].soundSummary[7].timesignature;
-  //       }
-  //       if(s[a].soundSummary[7].timesignature>timesignatureMax){
-  //         timesignatureMax = s[a].soundSummary[7].timesignature;
-  //       }
-  //
-  //     }
-  //   }
-  //   console.log(durationMax + 'durationMax');
-  //   console.log(durationMin + 'durationMin');
-  //   console.log(energyMin + 'energyMin');
-  //   console.log(energyMax + 'energyMax');
-  //   console.log(keyMin + 'KeyMin');
-  //   console.log(keyMax + 'keyMax');
-  //   console.log(loudnessMax + 'loudnessMax');
-  //   console.log(loudnessMin + 'loudnessMin');
-  //   console.log(modeMin + 'modeMin');
-  //   console.log(modeMax + 'modeMax');
-  //   console.log(tempoMin + 'tempoMin');
-  //   console.log(tempoMax + 'tempoMax');
-  //   console.log(timesignatureMin + 'tsMin');
-  //   console.log(timesignatureMax + "tsMax");
-  //
-  // });
 
   $scope.percentageOf = function(value, category, position){
     var min = 1;
@@ -167,7 +108,7 @@ angular.module('vgListaVizApp')
   $scope.song1 = function(inputText){
 
     if($scope.compType==='Song'){
-      return songs.query({title:{$regex:inputText, $options : 'i'}}, { limit: 10 })
+      return songs.query({$and:[{title:{$regex:inputText, $options : 'i'}}, {soundSummary: {$not: {$size: 0}}}]}, { limit: 10 })
       .then(function(s){
         return s.map(function(item){
           item.info = item.title + " - " + item.artist;
@@ -177,7 +118,7 @@ angular.module('vgListaVizApp')
       });
     }
     if($scope.compType==='Artist'){
-      return summaryArtist.query({artist:{$regex:inputText, $options : 'i'}}, { limit: 10 })
+      return summaryArtist.query({$and:[{artist:{$regex:inputText, $options : 'i'}}, { danceability: { $exists: true, $nin: [ 0 ] } }]}, { limit: 10 })
       .then(function(s){
         return s.map(function(item){
           item.info = item.artist;
@@ -205,6 +146,7 @@ angular.module('vgListaVizApp')
   $scope.onSelect = function(inp, number) {
     if(inp.type==='song'){
       $scope.changeComparison(inp,number);
+      console.log(inp);
     }
     else if(inp.type==='artist'){
       $scope.artist(inp, number)
@@ -286,6 +228,7 @@ angular.module('vgListaVizApp')
 
   $scope.compareConfig = {
     options: {
+      legend: { enabled: false},
       chart: {
         type: 'bar'
       },
@@ -310,6 +253,9 @@ angular.module('vgListaVizApp')
       plotOptions: {
         series: {
           stacking: 'normal'
+        },
+        column: {
+          colorByPoint: false
         }
       },
       tooltip: {
