@@ -49,7 +49,7 @@ angular.module('vgListaVizApp')
 
 
 
-  summaryYear.all().then(function(res){
+  summaryYear.all({ sort: {"year": 1} }).then(function(res){
     $scope.summaryDecade = res;
     $scope.update('danceability');
     $scope.safeToChange = true;
@@ -60,12 +60,12 @@ angular.module('vgListaVizApp')
 
   $scope.getValue = function(string){
     var values = [];
-    for(var i = 0; i< $scope.summaryDecade.length; i=i+5){
+    for(var i = 0; i< $scope.summaryDecade.length; i=i+3){
       console.log($scope.summaryDecade[i]);
       values.push($scope.summaryDecade[i][string]);
-
+      $scope.try.xAxis.categories.push($scope.summaryDecade[i].year);
     }
-    values.push($scope.summaryDecade[$scope.summaryDecade.length-1][string]);
+    $scope.try.xAxis.categories.push(2014);
     return values;
   };
 
@@ -85,13 +85,11 @@ angular.module('vgListaVizApp')
       suffix = ' s';
       suffixString = ' (Seconds)';
       $scope.try.options.tooltip.valueSuffix=suffix;
-
     }
 
     $scope.try.series[0].name = string.charAt(0).toUpperCase() + string.slice(1);
     $scope.try.series[0].data = $scope.getValue(string);
     $scope.try.yAxis.title.text = string + suffixString;
-    console.log($scope.try.series[0]);
   };
 
 
@@ -118,7 +116,7 @@ angular.module('vgListaVizApp')
       }
     },
     xAxis: {
-      categories: [1960, 1965, 1970, 1975, 1980, 1985, 1990, 1995, 2000, 2005, 2010, 2014]
+      categories: []
     },
     yAxis:{
       labels: {
