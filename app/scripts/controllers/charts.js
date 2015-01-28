@@ -8,7 +8,7 @@
 * Controller of the vgListaVizApp
 */
 angular.module('vgListaVizApp')
-.controller('ChartsCtrl', function ($scope, charts, songs, summaryDecade) {
+.controller('ChartsCtrl', function ($scope, charts, songs, summaryYear) {
   var year = 1960;
   // charts.query({"year": "1960"}).then(function(s){
   //   $scope.charts = s;
@@ -34,6 +34,9 @@ angular.module('vgListaVizApp')
     name:'energy'
   },
   {
+    name:'hitlasting'
+  },
+  {
     name:'loudness'
   },
   {
@@ -46,20 +49,23 @@ angular.module('vgListaVizApp')
 
 
 
-  summaryDecade.all().then(function(res){
+  summaryYear.all().then(function(res){
     $scope.summaryDecade = res;
     $scope.update('danceability');
     $scope.safeToChange = true;
     $scope.try.loading = false;
+    console.log(res);
 
   });
 
   $scope.getValue = function(string){
     var values = [];
-    for(var i = 0; i< $scope.summaryDecade.length; i++){
-
+    for(var i = 0; i< $scope.summaryDecade.length; i=i+5){
+      console.log($scope.summaryDecade[i]);
       values.push($scope.summaryDecade[i][string]);
+
     }
+    values.push($scope.summaryDecade[$scope.summaryDecade.length-1][string]);
     return values;
   };
 
@@ -82,9 +88,10 @@ angular.module('vgListaVizApp')
 
     }
 
-    $scope.try.series[0].name = string.charAt(0).toUpperCase() + string.slice(1);;
+    $scope.try.series[0].name = string.charAt(0).toUpperCase() + string.slice(1);
     $scope.try.series[0].data = $scope.getValue(string);
     $scope.try.yAxis.title.text = string + suffixString;
+    console.log($scope.try.series[0]);
   };
 
 
@@ -111,7 +118,7 @@ angular.module('vgListaVizApp')
       }
     },
     xAxis: {
-      categories: [1960, 1970, 1980, 1990, 2000, 2010]
+      categories: [1960, 1965, 1970, 1975, 1980, 1985, 1990, 1995, 2000, 2005, 2010, 2014]
     },
     yAxis:{
       labels: {

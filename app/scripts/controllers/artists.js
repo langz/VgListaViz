@@ -11,7 +11,7 @@ angular.module('vgListaVizApp')
 .controller('ArtistsCtrl', function ($scope, summaryArtistTopAntall) {
   console.log('hei');
 
-  summaryArtistTopAntall.all({ sort: {"antall": -1} }).then(function(s){
+  summaryArtistTopAntall.query({ sort: {"antall": -1} }).then(function(s){
     console.log(s);
     $scope.summaryArtistTopAntall = s;
     var mainArray = [];
