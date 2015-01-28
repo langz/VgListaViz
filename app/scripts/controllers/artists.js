@@ -46,8 +46,12 @@ angular.module('vgListaVizApp')
 
 if(attributt==="danceability"){
   $scope.try.series[0].data = [];
+
   $scope.try.loading = true;
-  $scope.try.options.tooltip.pointFormat = 'Danceability: <b>{point.y}</b>';
+  $scope.try.options.tooltip.pointFormat = 'Danceability: <b>{point.y:,.2f}</b>';
+  $scope.try.series[0].dataLabels.formatter=function(){
+    return Highcharts.numberFormat(this.y,2);
+  };
   $scope.try.yAxis.title.text = 'Danceability';
     summaryArtist.all({ sort: {"danceability": -1} }).then(function(s){
 
@@ -65,9 +69,13 @@ if(attributt==="danceability"){
     });
   }
   if(attributt==="duration"){
+
     $scope.try.series[0].data = [];
     $scope.try.loading = true;
-    $scope.try.options.tooltip.pointFormat = 'Duration: <b>point.y:,.2f}</b>';
+    $scope.try.options.tooltip.pointFormat = 'Duration: <b>{point.y:,.0f}</b> sec';
+    $scope.try.series[0].dataLabels.formatter=function(){
+      return Highcharts.numberFormat(this.y,0);
+    };
     $scope.try.yAxis.title.text = 'Duration';
       summaryArtist.all({ sort: {"duration": -1} }).then(function(s){
 
@@ -88,6 +96,9 @@ if(attributt==="danceability"){
       $scope.try.series[0].data = [];
       $scope.try.loading = true;
       $scope.try.options.tooltip.pointFormat = 'Energy: <b>{point.y:,.2f}</b>';
+      $scope.try.series[0].dataLabels.formatter=function(){
+        return Highcharts.numberFormat(this.y,2);
+      };
       $scope.try.yAxis.title.text = 'Energy';
         summaryArtist.all({ sort: {"energy": -1} }).then(function(s){
 
@@ -107,7 +118,10 @@ if(attributt==="danceability"){
         if(attributt==="loudness"){
           $scope.try.series[0].data = [];
           $scope.try.loading = true;
-          $scope.try.options.tooltip.pointFormat = 'Loudness: <b>-{point.y:,.2f}</b>';
+          $scope.try.options.tooltip.pointFormat = 'Loudness: <b>-{point.y:,.2f} db</b>';
+          $scope.try.series[0].dataLabels.formatter=function(){
+            return -Highcharts.numberFormat(this.y,2);
+          };
           $scope.try.yAxis.title.text = 'Loudness';
             summaryArtist.all({ sort: {"loudness": 1} }).then(function(s){
 
@@ -128,6 +142,9 @@ if(attributt==="danceability"){
             $scope.try.series[0].data = [];
             $scope.try.loading = true;
             $scope.try.options.tooltip.pointFormat = 'Antall ganger listet: <b>{this.y}</b>';
+            $scope.try.series[0].dataLabels.formatter=function(){
+              return Highcharts.numberFormat(this.y,0);
+            };
             $scope.try.yAxis.title.text = 'Antall ganger listet';
               summaryArtist.all({ sort: {"antall": -1} }).then(function(s){
 
@@ -148,6 +165,9 @@ if(attributt==="danceability"){
               $scope.try.series[0].data = [];
               $scope.try.loading = true;
               $scope.try.options.tooltip.pointFormat = 'Antall unike sanger: <b>{point.y}</b>';
+              $scope.try.series[0].dataLabels.formatter=function(){
+                return Highcharts.numberFormat(this.y,0);
+              };
               $scope.try.yAxis.title.text = 'Antall unike sanger';
                 summaryArtist.all({ sort: {"antallunikesanger": -1} }).then(function(s){
 
@@ -168,8 +188,12 @@ if(attributt==="danceability"){
               $scope.try.series[0].data = [];
               $scope.try.loading = true;
               $scope.try.options.tooltip.pointFormat = 'Mode: <b>{point.y:,.2f}</b>';
+              $scope.try.series[0].dataLabels.formatter=function(){
+                return Highcharts.numberFormat(this.y,2);
+              };
               $scope.try.yAxis.title.text = 'Mode';
                 summaryArtist.all({ sort: {"mode": -1} }).then(function(s){
+
 
                   console.log(s);
                   $scope.summaryArtistTopAntall = s;
@@ -188,6 +212,9 @@ if(attributt==="danceability"){
                 $scope.try.series[0].data = [];
                 $scope.try.loading = true;
                 $scope.try.options.tooltip.pointFormat = 'Tempo: <b>{point.y:,.2f}</b>';
+                $scope.try.series[0].dataLabels.formatter=function(){
+                  return Highcharts.numberFormat(this.y,2);
+                };
                 $scope.try.yAxis.title.text = 'Tempo';
                   summaryArtist.all({ sort: {"tempo": -1} }).then(function(s){
 
@@ -238,7 +265,8 @@ if(attributt==="danceability"){
           '</a>';
         },
         useHTML:true
-      }
+      },
+
 
     },
     yAxis: {
@@ -263,7 +291,10 @@ if(attributt==="danceability"){
           fontSize: '13px',
           fontFamily: 'Verdana, sans-serif',
           textShadow: '0 0 3px black'
-        }
+        },
+        formatter: function () {
+    return Highcharts.numberFormat(this.y,2);
+}
       }
     }],
     title: {
