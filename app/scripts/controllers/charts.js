@@ -116,7 +116,15 @@ angular.module('vgListaVizApp')
       }
     },
     xAxis: {
-      categories: []
+      categories: [],
+      type: 'category',
+      labels: {
+        formatter: function () {
+          return '<a href="#/chart/' + this.value + '"style="color:black;">' + this.value +
+          '</a>';
+        },
+        useHTML:true
+      }
     },
     yAxis:{
       labels: {
