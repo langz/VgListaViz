@@ -60,12 +60,15 @@ angular.module('vgListaVizApp')
 
   $scope.getValue = function(string){
     var values = [];
+    var count = 0;
     for(var i = 0; i< $scope.summaryDecade.length; i=i+3){
       console.log($scope.summaryDecade[i]);
       values.push($scope.summaryDecade[i][string]);
-      $scope.try.xAxis.categories.push($scope.summaryDecade[i].year);
+      count = count + $scope.summaryDecade[i][string];
+      $scope.try.xAxis.categories.push({a:$scope.summaryDecade[i].year, b: "summaryYear/" + $scope.summaryDecade[i]._id.$oid });
     }
     $scope.try.xAxis.categories.push(2014);
+    console.log(string  +  " count :" + count + "/" + values.length + " = " + count/values.length );
     return values;
   };
 
@@ -101,7 +104,9 @@ angular.module('vgListaVizApp')
       tooltip: {
         valueDecimals:2,
         valueSuffix:'',
-        pointFormat: '{series.name}: {point.y}'
+        pointFormat: '{series.name}: {point.y}',
+        headerFormat:"<span style=font-size: 10px>{point.key.a}</span><br/>",
+        useHTML:true,
       },
 
       plotOptions: {
@@ -120,7 +125,7 @@ angular.module('vgListaVizApp')
       type: 'category',
       labels: {
         formatter: function () {
-          return '<a href="#/chart/' + this.value + '"style="color:black;">' + this.value +
+          return '<a href="#/chart/' + this.value.b + '"style="color:black;">' + this.value.a +
           '</a>';
         },
         useHTML:true
@@ -144,7 +149,7 @@ angular.module('vgListaVizApp')
     }
     ],
     title: {
-      text: 'Vglista Topp 20 Summary'
+      text: ''
     },
 
     loading: true

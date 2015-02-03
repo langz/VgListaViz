@@ -1,0 +1,86 @@
+<style>
+  text:hover { opacity: .7 !important; }
+</style>
+<h2 class="sub-header">{{song.title}}   <u><span ng-click="gotoArtist(song.artist)" style="font-size: 20px; cursor: pointer;">{{song.artist}}</span></u></h2>
+
+<h3 class="sub-header">Lyd</h3>
+<hr>
+
+<div id="danceability" style="height:36px;"></div>
+
+<div id="duration" style="height:36px;"></div>
+
+<div id="energy" style="height:36px;"></div>
+
+<div id="loudness" style="height:36px;"></div>
+
+<div id="mode" style="height:36px;"></div>
+
+<div id="listet" style="height:36px;"></div>
+
+<div id="tempo" style="height:36px;"></div>
+
+<div ng-show="tekst">
+<h3 class="sub-header">Tekst</h3>
+<hr>
+<div id="vis" class="col-xs-12" ></div>
+</div>
+<div >
+</br>
+  <h3 class="sub-header">{{song.title}}'s historie på listene</h3>
+  <hr>
+  <div class="col-xs-12">
+    <highchart id="chart1" config="try" data-highcharts-chart="0"></highchart>
+  </div>
+<h3 class="sub-header">Andre sanger av {{song.artist}}</h3>
+<hr>
+<div class="row">
+  <div class="col-xs-12">
+  <div class="input-group">
+    <input type="text" class="form-control" ng-model="query" id="input_search" placeholder="Søk sang">
+    <span class="input-group-addon btn btn-primary button1" title="tooltip" >
+      <span class="glyphicon glyphicon-search"></span>
+    </span>
+  </div>
+</div>
+</div>
+</br>
+<div class="row">
+  <div class="col-xs-12">
+  <table class="table table-hover table-condensed table-responsive table-striped">
+    <tr>
+      <th class="col-sm-4"> <a ng-click="sortField='title'; reverse = !reverse">
+        Tittel <span ng-show="sortField == 'title'">
+          <span ng-show="!reverse" class="glyphicon glyphicon-arrow-up"></span>
+          <span ng-show="reverse" class="glyphicon glyphicon-arrow-down"></span>
+        </span>
+      </a>
+    </th>
+    <th class="col-xs-4"> <a ng-click="sortField='antall'; reverse = !reverse">
+      #Listet <span ng-show="sortField == 'antall'">
+        <span ng-show="!reverse" class="glyphicon glyphicon-arrow-up"></span>
+        <span ng-show="reverse" class="glyphicon glyphicon-arrow-down"></span>
+      </span>
+    </a>
+  </th>
+  <th class="col-xs-4"><a ng-click="sortField='felt3'; reverse = !reverse">
+    #Posisjon <span ng-show="sortField == 'felt3'">
+      <span ng-show="!reverse" class="glyphicon glyphicon-arrow-up"></span>
+      <span ng-show="reverse" class="glyphicon glyphicon-arrow-down"></span>
+    </span>
+  </a>
+</th>
+
+
+
+
+</tr>
+<tr ng-if="sang._id.$oid != song._id.$oid" ng-click="gotoSang(sang._id.$oid)" ng-repeat="sang in artist.sanger | filter:query | orderBy:sortField:reverse" style="cursor: pointer;">
+  <td class="col-xs-4">{{sang.title}}</td>
+  <td class="col-xs-4">{{sang.antall}}</td>
+  <td class="col-xs-4">2</td>
+
+</tr>
+</table>
+</div>
+</div>

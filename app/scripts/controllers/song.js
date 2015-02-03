@@ -2,21 +2,19 @@
 
 /**
 * @ngdoc function
-* @name vgListaVizApp.controller:ChartCtrl
+* @name vgListaVizApp.controller:SongCtrl
 * @description
-* # ChartCtrl
+* # SongCtrl
 * Controller of the vgListaVizApp
 */
 angular.module('vgListaVizApp')
-.controller('ChartCtrl',function ($scope, $routeParams, summaryYear, charts, $location, songs) {
-  $scope.chartType = $routeParams.chartType;
-  $scope.oid = $routeParams.oid;
+.controller('SongCtrl',function ($scope, $routeParams, $location, songs, summaryArtist, charts) {
   $scope.isCollapsed = false;
   $scope.lydClick = true;
-  $scope.chart = {};
-  $scope.yearCharts = [];
-  $scope.sortField = 'position';
-  $scope.reverse = false;
+  $scope.song = {};
+  $scope.song.artist = "";
+  $scope.oid = $routeParams.oid;
+  $scope.tekst = true;
   var vis;
   var svg;
   var layout;
@@ -217,6 +215,56 @@ angular.module('vgListaVizApp')
       }
     });
   }
+  var createListet = function(verdi){
+    Highcharts.setOptions(optionsNormal);
+    var duration = new Highcharts.Chart({
+      chart:{renderTo:'listet'},
+      xAxis:{categories:['Listet']},
+      yAxis:{
+        max:durationMax,
+        labels:{y:10,style:{fontSize:'8px'}},
+        plotBands:[]
+      },
+      series:[{name:'Gjennomsnitt',pointWidth:8.25,data:[durationAvg], color: 'rgba(103,103,103,.35)', zIndex:0},
+      {name:'Verdi', pointWidth:8.5, data:[verdi], zIndex:1},
+      {name:'Gjennomsnitt',pointWidth:8.25,data:[durationAvg], color: 'rgba(103,103,103,.35)', zIndex:0}],
+      tooltip:{
+        enabled:true,
+        backgroundColor:'rgba(255, 255, 255, .85)',
+        borderWidth:0,
+        shadow:true,
+        style:{fontSize:'10px',padding:2},
+        formatter:function() {
+          return this.series.name + ": <strong>" + Highcharts.numberFormat(this.y,0) + "s"+ "</strong>";
+        }
+      }
+    });
+  }
+  var createSanger = function(verdi){
+    Highcharts.setOptions(optionsNormal);
+    var duration = new Highcharts.Chart({
+      chart:{renderTo:'sanger'},
+      xAxis:{categories:['Sanger']},
+      yAxis:{
+        max:durationMax,
+        labels:{y:10,style:{fontSize:'8px'}},
+        plotBands:[]
+      },
+      series:[{name:'Gjennomsnitt',pointWidth:8.25,data:[durationAvg], color: 'rgba(103,103,103,.35)', zIndex:0},
+      {name:'Verdi', pointWidth:8.5, data:[verdi], zIndex:1},
+      {name:'Gjennomsnitt',pointWidth:8.25,data:[durationAvg], color: 'rgba(103,103,103,.35)', zIndex:0}],
+      tooltip:{
+        enabled:true,
+        backgroundColor:'rgba(255, 255, 255, .85)',
+        borderWidth:0,
+        shadow:true,
+        style:{fontSize:'10px',padding:2},
+        formatter:function() {
+          return this.series.name + ": <strong>" + Highcharts.numberFormat(this.y,0) + "s"+ "</strong>";
+        }
+      }
+    });
+  }
   var createEnergy = function(verdi){
     Highcharts.setOptions(optionsNormal);
     var energy = new Highcharts.Chart({
@@ -298,16 +346,9 @@ angular.module('vgListaVizApp')
     });
   }
   var createBulletCharts = function(obj){
-    createDanceability(obj.danceability);
-    createDuration(obj.duration);
-    createEnergy(obj.energy);
-    createLoudness(Math.abs(obj.loudness));
-    createMode(obj.mode);
-    createTempo(obj.tempo);
-  }
-  var createBulletCharts2 = function(obj){
     createDanceability(obj.soundSummary[0].danceability);
     createDuration(obj.soundSummary[1].duration);
+    createListet(1);
     createEnergy(obj.soundSummary[2].energy);
     createLoudness(Math.abs(obj.soundSummary[4].loudness));
     createMode(obj.soundSummary[5].mode);
@@ -416,52 +457,122 @@ angular.module('vgListaVizApp')
 
     }
 
-    $scope.goToChartTypeChart = function(oid){
+    $scope.try = {
+      options: {
+        chart: {
+          type: 'line'
+        },
+        tooltip: {
+          valueDecimals:0,
+          valueSuffix:'',
+          pointFormat: '{series.name}: {point.y}',
+          headerFormat:"<span style=font-size: 10px>{point.key.a}</span><br/>",
+          useHTML:true,
+        },
 
-      console.log('/chart/chart/'+oid);
-      $location.path('/chart/chart/'+oid);
+        plotOptions: {
+          series: {
+            marker: {
+              fillColor: '#FFFFFF',
+              lineWidth: 2,
+              lineColor: '#dd2027',
+              symbol:'circle'
+            }
+          }
+        }
+      },
+      xAxis: {
+        categories: [],
+        type: 'category',
+        labels: {
+          formatter: function () {
+            return '<a href="#/chart/' + this.value.b + '"style="color:black;">' + this.value.a +
+            '</a>';
+          },
+          useHTML:true
+        }
+      },
+      yAxis:{
+        min:1,
+        max:10,
+        tickInterval: 1,
+        reversed: true,
+        labels: {
+          enabled: true
+        },
+        title: {
+          text: "Plassering"
+        }
+      },
 
+      series: [{
+        name:'Plass',
+        data:'',
+        lineColor: '#dd2027',
+        fillColor: '#dd2027',
+        showInLegend: false
+      }
+      ],
+      title: {
+        text: ''
+      },
+
+      loading: true
     };
 
-    $scope.goToSang = function(sangTittel, artistNavn){
-      songs.query({$and: [{title:sangTittel},{artist:artistNavn} ]}).then(function(res){
 
 
-        console.log(res);
-      console.log('/song/'+res[0]._id.$oid);
 
-      $location.path('/song/'+res[0]._id.$oid);
-    });
+    $scope.gotoSang = function(oid){
+      console.log('/song/'+oid);
+      $location.path('/song/'+oid);
     };
     $scope.gotoArtist = function(artistNavn){
       console.log('/artist/'+artistNavn);
       $location.path('/artist/'+artistNavn);
     };
 
-    if($scope.chartType==='summaryYear'){
-      console.log('summaryYear');
-      summaryYear.query({_id:{$oid:$scope.oid}}).then(function(res){
-        $scope.chart = res[0];
-        createBulletCharts(res[0]);
-        omg(res[0].lyricSummary);
-        console.log(res);
-        charts.query({year:"1963"}).then(function(res2){
-          console.log(res2);
-          $scope.yearCharts = res2;
-        });
+    songs.query({_id:{$oid: $scope.oid }}).then(function(res){
+      console.log(res);
+      createBulletCharts(res[0]);
+      $scope.song = res[0];
+
+
+      if($scope.song.bow.length===0){
+        console.log("null");
+        $scope.tekst = false;
+      }
+      else{
+        console.log("kke null");
+        omg(res[0].bow);
+      }
+      charts.query({ list: { $elemMatch: {"artist": $scope.song.artist, "title": $scope.song.title}}}).then(function(res2){
+        console.log("det shit")
+        console.log(res2);
+        var values = [];
+        var categorie = [];
+        for(var a = 0 ; a<res2.length; a++){
+            for(var i = 0 ; i<res2[a].list.length;i++){
+
+              if(res2[a].list[i].artist===$scope.song.artist && res2[a].list[i].title===$scope.song.title){
+                values.push(res2[a].list[i].position);
+                categorie.push({a:res2[a].year + " " + res2[a].week, b: "chart/" + res2[a]._id.$oid });
+                break;
+              }
+            }
+        }
+        $scope.try.loading = false;
+        $scope.try.xAxis.categories = categorie;
+        $scope.try.series[0].data = values;
+
+
       });
-    }
-    else if($scope.chartType==='chart'){
-      $scope.listeAktiv = true;
-      charts.query({_id:{$oid:$scope.oid}}).then(function(res){
+
+      summaryArtist.query({ artist:$scope.song.artist }).then(function(res){
         console.log(res);
-        $scope.chart = res[0];
-        createBulletCharts2(res[0]);
-        omg(res[0].lyricSummary);
-        charts.query({year:"1963"}).then(function(res2){
-          console.log(res2);
-          $scope.yearCharts = res2;
-        });
+        $scope.artist = res[0];
       });
-    }
+
+    });
+
   });

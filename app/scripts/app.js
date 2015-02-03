@@ -39,7 +39,7 @@ angular
     templateUrl: 'views/artist.html',
     controller: 'ArtistCtrl'
   })
-  .when('/chart/:chartnavn', {
+  .when('/chart/:chartType/:oid', {
     templateUrl: 'views/chart.html',
     controller: 'ChartCtrl'
   })
@@ -50,6 +50,10 @@ angular
   .when('/compare', {
     templateUrl: 'views/compare.html',
     controller: 'CompareCtrl'
+  })
+  .when('/song/:oid', {
+    templateUrl: 'views/song.html',
+    controller: 'SongCtrl'
   })
   .otherwise({
     redirectTo: '/'
