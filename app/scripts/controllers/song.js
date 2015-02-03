@@ -15,6 +15,8 @@ angular.module('vgListaVizApp')
   $scope.song.artist = "";
   $scope.oid = $routeParams.oid;
   $scope.tekst = true;
+  $scope.soundData = true;
+  $scope.komigjen = [];
   var vis;
   var svg;
   var layout;
@@ -33,6 +35,7 @@ angular.module('vgListaVizApp')
   var modeMax = 1;
   var tempoMax =220.04;
   var timesignatureMax=7;
+  var antallUkerMax = 55;
 
   var danceabilityAvg = 0.5946363853683373;
   var durationAvg = 224.95823756669492;
@@ -41,6 +44,7 @@ angular.module('vgListaVizApp')
   var modeAvg = 0.7065017816252117;
   var tempoAvg = 120.10330113014082;
   var hitlastingAvg = 7.2631578947368425;
+  var antallUkerAvg = 9;
 
 
 
@@ -219,15 +223,15 @@ angular.module('vgListaVizApp')
     Highcharts.setOptions(optionsNormal);
     var duration = new Highcharts.Chart({
       chart:{renderTo:'listet'},
-      xAxis:{categories:['Listet']},
+      xAxis:{categories:['Antall uker']},
       yAxis:{
-        max:durationMax,
+        max:antallUkerMax,
         labels:{y:10,style:{fontSize:'8px'}},
         plotBands:[]
       },
-      series:[{name:'Gjennomsnitt',pointWidth:8.25,data:[durationAvg], color: 'rgba(103,103,103,.35)', zIndex:0},
+      series:[{name:'Gjennomsnitt',pointWidth:8.25,data:[antallUkerAvg], color: 'rgba(103,103,103,.35)', zIndex:0},
       {name:'Verdi', pointWidth:8.5, data:[verdi], zIndex:1},
-      {name:'Gjennomsnitt',pointWidth:8.25,data:[durationAvg], color: 'rgba(103,103,103,.35)', zIndex:0}],
+      {name:'Gjennomsnitt',pointWidth:8.25,data:[antallUkerAvg], color: 'rgba(103,103,103,.35)', zIndex:0}],
       tooltip:{
         enabled:true,
         backgroundColor:'rgba(255, 255, 255, .85)',
@@ -235,7 +239,7 @@ angular.module('vgListaVizApp')
         shadow:true,
         style:{fontSize:'10px',padding:2},
         formatter:function() {
-          return this.series.name + ": <strong>" + Highcharts.numberFormat(this.y,0) + "s"+ "</strong>";
+          return this.series.name + ": <strong>" + Highcharts.numberFormat(this.y,0) + "</strong>";
         }
       }
     });
@@ -348,7 +352,6 @@ angular.module('vgListaVizApp')
   var createBulletCharts = function(obj){
     createDanceability(obj.soundSummary[0].danceability);
     createDuration(obj.soundSummary[1].duration);
-    createListet(1);
     createEnergy(obj.soundSummary[2].energy);
     createLoudness(Math.abs(obj.soundSummary[4].loudness));
     createMode(obj.soundSummary[5].mode);
@@ -466,7 +469,7 @@ angular.module('vgListaVizApp')
           valueDecimals:0,
           valueSuffix:'',
           pointFormat: '{series.name}: {point.y}',
-          headerFormat:"<span style=font-size: 10px>{point.key.a}</span><br/>",
+          headerFormat:"<span style=font-size: 10px>{point.key.a}, {point.key.c}</span><br/>",
           useHTML:true,
         },
 
@@ -486,15 +489,17 @@ angular.module('vgListaVizApp')
         type: 'category',
         labels: {
           formatter: function () {
-            return '<a href="#/chart/' + this.value.b + '"style="color:black;">' + this.value.a +
-            '</a>';
+            if(this.value.a){
+              return '<a href="#/chart/' + this.value.b + '"style="color:black;">' + this.value.a.substring(2,4) +
+              '</a>';
+            }
           },
           useHTML:true
         }
       },
       yAxis:{
         min:1,
-        max:10,
+        max:20,
         tickInterval: 1,
         reversed: true,
         labels: {
@@ -534,14 +539,23 @@ angular.module('vgListaVizApp')
 
     songs.query({_id:{$oid: $scope.oid }}).then(function(res){
       console.log(res);
-      createBulletCharts(res[0]);
+
       $scope.song = res[0];
+
+      if($scope.song.soundSummary.length===0){
+        console.log("null");
+      }
+
+      else{
+        createBulletCharts($scope.song);
+      }
 
 
       if($scope.song.bow.length===0){
         console.log("null");
         $scope.tekst = false;
       }
+
       else{
         console.log("kke null");
         omg(res[0].bow);
@@ -552,19 +566,19 @@ angular.module('vgListaVizApp')
         var values = [];
         var categorie = [];
         for(var a = 0 ; a<res2.length; a++){
-            for(var i = 0 ; i<res2[a].list.length;i++){
+          for(var i = 0 ; i<res2[a].list.length;i++){
 
-              if(res2[a].list[i].artist===$scope.song.artist && res2[a].list[i].title===$scope.song.title){
-                values.push(res2[a].list[i].position);
-                categorie.push({a:res2[a].year + " " + res2[a].week, b: "chart/" + res2[a]._id.$oid });
-                break;
-              }
+            if(res2[a].list[i].artist===$scope.song.artist && res2[a].list[i].title===$scope.song.title){
+              values.push(res2[a].list[i].position);
+              categorie.push({a:res2[a].year, b: "chart/" + res2[a]._id.$oid, c:res2[a].week});
+              break;
             }
+          }
         }
-        $scope.try.loading = false;
-        $scope.try.xAxis.categories = categorie;
         $scope.try.series[0].data = values;
-
+        $scope.try.xAxis.categories = categorie;
+        $scope.try.loading = false;
+        createListet(res2.length);
 
       });
 
@@ -572,7 +586,6 @@ angular.module('vgListaVizApp')
         console.log(res);
         $scope.artist = res[0];
       });
-
     });
 
   });

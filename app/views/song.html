@@ -2,8 +2,8 @@
   text:hover { opacity: .7 !important; }
 </style>
 <h2 class="sub-header">{{song.title}}   <u><span ng-click="gotoArtist(song.artist)" style="font-size: 20px; cursor: pointer;">{{song.artist}}</span></u></h2>
-
-<h3 class="sub-header">Lyd</h3>
+<div ng-if="soundData">
+<h3 ng-click="metoden()" class="sub-header">Lyd</h3>
 <hr>
 
 <div id="danceability" style="height:36px;"></div>
@@ -19,7 +19,7 @@
 <div id="listet" style="height:36px;"></div>
 
 <div id="tempo" style="height:36px;"></div>
-
+</div>
 <div ng-show="tekst">
 <h3 class="sub-header">Tekst</h3>
 <hr>
@@ -32,6 +32,7 @@
   <div class="col-xs-12">
     <highchart id="chart1" config="try" data-highcharts-chart="0"></highchart>
   </div>
+  <div class="col-xs-12" ng-if="artist.sanger.length!=1">
 <h3 class="sub-header">Andre sanger av {{song.artist}}</h3>
 <hr>
 <div class="row">
@@ -57,14 +58,14 @@
       </a>
     </th>
     <th class="col-xs-4"> <a ng-click="sortField='antall'; reverse = !reverse">
-      #Listet <span ng-show="sortField == 'antall'">
+      Antall uker på listen <span ng-show="sortField == 'antall'">
         <span ng-show="!reverse" class="glyphicon glyphicon-arrow-up"></span>
         <span ng-show="reverse" class="glyphicon glyphicon-arrow-down"></span>
       </span>
     </a>
   </th>
   <th class="col-xs-4"><a ng-click="sortField='felt3'; reverse = !reverse">
-    #Posisjon <span ng-show="sortField == 'felt3'">
+    Beste posisjon <span ng-show="sortField == 'felt3'">
       <span ng-show="!reverse" class="glyphicon glyphicon-arrow-up"></span>
       <span ng-show="reverse" class="glyphicon glyphicon-arrow-down"></span>
     </span>
@@ -82,5 +83,6 @@
 
 </tr>
 </table>
+</div>
 </div>
 </div>

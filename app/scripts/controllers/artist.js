@@ -17,6 +17,8 @@ angular.module('vgListaVizApp')
   $scope.lister = [];
   $scope.sortField='position';
   $scope.reverse = false;
+  $scope.sortField2='title';
+  $scope.reverse2 = false;
   var vis;
   var svg;
   var layout;
@@ -35,6 +37,8 @@ angular.module('vgListaVizApp')
   var modeMax = 1;
   var tempoMax =220.04;
   var timesignatureMax=7;
+  var numWeeksMax = 350;
+  var numSongsMax = 33;
 
   var danceabilityAvg = 0.5946363853683373;
   var durationAvg = 224.95823756669492;
@@ -43,7 +47,8 @@ angular.module('vgListaVizApp')
   var modeAvg = 0.7065017816252117;
   var tempoAvg = 120.10330113014082;
   var hitlastingAvg = 7.2631578947368425;
-
+var numWeeksAvg = 17;
+var numSongsAvg = 2;
 
 
 
@@ -221,15 +226,15 @@ angular.module('vgListaVizApp')
     Highcharts.setOptions(optionsNormal);
     var duration = new Highcharts.Chart({
       chart:{renderTo:'listet'},
-      xAxis:{categories:['Listet']},
+      xAxis:{categories:['Antall uker']},
       yAxis:{
-        max:durationMax,
+        max:numWeeksMax,
         labels:{y:10,style:{fontSize:'8px'}},
         plotBands:[]
       },
-      series:[{name:'Gjennomsnitt',pointWidth:8.25,data:[durationAvg], color: 'rgba(103,103,103,.35)', zIndex:0},
+      series:[{name:'Gjennomsnitt',pointWidth:8.25,data:[numWeeksAvg], color: 'rgba(103,103,103,.35)', zIndex:0},
       {name:'Verdi', pointWidth:8.5, data:[verdi], zIndex:1},
-      {name:'Gjennomsnitt',pointWidth:8.25,data:[durationAvg], color: 'rgba(103,103,103,.35)', zIndex:0}],
+      {name:'Gjennomsnitt',pointWidth:8.25,data:[numWeeksAvg], color: 'rgba(103,103,103,.35)', zIndex:0}],
       tooltip:{
         enabled:true,
         backgroundColor:'rgba(255, 255, 255, .85)',
@@ -237,7 +242,7 @@ angular.module('vgListaVizApp')
         shadow:true,
         style:{fontSize:'10px',padding:2},
         formatter:function() {
-          return this.series.name + ": <strong>" + Highcharts.numberFormat(this.y,0) + "s"+ "</strong>";
+          return this.series.name + ": <strong>" + Highcharts.numberFormat(this.y,0) + "</strong>";
         }
       }
     });
@@ -246,15 +251,15 @@ angular.module('vgListaVizApp')
     Highcharts.setOptions(optionsNormal);
     var duration = new Highcharts.Chart({
       chart:{renderTo:'sanger'},
-      xAxis:{categories:['Sanger']},
+      xAxis:{categories:['Antall Sanger']},
       yAxis:{
-        max:durationMax,
+        max:numSongsMax,
         labels:{y:10,style:{fontSize:'8px'}},
         plotBands:[]
       },
-      series:[{name:'Gjennomsnitt',pointWidth:8.25,data:[durationAvg], color: 'rgba(103,103,103,.35)', zIndex:0},
+      series:[{name:'Gjennomsnitt',pointWidth:8.25,data:[numSongsAvg], color: 'rgba(103,103,103,.35)', zIndex:0},
       {name:'Verdi', pointWidth:8.5, data:[verdi], zIndex:1},
-      {name:'Gjennomsnitt',pointWidth:8.25,data:[durationAvg], color: 'rgba(103,103,103,.35)', zIndex:0}],
+      {name:'Gjennomsnitt',pointWidth:8.25,data:[numSongsAvg], color: 'rgba(103,103,103,.35)', zIndex:0}],
       tooltip:{
         enabled:true,
         backgroundColor:'rgba(255, 255, 255, .85)',
@@ -262,7 +267,7 @@ angular.module('vgListaVizApp')
         shadow:true,
         style:{fontSize:'10px',padding:2},
         formatter:function() {
-          return this.series.name + ": <strong>" + Highcharts.numberFormat(this.y,0) + "s"+ "</strong>";
+          return this.series.name + ": <strong>" + Highcharts.numberFormat(this.y,0) + "</strong>";
         }
       }
     });

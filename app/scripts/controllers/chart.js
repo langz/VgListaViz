@@ -15,8 +15,13 @@ angular.module('vgListaVizApp')
   $scope.lydClick = true;
   $scope.chart = {};
   $scope.yearCharts = [];
-  $scope.sortField = 'position';
-  $scope.reverse = false;
+
+    $scope.sortField = 'week';
+    $scope.reverse = false;
+
+  $scope.sortField2 = 'position';
+  $scope.reverse2 = false;
+
   var vis;
   var svg;
   var layout;
@@ -309,9 +314,9 @@ angular.module('vgListaVizApp')
     createDanceability(obj.soundSummary[0].danceability);
     createDuration(obj.soundSummary[1].duration);
     createEnergy(obj.soundSummary[2].energy);
-    createLoudness(Math.abs(obj.soundSummary[4].loudness));
-    createMode(obj.soundSummary[5].mode);
-    createTempo(obj.soundSummary[6].tempo);
+    createLoudness(Math.abs(obj.soundSummary[3].loudness));
+    createMode(obj.soundSummary[4].mode);
+    createTempo(obj.soundSummary[5].tempo);
   }
   var omg = function(wordInput){
     fill = d3.scale.category20b();
@@ -422,6 +427,15 @@ angular.module('vgListaVizApp')
       $location.path('/chart/chart/'+oid);
 
     };
+    $scope.goToChartTypeSummaryYear = function(aar){
+      console.log(aar);
+      summaryYear.query({year:parseInt(aar)}).then(function(res){
+        console.log("SEAEAS");
+        console.log(res);
+      console.log('/chart/summaryYear/'+res[0]._id.$oid);
+      $location.path('/chart/summaryYear/'+res[0]._id.$oid);
+    });
+    };
 
     $scope.goToSang = function(sangTittel, artistNavn){
       songs.query({$and: [{title:sangTittel},{artist:artistNavn} ]}).then(function(res){
@@ -445,9 +459,15 @@ angular.module('vgListaVizApp')
         createBulletCharts(res[0]);
         omg(res[0].lyricSummary);
         console.log(res);
-        charts.query({year:"1963"}).then(function(res2){
+        console.log("Prøver spøøring : " + $scope.chart.year);
+        charts.query({year:String($scope.chart.year)}).then(function(res2){
           console.log(res2);
-          $scope.yearCharts = res2;
+          var tempArray = [];
+          for(var a = 0 ; a < res2.length; a++){
+            tempArray.push({_id:res2[a]._id, week:parseInt(res2[a].week.substring(4,res2[a].week.length)), year: res2[a].year});
+          }
+          console.log(tempArray);
+          $scope.yearCharts = tempArray;
         });
       });
     }
@@ -458,9 +478,14 @@ angular.module('vgListaVizApp')
         $scope.chart = res[0];
         createBulletCharts2(res[0]);
         omg(res[0].lyricSummary);
-        charts.query({year:"1963"}).then(function(res2){
+        charts.query({year:String($scope.chart.year)}).then(function(res2){
           console.log(res2);
-          $scope.yearCharts = res2;
+          var tempArray = [];
+          for(var a = 0 ; a < res2.length; a++){
+            tempArray.push({_id:res2[a]._id, week:parseInt(res2[a].week.substring(4,res2[a].week.length)), year: res2[a].year});
+          }
+          console.log(tempArray);
+          $scope.yearCharts = tempArray;
         });
       });
     }

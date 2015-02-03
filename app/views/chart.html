@@ -1,9 +1,15 @@
 <style>
 text:hover { opacity: .7 !important; }
 </style>
-<h2 class="sub-header">{{chart.year}}   <u><span style="font-size: 20px;">{{chart.week}}</span></u></h2>
+<div ng-if="listeAktiv">
+<h2 class="sub-header"><span style="cursor: pointer;" ng-click="goToChartTypeSummaryYear(chart.year)">{{chart.year}}</span>   <u><span style="font-size: 20px;">{{chart.week}}</span></u></h2>
+</div>
+<div ng-if="!listeAktiv">
+<h2 class="sub-header">Sammendrag for året {{chart.year}}</h2>
+</div>
 <h3 class="sub-header">Lyd</h3>
 <hr>
+
 
 
 
@@ -49,24 +55,24 @@ text:hover { opacity: .7 !important; }
   <div class="col-xs-12">
     <table class="table table-hover table-condensed table-responsive table-striped">
       <tr>
-        <th class="col-xs-4"> <a ng-click="sortField='position'; reverse = !reverse">
-          Plassering <span ng-show="sortField == 'position'">
-            <span ng-show="!reverse" class="glyphicon glyphicon-arrow-up"></span>
-            <span ng-show="reverse" class="glyphicon glyphicon-arrow-down"></span>
+        <th class="col-xs-2"> <a ng-click="sortField2='position'; reverse2 = !reverse2">
+          Plassering <span ng-show="sortField2 == 'position'">
+            <span ng-show="!reverse2" class="glyphicon glyphicon-arrow-up"></span>
+            <span ng-show="reverse2" class="glyphicon glyphicon-arrow-down"></span>
           </span>
         </a>
       </th>
-        <th class="col-xs-4"> <a ng-click="sortField='title'; reverse = !reverse">
-          Tittel <span ng-show="sortField == 'title'">
-            <span ng-show="!reverse" class="glyphicon glyphicon-arrow-up"></span>
-            <span ng-show="reverse" class="glyphicon glyphicon-arrow-down"></span>
+        <th class="col-xs-6"> <a ng-click="sortField2='title'; reverse2 = !reverse2">
+          Tittel <span ng-show="sortField2 == 'title'">
+            <span ng-show="!reverse2" class="glyphicon glyphicon-arrow-up"></span>
+            <span ng-show="reverse2" class="glyphicon glyphicon-arrow-down"></span>
           </span>
         </a>
       </th>
-      <th class="col-xs-4"> <a ng-click="sortField='artist'; reverse = !reverse">
-        Artist <span ng-show="sortField == 'artist'">
-          <span ng-show="!reverse" class="glyphicon glyphicon-arrow-up"></span>
-          <span ng-show="reverse" class="glyphicon glyphicon-arrow-down"></span>
+      <th class="col-xs4"> <a ng-click="sortField2='artist'; reverse2 = !reverse2">
+        Artist <span ng-show="sortField2 == 'artist'">
+          <span ng-show="!reverse2" class="glyphicon glyphicon-arrow-up"></span>
+          <span ng-show="reverse2" class="glyphicon glyphicon-arrow-down"></span>
         </span>
       </a>
     </th>
@@ -76,9 +82,9 @@ text:hover { opacity: .7 !important; }
 
 
   </tr>
-  <tr ng-repeat="sang in chart.list | filter:query | orderBy:sortField:reverse" style="cursor: pointer;">
-    <td class="col-xs-4">{{sang.position}}.</td>
-    <td style="cursor: pointer;" ng-click="goToSang(sang.title)" class="col-xs-4">{{sang.title}}</td>
+  <tr ng-repeat="sang in chart.list | filter:query | orderBy:sortField2:reverse2" style="cursor: pointer;">
+    <td class="col-xs-2">{{sang.position}}.</td>
+    <td style="cursor: pointer;" ng-click="goToSang(sang.title)" class="col-xs-6">{{sang.title}}</td>
     <td style="cursor: pointer;" ng-click="gotoArtist(sang.artist)" class="col-xs-4">{{sang.artist}}</td>
 
 
@@ -88,7 +94,7 @@ text:hover { opacity: .7 !important; }
 </div>
 </div>
 <div>
-  <h3 class="sub-header">{{chart.year}}'s lister</h3>
+  <h3 class="sub-header">Lister fra {{chart.year}}</h3>
   <hr>
   <div class="row">
     <div class="col-xs-12">

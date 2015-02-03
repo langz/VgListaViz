@@ -53,24 +53,24 @@
   <div class="col-xs-12">
   <table class="table table-hover table-condensed table-responsive table-striped">
     <tr>
-      <th class="col-sm-4"> <a ng-click="sortField='title'; reverse = !reverse">
-        Tittel <span ng-show="sortField == 'title'">
-          <span ng-show="!reverse" class="glyphicon glyphicon-arrow-up"></span>
-          <span ng-show="reverse" class="glyphicon glyphicon-arrow-down"></span>
+      <th class="col-sm-4"> <a ng-click="sortField2='title'; reverse2 = !reverse2">
+        Tittel <span ng-show="sortField2 == 'title'">
+          <span ng-show="!reverse2" class="glyphicon glyphicon-arrow-up"></span>
+          <span ng-show="reverse2" class="glyphicon glyphicon-arrow-down"></span>
         </span>
       </a>
     </th>
-    <th class="col-xs-4"> <a ng-click="sortField='antall'; reverse = !reverse">
-      #Listet <span ng-show="sortField == 'antall'">
-        <span ng-show="!reverse" class="glyphicon glyphicon-arrow-up"></span>
-        <span ng-show="reverse" class="glyphicon glyphicon-arrow-down"></span>
+    <th class="col-xs-4"> <a ng-click="sortField2='antall'; reverse2 = !reverse2">
+      #Listet <span ng-show="sortField2 == 'antall'">
+        <span ng-show="!reverse2" class="glyphicon glyphicon-arrow-up"></span>
+        <span ng-show="reverse2" class="glyphicon glyphicon-arrow-down"></span>
       </span>
     </a>
   </th>
-  <th class="col-xs-4"><a ng-click="sortField='felt3'; reverse = !reverse">
-    #Posisjon <span ng-show="sortField == 'felt3'">
-      <span ng-show="!reverse" class="glyphicon glyphicon-arrow-up"></span>
-      <span ng-show="reverse" class="glyphicon glyphicon-arrow-down"></span>
+  <th class="col-xs-4"><a ng-click="sortField2='felt3'; reverse2 = !reverse2">
+    #Posisjon <span ng-show="sortField2 == 'felt3'">
+      <span ng-show="!reverse2" class="glyphicon glyphicon-arrow-up"></span>
+      <span ng-show="reverse2" class="glyphicon glyphicon-arrow-down"></span>
     </span>
   </a>
 </th>
@@ -79,7 +79,7 @@
 
 
 </tr>
-<tr ng-click="gotoSang(sang._id.$oid)" ng-repeat="sang in artist.sanger | filter:query | orderBy:sortField:reverse" style="cursor: pointer;">
+<tr ng-click="gotoSang(sang._id.$oid)" ng-repeat="sang in artist.sanger | filter:query | orderBy:sortField2:reverse2" style="cursor: pointer;">
   <td class="col-xs-4">{{sang.title}}</td>
   <td class="col-xs-4">{{sang.antall}}</td>
   <td class="col-xs-4">2</td>
@@ -88,12 +88,12 @@
 </table>
 </div>
 </div>
-<h3 class="sub-header">Lister deltatt i</h3>
+<h3 class="sub-header">Listet i</h3>
 <hr>
 <div class="row">
   <div class="col-xs-12">
   <div class="input-group">
-    <input type="text" class="form-control" ng-model="query" id="input_search" placeholder="Søk i lister">
+    <input type="text" class="form-control" ng-model="query1" id="input_search" placeholder="Søk i lister">
     <span class="input-group-addon btn btn-primary button1" title="tooltip" >
       <span class="glyphicon glyphicon-search"></span>
     </span>
@@ -139,7 +139,7 @@
 
 
 </tr>
-<tr ng-repeat="list in lister | filter:query | orderBy:sortField:reverse" style="cursor: pointer;">
+<tr ng-repeat="list in lister | filter:query1 | orderBy:sortField:reverse" style="cursor: pointer;">
   <td class="col-xs-4">{{list.position}}</td>
   <td ng-click="goToSangTitle(list.title, list.artist)" class="col-xs-4">{{list.title}}</td>
   <td ng-click="goToChartTypeChart(list.oid)" class="col-xs-4">{{list.week}}</td>

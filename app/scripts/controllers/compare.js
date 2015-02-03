@@ -252,7 +252,15 @@ angular.module('vgListaVizApp')
       }],
       plotOptions: {
         series: {
-          stacking: 'normal'
+          stacking: 'normal',
+             dataLabels: {
+                    enabled: true,
+                    borderColor:'black',
+                    color:'white',
+                    formatter: function () {
+                      return Highcharts.numberFormat(Math.abs(getValue(this.point.y, this.point.category)), 1);
+                    }
+                }
         },
         column: {
           colorByPoint: false
