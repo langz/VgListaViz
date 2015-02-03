@@ -7,3 +7,4 @@ Lage bedre spørringer for Artist!
 Skrive om informasjonen på siden
 Lese om Timesignature/mode/key.
 Generere ny data hvor det blir brukt noe slags form for stoppordsliste.
+Integrasjon mellom Compare og Discover til de andre sidene.
