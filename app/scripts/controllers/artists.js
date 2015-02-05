@@ -8,39 +8,39 @@
 * Controller of the vgListaVizApp
 */
 angular.module('vgListaVizApp')
-.controller('ArtistsCtrl', function ($scope, summaryArtist) {
+.controller('ArtistsCtrl', function ($scope, summaryArtist, $location) {
 
   $scope.item = {};
   $scope.choices = [
-  {
-    name:'danceability',
-  },
-  {
-    name:'duration'
-  },
-  {
-    name:'energy'
-  },
-  {
-    name:'loudness'
-  },
-  {
-    name:'mode'
-  },
-  {
-    name:'tempo'
-  },
-  {
-    name:'antallganger'
-  },
-  {
-    name:'antallunike'
-  }
+    {
+      name:'danceability',
+    },
+    {
+      name:'duration'
+    },
+    {
+      name:'energy'
+    },
+    {
+      name:'loudness'
+    },
+    {
+      name:'mode'
+    },
+    {
+      name:'tempo'
+    },
+    {
+      name:'antallganger'
+    },
+    {
+      name:'antallunike'
+    }
   ];
 
 
   $scope.genererChart = function(attributt){
-
+    $scope.try.series[1].data = [];
     if(attributt==="danceability"){
       $scope.try.series[0].data = [];
 
@@ -62,8 +62,8 @@ angular.module('vgListaVizApp')
           mainArray.push(tempArray);
         }
         $scope.try.loading = false;
-$scope.try.yAxis.min = 0;
-$scope.try.yAxis.max = 1;
+        $scope.try.yAxis.min = 0;
+        $scope.try.yAxis.max = 1;
         $scope.try.series[0].data = mainArray;
         $scope.try.series[1].data = [[0,0.6],[19,0.6]];
       });
@@ -335,6 +335,19 @@ $scope.try.yAxis.max = 1;
 
     loading: true
   };
-
+  $scope.goToArtist = function(artistNavn){
+    console.log('/artist/'+artistNavn);
+    $location.path('/artist/'+artistNavn);
+  };
+$scope.searchArtist = function(inputText){
+  return summaryArtist.query({$and:[{artist:{$regex:inputText, $options : 'i'}}, { danceability: { $exists: true, $nin: [ 0 ] } }]}, { limit: 10 })
+  .then(function(s){
+    return s.map(function(item){
+      item.info = item.artist;
+      item.type='artist';
+      return item;
+    });
+  });
+};
   $scope.genererChart('danceability');
 });

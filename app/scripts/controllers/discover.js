@@ -120,7 +120,7 @@ $scope.choicesY = [
 }
 ];
 //INIT
-songs.query( {soundSummary: {$not: {$size: 0}}}, {limit:1}).then(function(res){
+songs.query( {soundSummary: {$not: {$size: 0}}}, {limit:100}).then(function(res){
   $scope.songs = res;
   console.log(res.length);
   $scope.update($scope.itemX, $scope.itemY, $scope.songs);
@@ -230,13 +230,15 @@ console.log('produsererer nå');
         artist:sangen.week,
         xtype: xaxis.name,
         ytype:yaxis.name
-      }
+      };
+
     }
     else if($scope.type==='Artist'){
       data = {
         name:sangen.artist,
         x:sangen[xaxis.name],
         y:sangen[yaxis.name],
+        artist:"",
         xtype: xaxis.name,
         ytype:yaxis.name
       }
@@ -291,7 +293,8 @@ $scope.try = {
         },
         tooltip: {
           headerFormat:'',
-          pointFormat: '<b>{point.name}</b>  {point.artist} <br/>{point.ytype}: {point.y:.1f} <br/> {point.xtype}: {point.x:.1f} '
+          pointFormat: '<b>{point.name}</b>  {point.artist} <br/>{point.ytype}: {point.y:.1f} <br/> {point.xtype}: {point.x:.1f} ',
+          hideDelay: 4000,
         }
       },
       series: {

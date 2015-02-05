@@ -6,8 +6,8 @@
   <highchart id="chart1" config="try" data-highcharts-chart="0"></highchart>
 </div>
 <div class="col-xs-12">
-  <h4 class="" style="padding-bottom:5px;">Finn informasjon om en artist</h4>
-  <input type="text" ng-model="asyncSelected1" placeholder="Søk etter Artist" typeahead="address.info for address in searchArtist($viewValue)" typeahead-loading="loadingLocations1" typeahead-on-select="goToArtist($item.artist)" typeahead-template-url="customTemplate.html" class="form-control">
+  <h4 class="" style="padding-bottom:5px;">Finn informasjon om en sang</h4>
+  <input type="text" ng-model="asyncSelected1" placeholder="Søk etter Sang" typeahead="address.info for address in searchSong($viewValue)" typeahead-loading="loadingLocations1" typeahead-on-select="goToSang($item._id.$oid)" typeahead-template-url="customTemplate.html" class="form-control">
   <i ng-show="loadingLocations1" class="glyphicon glyphicon-refresh"></i>
 </div>
 <script type="text/ng-template" id="customTemplate.html">
