@@ -26,24 +26,31 @@ angular.module('vgListaVizApp')
   $scope.choices = [
   {
     name:'danceability',
+    value: 1
   },
   {
-    name:'duration'
+    name:'duration',
+    value: 1000
   },
   {
-    name:'energy'
+    name:'energy',
+    value: 1
   },
   {
-    name:'hitlasting'
+    name:'hitlasting',
+    value: 10
   },
   {
-    name:'loudness'
+    name:'loudness',
+    value: 55
   },
   {
-    name:'mode'
+    name:'mode',
+    value: 1
   },
   {
-    name:'tempo'
+    name:'tempo',
+    value: 220
   }
   ];
 
@@ -59,14 +66,23 @@ angular.module('vgListaVizApp')
   });
 
   $scope.getValue = function(string){
+    console.log(string);
     var values = [];
     var count = 0;
+    var regs = [];
     for(var i = 0; i< $scope.summaryDecade.length; i=i+3){
-      console.log($scope.summaryDecade[i]);
+      var reg = [];
+
+      reg.push(i);
+      reg.push($scope.summaryDecade[i][string]);
+
+      regs.push(reg);
       values.push($scope.summaryDecade[i][string]);
       count = count + $scope.summaryDecade[i][string];
       $scope.try.xAxis.categories.push({a:$scope.summaryDecade[i].year, b: "summaryYear/" + $scope.summaryDecade[i]._id.$oid });
     }
+    var regres = regression('linear', regs);
+    $scope.try.series[1].data = [regres.points[0], [18,regres.points[regres.points.length-1][1]]];
     $scope.try.xAxis.categories.push(2014);
     console.log(string  +  " count :" + count + "/" + values.length + " = " + count/values.length );
     return values;
@@ -91,8 +107,16 @@ angular.module('vgListaVizApp')
     }
 
     $scope.try.series[0].name = string.charAt(0).toUpperCase() + string.slice(1);
+
     $scope.try.series[0].data = $scope.getValue(string);
     $scope.try.yAxis.title.text = string + suffixString;
+//     for(var a = 0 ; a < $scope.choices.length; a++){
+//       if($scope.choices[a].name===string){
+//         $scope.try.yAxis.min = 0;
+//         $scope.try.yAxis.max = $scope.choices[a].value;
+// break;
+//       }
+//     }
   };
 
 
@@ -146,6 +170,20 @@ angular.module('vgListaVizApp')
       lineColor: '#dd2027',
       fillColor: '#dd2027',
       showInLegend: false
+    },
+    {
+      type: 'line',
+      name: 'Regression Line',
+      data: '',
+      marker: {
+        enabled: false
+      },
+      states: {
+        hover: {
+          lineWidth: 0
+        }
+      },
+      enableMouseTracking: false
     }
     ],
     title: {
