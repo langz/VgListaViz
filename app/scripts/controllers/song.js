@@ -35,7 +35,7 @@ angular.module('vgListaVizApp')
   var modeMax = 1;
   var tempoMax =220.04;
   var timesignatureMax=7;
-  var antallUkerMax = 55;
+  var antallUkerMax = 60;
 
   var danceabilityAvg = 0.5946363853683373;
   var durationAvg = 224.95823756669492;

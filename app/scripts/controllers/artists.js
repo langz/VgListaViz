@@ -8,7 +8,8 @@
 * Controller of the vgListaVizApp
 */
 angular.module('vgListaVizApp')
-.controller('ArtistsCtrl', function ($scope, summaryArtist, $location) {
+.controller('ArtistsCtrl', function ($scope, summaryArtist, $location, summaryArtistTopAntall, summaryArtistTopDuration, summaryArtistTopEnergy, summaryArtistTopLoudness,
+summaryArtistTopMode, summaryArtistTopTempo, summaryArtistTopTimesignature, summaryArtistTopUnik) {
 
   $scope.item = {};
   $scope.choices = [
@@ -50,7 +51,7 @@ angular.module('vgListaVizApp')
         return Highcharts.numberFormat(this.y,2);
       };
       $scope.try.yAxis.title.text = 'Danceability';
-      summaryArtist.all({ sort: {"danceability": -1} }).then(function(s){
+      summaryArtistTopDuration.all({sort:{danceability:-1}}).then(function(s){
 
         console.log(s);
         $scope.summaryArtistTopAntall = s;
@@ -78,7 +79,7 @@ angular.module('vgListaVizApp')
         return Highcharts.numberFormat(this.y,0);
       };
       $scope.try.yAxis.title.text = 'Duration';
-      summaryArtist.all({ sort: {"duration": -1} }).then(function(s){
+      summaryArtistTopDuration.all({sort:{duration:-1}}).then(function(s){
 
         console.log(s);
         $scope.summaryArtistTopAntall = s;
@@ -104,7 +105,7 @@ angular.module('vgListaVizApp')
         return Highcharts.numberFormat(this.y,2);
       };
       $scope.try.yAxis.title.text = 'Energy';
-      summaryArtist.all({ sort: {"energy": -1} }).then(function(s){
+      summaryArtistTopEnergy.all({sort:{energy:-1}}).then(function(s){
 
         console.log(s);
         $scope.summaryArtistTopAntall = s;
@@ -130,7 +131,7 @@ angular.module('vgListaVizApp')
         return -Highcharts.numberFormat(this.y,2);
       };
       $scope.try.yAxis.title.text = 'Loudness';
-      summaryArtist.all({ sort: {"loudness": 1} }).then(function(s){
+      summaryArtistTopLoudness.all({sort:{loudness:1}}).then(function(s){
 
         console.log(s);
         $scope.summaryArtistTopAntall = s;
@@ -156,7 +157,7 @@ angular.module('vgListaVizApp')
         return Highcharts.numberFormat(this.y,0);
       };
       $scope.try.yAxis.title.text = 'Antall ganger listet';
-      summaryArtist.all({ sort: {"antall": -1} }).then(function(s){
+      summaryArtistTopAntall.all({sort:{antall:-1}}).then(function(s){
 
         console.log(s);
         $scope.summaryArtistTopAntall = s;
@@ -182,7 +183,7 @@ angular.module('vgListaVizApp')
         return Highcharts.numberFormat(this.y,0);
       };
       $scope.try.yAxis.title.text = 'Antall unike sanger';
-      summaryArtist.all({ sort: {"antallunikesanger": -1} }).then(function(s){
+      summaryArtistTopUnik.all({sort:{antallunikesanger:-1}}).then(function(s){
 
         console.log(s);
         $scope.summaryArtistTopAntall = s;
@@ -208,7 +209,7 @@ angular.module('vgListaVizApp')
         return Highcharts.numberFormat(this.y,2);
       };
       $scope.try.yAxis.title.text = 'Mode';
-      summaryArtist.all({ sort: {"mode": -1} }).then(function(s){
+      summaryArtistTopMode.all({sort:{mode:-1}}).then(function(s){
 
 
         console.log(s);
@@ -235,7 +236,7 @@ angular.module('vgListaVizApp')
         return Highcharts.numberFormat(this.y,2);
       };
       $scope.try.yAxis.title.text = 'Tempo';
-      summaryArtist.all({ sort: {"tempo": -1} }).then(function(s){
+      summaryArtistTopTempo.all({sort:{tempo:-1}}).then(function(s){
 
         console.log(s);
         $scope.summaryArtistTopAntall = s;

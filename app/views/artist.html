@@ -67,8 +67,8 @@
       </span>
     </a>
   </th>
-  <th class="col-xs-4"><a ng-click="sortField2='felt3'; reverse2 = !reverse2">
-    #Posisjon <span ng-show="sortField2 == 'felt3'">
+  <th class="col-xs-4"><a ng-click="sortField2='bestPos'; reverse2 = !reverse2">
+    #Posisjon <span ng-show="sortField2 == 'bestPos'">
       <span ng-show="!reverse2" class="glyphicon glyphicon-arrow-up"></span>
       <span ng-show="reverse2" class="glyphicon glyphicon-arrow-down"></span>
     </span>
@@ -82,7 +82,7 @@
 <tr ng-click="gotoSang(sang._id.$oid)" ng-repeat="sang in artist.sanger | filter:query | orderBy:sortField2:reverse2" style="cursor: pointer;">
   <td class="col-xs-4">{{sang.title}}</td>
   <td class="col-xs-4">{{sang.antall}}</td>
-  <td class="col-xs-4">2</td>
+  <td class="col-xs-4">{{sang.bestPos}}</td>
 
 </tr>
 </table>
