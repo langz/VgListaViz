@@ -9,7 +9,7 @@
  */
 angular.module('vgListaVizApp')
   .controller('SongsCtrl', function ($scope, summaryArtist, $location, songs, summarySongTopAntall, summarySongTopDuration, summarySongTopEnergy, summarySongTopLoudness,
-summarySongTopMode, summarySongTopTempo, summarySongTopTimesignature) {
+summarySongTopMode, summarySongTopTempo, summarySongTopTimesignature, summarySongTopDanceability) {
 
     $scope.item = {};
     $scope.links = [];
@@ -58,7 +58,7 @@ var getLink = function(input){
           return Highcharts.numberFormat(this.y,2);
         };
         $scope.try.yAxis.title.text = 'Danceability';
-        summarySongTopDuration.all({ sort: {"soundSummary.danceability": -1} }).then(function(s){
+        summarySongTopDanceability.all({ sort: {"soundSummary.danceability": -1} }).then(function(s){
 
           console.log(s);
           $scope.songs = s;

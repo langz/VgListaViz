@@ -9,7 +9,7 @@
 */
 angular.module('vgListaVizApp')
 .controller('ArtistsCtrl', function ($scope, summaryArtist, $location, summaryArtistTopAntall, summaryArtistTopDuration, summaryArtistTopEnergy, summaryArtistTopLoudness,
-summaryArtistTopMode, summaryArtistTopTempo, summaryArtistTopTimesignature, summaryArtistTopUnik) {
+summaryArtistTopMode, summaryArtistTopTempo, summaryArtistTopTimesignature, summaryArtistTopUnik, summaryArtistTopDanceability) {
 
   $scope.item = {};
   $scope.choices = [
@@ -51,7 +51,7 @@ summaryArtistTopMode, summaryArtistTopTempo, summaryArtistTopTimesignature, summ
         return Highcharts.numberFormat(this.y,2);
       };
       $scope.try.yAxis.title.text = 'Danceability';
-      summaryArtistTopDuration.all({sort:{danceability:-1}}).then(function(s){
+      summaryArtistTopDanceability.all({sort:{danceability:-1}}).then(function(s){
 
         console.log(s);
         $scope.summaryArtistTopAntall = s;
