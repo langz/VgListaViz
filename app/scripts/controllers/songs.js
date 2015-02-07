@@ -144,7 +144,7 @@ var getLink = function(input){
           return -Highcharts.numberFormat(this.y,2);
         };
         $scope.try.yAxis.title.text = 'Loudness';
-        summarySongTopLoudness.all({ sort: {"soundSummary.loudness": -1} }).then(function(s){
+        summarySongTopLoudness.all({ sort: {"soundSummary.loudness": 1} }).then(function(s){
 
           console.log(s);
           $scope.songs = s;
