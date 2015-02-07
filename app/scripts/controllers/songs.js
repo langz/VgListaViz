@@ -144,7 +144,7 @@ var getLink = function(input){
           return -Highcharts.numberFormat(this.y,2);
         };
         $scope.try.yAxis.title.text = 'Loudness';
-        summarySongTopLoudness.all({ sort: {"soundSummary.loudness": 1} }).then(function(s){
+        summarySongTopLoudness.all({ sort: {"soundSummary.4.loudness": 1} }).then(function(s){
 
           console.log(s);
           $scope.songs = s;
@@ -153,7 +153,6 @@ var getLink = function(input){
             var tempArray = [];
             $scope.links.push({tittel: $scope.songs[i].title, id:$scope.songs[i]._id.$oid});
             tempArray.push($scope.songs[i].title);
-            console.log($scope.songs[i].soundSummary);
             tempArray.push(Math.abs($scope.songs[i].soundSummary[4]["loudness"]));
             mainArray.push(tempArray);
           }
