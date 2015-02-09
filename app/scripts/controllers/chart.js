@@ -48,8 +48,18 @@ angular.module('vgListaVizApp')
   var modeAvg = 0.7065017816252117;
   var tempoAvg = 120.10330113014082;
   var hitlastingAvg = 7.2631578947368425;
+  var timesignatureAvg=2;
 
+  $scope.years = [1960, 1961, 1962, 1963, 1964, 1965, 1966, 1967,
+    1968, 1969, 1970, 1971, 1972, 1973, 1974, 1975, 1976, 1977, 1978, 1979,
+    1980, 1981, 1982, 1983, 1984, 1985, 1986, 1987, 1988, 1989, 1990, 1991,
+    1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004,
+    2005, 2006, 2007, 2008, 2009, 2010];
 
+    $scope.weeks = [1, 2, 3, 4, 5, 6, 7, 8, 9,
+      10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23,
+      24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36,
+      37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52];
 
 
   var optionsNormal = {
@@ -186,7 +196,7 @@ angular.module('vgListaVizApp')
     Highcharts.setOptions(optionsNormal);
     var danceability = new Highcharts.Chart({
       chart:{renderTo:'danceability'},
-      xAxis:{categories:['Danceability']},
+      xAxis:{categories:['Dansbarhet']},
       yAxis:{
         max:danceabilityMax,
         labels:{y:10,style:{fontSize:'8px'}},
@@ -201,7 +211,7 @@ angular.module('vgListaVizApp')
     Highcharts.setOptions(optionsNormal);
     var duration = new Highcharts.Chart({
       chart:{renderTo:'duration'},
-      xAxis:{categories:['Duration']},
+      xAxis:{categories:['Varighet']},
       yAxis:{
         max:durationMax,
         labels:{y:10,style:{fontSize:'8px'}},
@@ -226,7 +236,7 @@ angular.module('vgListaVizApp')
     Highcharts.setOptions(optionsNormal);
     var energy = new Highcharts.Chart({
       chart:{renderTo:'energy'},
-      xAxis:{categories:['Energy']},
+      xAxis:{categories:['Energi']},
       yAxis:{
         max:energyMax,
         labels:{y:10,style:{fontSize:'8px'}},
@@ -241,7 +251,7 @@ angular.module('vgListaVizApp')
     Highcharts.setOptions(optionsLoudness);
     var loudness = new Highcharts.Chart({
       chart:{renderTo:'loudness'},
-      xAxis:{categories:['Loudness']},
+      xAxis:{categories:['Lydstyrke']},
       yAxis:{
         max:-loudnessMax,
         labels:{y:10,style:{fontSize:'8px'}},
@@ -266,7 +276,7 @@ angular.module('vgListaVizApp')
     Highcharts.setOptions(optionsNormal);
     var mode = new Highcharts.Chart({
       chart:{renderTo:'mode'},
-      xAxis:{categories:['Mode']},
+      xAxis:{categories:['Modal skala']},
       yAxis:{
         max:modeMax,
         labels:{y:10,style:{fontSize:'8px'}},
@@ -302,6 +312,31 @@ angular.module('vgListaVizApp')
       }
     });
   }
+  var createTimesignature = function(verdi){
+    Highcharts.setOptions(optionsNormal);
+    var tempo = new Highcharts.Chart({
+      chart:{renderTo:'timesignature'},
+      xAxis:{categories:['Taktart']},
+      yAxis:{
+        max:timesignatureMax,
+        labels:{y:10,style:{fontSize:'8px'}},
+        plotBands:[]
+      },
+      series:[{name:'Gjennomsnitt',pointWidth:8.25,data:[timesignatureAvg], color: 'rgba(103,103,103,.35)', zIndex:0},
+      {name:'Verdi', pointWidth:8.5, data:[verdi], zIndex:1},
+      {name:'Gjennomsnitt',pointWidth:8.25,data:[timesignatureAvg], color: 'rgba(103,103,103,.35)', zIndex:0}],
+      tooltip:{
+        enabled:true,
+        backgroundColor:'rgba(255, 255, 255, .85)',
+        borderWidth:0,
+        shadow:true,
+        style:{fontSize:'10px',padding:2},
+        formatter:function() {
+          return this.series.name + ": <strong>" + Highcharts.numberFormat(this.y,0) + "</strong>";
+        }
+      }
+    });
+  }
   var createBulletCharts = function(obj){
     createDanceability(obj.danceability);
     createDuration(obj.duration);
@@ -309,6 +344,7 @@ angular.module('vgListaVizApp')
     createLoudness(Math.abs(obj.loudness));
     createMode(obj.mode);
     createTempo(obj.tempo);
+    createTimesignature(obj.tempo);
   }
   var createBulletCharts2 = function(obj){
     createDanceability(obj.soundSummary[0].danceability);
@@ -317,6 +353,7 @@ angular.module('vgListaVizApp')
     createLoudness(Math.abs(obj.soundSummary[3].loudness));
     createMode(obj.soundSummary[4].mode);
     createTempo(obj.soundSummary[5].tempo);
+    createTimesignature(obj.soundSummary[6].timesignature);
   }
   var omg = function(wordInput){
     fill = d3.scale.category20b();
@@ -420,6 +457,9 @@ angular.module('vgListaVizApp')
       }
 
     }
+    $scope.goToCompare = function(oid){
+      $location.path('/compare/chart/'+oid);
+    };
 
     $scope.goToChartTypeChart = function(oid){
 
@@ -451,6 +491,19 @@ angular.module('vgListaVizApp')
       console.log('/artist/'+artistNavn);
       $location.path('/artist/'+artistNavn);
     };
+    $scope.getChart = function(year, week){
+      charts.query({ $and: [{"year": ""+year+""}, {"week": "Uke " +week}, {soundSummary: {$not: {$size: 0}}}]}).then(function(s){
+        if(s.length===0){
+          alert('Det er dessverre ikke publisert noen liste for denne uken');
+        }
+        else{
+          s[0].title = s[0].year + " - " + s[0].week;
+          $scope.goToChartTypeChart(s[0]._id.$oid);
+        }
+
+      });
+
+    };
 
     if($scope.chartType==='summaryYear'){
       console.log('summaryYear');
@@ -460,33 +513,20 @@ angular.module('vgListaVizApp')
         omg(res[0].lyricSummary);
         console.log(res);
         console.log("Prøver spøøring : " + $scope.chart.year);
-        charts.query({year:String($scope.chart.year)}).then(function(res2){
-          console.log(res2);
-          var tempArray = [];
-          for(var a = 0 ; a < res2.length; a++){
-            tempArray.push({_id:res2[a]._id, week:parseInt(res2[a].week.substring(4,res2[a].week.length)), year: res2[a].year});
-          }
-          console.log(tempArray);
-          $scope.yearCharts = tempArray;
-        });
+        $scope.selectedYear = $scope.years[1960-res[0].year];
       });
     }
     else if($scope.chartType==='chart'){
       $scope.listeAktiv = true;
       charts.query({_id:{$oid:$scope.oid}}).then(function(res){
         console.log(res);
+        $scope.selectedYear = $scope.years[1960-res[0].year];
+        $scope.selectedWeek = $scope.weeks[parseInt(res[0].week.substring(4, res[0].week.length))-1];
         $scope.chart = res[0];
         createBulletCharts2(res[0]);
         omg(res[0].lyricSummary);
-        charts.query({year:String($scope.chart.year)}).then(function(res2){
-          console.log(res2);
-          var tempArray = [];
-          for(var a = 0 ; a < res2.length; a++){
-            tempArray.push({_id:res2[a]._id, week:parseInt(res2[a].week.substring(4,res2[a].week.length)), year: res2[a].year});
-          }
-          console.log(tempArray);
-          $scope.yearCharts = tempArray;
-        });
+
       });
     }
+
   });

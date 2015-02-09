@@ -49,6 +49,7 @@ angular.module('vgListaVizApp')
   var hitlastingAvg = 7.2631578947368425;
 var numWeeksAvg = 17;
 var numSongsAvg = 2;
+var timesignatureAvg=2;
 
 
 
@@ -186,7 +187,7 @@ var numSongsAvg = 2;
     Highcharts.setOptions(optionsNormal);
     var danceability = new Highcharts.Chart({
       chart:{renderTo:'danceability'},
-      xAxis:{categories:['Danceability']},
+      xAxis:{categories:['Dansbarhet']},
       yAxis:{
         max:danceabilityMax,
         labels:{y:10,style:{fontSize:'8px'}},
@@ -201,7 +202,7 @@ var numSongsAvg = 2;
     Highcharts.setOptions(optionsNormal);
     var duration = new Highcharts.Chart({
       chart:{renderTo:'duration'},
-      xAxis:{categories:['Duration']},
+      xAxis:{categories:['Varighet']},
       yAxis:{
         max:durationMax,
         labels:{y:10,style:{fontSize:'8px'}},
@@ -226,7 +227,7 @@ var numSongsAvg = 2;
     Highcharts.setOptions(optionsNormal);
     var duration = new Highcharts.Chart({
       chart:{renderTo:'listet'},
-      xAxis:{categories:['Antall uker']},
+      xAxis:{categories:['Uker på listen']},
       yAxis:{
         max:numWeeksMax,
         labels:{y:10,style:{fontSize:'8px'}},
@@ -276,7 +277,7 @@ var numSongsAvg = 2;
     Highcharts.setOptions(optionsNormal);
     var energy = new Highcharts.Chart({
       chart:{renderTo:'energy'},
-      xAxis:{categories:['Energy']},
+      xAxis:{categories:['Energi']},
       yAxis:{
         max:energyMax,
         labels:{y:10,style:{fontSize:'8px'}},
@@ -291,7 +292,7 @@ var numSongsAvg = 2;
     Highcharts.setOptions(optionsLoudness);
     var loudness = new Highcharts.Chart({
       chart:{renderTo:'loudness'},
-      xAxis:{categories:['Loudness']},
+      xAxis:{categories:['Lydstyrke']},
       yAxis:{
         max:-loudnessMax,
         labels:{y:10,style:{fontSize:'8px'}},
@@ -316,7 +317,7 @@ var numSongsAvg = 2;
     Highcharts.setOptions(optionsNormal);
     var mode = new Highcharts.Chart({
       chart:{renderTo:'mode'},
-      xAxis:{categories:['Mode']},
+      xAxis:{categories:['Modal skala']},
       yAxis:{
         max:modeMax,
         labels:{y:10,style:{fontSize:'8px'}},
@@ -352,6 +353,31 @@ var numSongsAvg = 2;
       }
     });
   }
+  var createTimesignature = function(verdi){
+    Highcharts.setOptions(optionsNormal);
+    var tempo = new Highcharts.Chart({
+      chart:{renderTo:'timesignature'},
+      xAxis:{categories:['Taktart']},
+      yAxis:{
+        max:timesignatureMax,
+        labels:{y:10,style:{fontSize:'8px'}},
+        plotBands:[]
+      },
+      series:[{name:'Gjennomsnitt',pointWidth:8.25,data:[timesignatureAvg], color: 'rgba(103,103,103,.35)', zIndex:0},
+      {name:'Verdi', pointWidth:8.5, data:[verdi], zIndex:1},
+      {name:'Gjennomsnitt',pointWidth:8.25,data:[timesignatureAvg], color: 'rgba(103,103,103,.35)', zIndex:0}],
+      tooltip:{
+        enabled:true,
+        backgroundColor:'rgba(255, 255, 255, .85)',
+        borderWidth:0,
+        shadow:true,
+        style:{fontSize:'10px',padding:2},
+        formatter:function() {
+          return this.series.name + ": <strong>" + Highcharts.numberFormat(this.y,0) + "</strong>";
+        }
+      }
+    });
+  }
   var createBulletCharts = function(obj){
     createDanceability(obj.danceability);
     createDuration(obj.duration);
@@ -361,6 +387,7 @@ var numSongsAvg = 2;
     createLoudness(Math.abs(obj.loudness));
     createMode(obj.mode);
     createTempo(obj.tempo);
+    createTimesignature(obj.timesignature);
   }
   var omg = function(wordInput){
     fill = d3.scale.category20b();
@@ -463,13 +490,82 @@ var numSongsAvg = 2;
         layout.stop().words(wordInput).start();
       }
 
-    }
+    };
+
+    $scope.try = {
+      options: {
+        chart: {
+          type: 'line'
+        },
+        tooltip: {
+          valueDecimals:0,
+          valueSuffix:'',
+          pointFormat: '{series.name}: {point.y}',
+          headerFormat:"<b><span style=font-size: 10px>{point.key.a}, {point.key.c}</span></b><br/><span style=font-size: 10px>{point.key.d}</span></br>",
+          useHTML:true,
+        },
+
+        plotOptions: {
+          series: {
+            marker: {
+              fillColor: '#FFFFFF',
+              lineWidth: 2,
+              lineColor: '#dd2027',
+              symbol:'circle'
+            }
+          }
+        }
+      },
+      xAxis: {
+        categories: [],
+        type: 'category',
+        labels: {
+          formatter: function () {
+            if(this.value.a){
+              if(this.isFirst || this.isLast){ return '<a href="#/chart/' + this.value.b + this.value.b + + console.log(this) + '"style="color:black;">' + this.value.a +
+              '</a>'; }
+            }
+          },
+          useHTML:true
+        }
+      },
+      yAxis:{
+        min:1,
+        max:20,
+        tickInterval: 1,
+        reversed: true,
+        labels: {
+          enabled: true
+        },
+        title: {
+          text: "Plassering"
+        }
+      },
+
+      series: [{
+        name:'Plass',
+        data:'',
+        lineColor: '#dd2027',
+        fillColor: '#dd2027',
+        showInLegend: false
+      }
+      ],
+      title: {
+        text: ''
+      },
+
+      loading: true,
+      exporting: { enabled: false }
+    };
 
     $scope.goToChartTypeChart = function(oid){
 
       console.log('/chart/chart/'+oid);
       $location.path('/chart/chart/'+oid);
 
+    };
+    $scope.goToCompare = function(oid){
+      $location.path('/compare/artist/'+oid);
     };
 
     $scope.gotoSang = function(oid){
@@ -503,6 +599,22 @@ var numSongsAvg = 2;
 
 
       charts.query({ list: { $elemMatch: {"artist": $scope.artist.artist}}}).then(function(res2){
+
+        var values = [];
+        var categorie = [];
+        for(var a = 0 ; a<res2.length; a++){
+          for(var i = 0 ; i<res2[a].list.length;i++){
+
+            if(res2[a].list[i].artist===$scope.artist.artist){
+              values.push(res2[a].list[i].position);
+              categorie.push({a:res2[a].year, b: "chart/" + res2[a]._id.$oid, c:res2[a].week, d:res2[a].list[i].title});
+              break;
+            }
+          }
+        }
+        $scope.try.series[0].data = values;
+        $scope.try.xAxis.categories = categorie;
+        $scope.try.loading = false;
         for(var a = 0 ; a<res2.length; a++){
             for(var i = 0 ; i<res2[a].list.length;i++){
 

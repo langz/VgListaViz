@@ -29,6 +29,11 @@ angular.module('vgListaVizApp')
         return true;
       }
     }
+    if(viewLocation==='/compare/'){
+      if($location.path().indexOf(/compare/) >-1){
+        return true;
+      }
+    }
     else{
       return false;
     }

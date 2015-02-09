@@ -47,7 +47,7 @@ angular
     templateUrl: 'views/discover.html',
     controller: 'DiscoverCtrl'
   })
-  .when('/compare', {
+  .when('/compare/:type/:id/', {
     templateUrl: 'views/compare.html',
     controller: 'CompareCtrl'
   })

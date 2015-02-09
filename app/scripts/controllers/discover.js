@@ -16,8 +16,8 @@ angular.module('vgListaVizApp')
 
   $scope.types = [
   'Artist',
-  'Chart',
-  'Song'
+  'Liste',
+  'Sang'
   ];
 
   $scope.itemX = {
@@ -190,10 +190,10 @@ $scope.try.loading = true;
   if($scope.type==='Artist'){
     $scope.getArtists();
   }
-  else if($scope.type==='Chart'){
+  else if($scope.type==='Liste'){
     $scope.getCharts();
   }
-  else if($scope.type==='Song'){
+  else if($scope.type==='Sang'){
     $scope.getSongs();
 
   }
@@ -222,7 +222,7 @@ console.log('produsererer nå');
 
     var sangen = datainp[i];
     var data = {};
-    if($scope.type==='Chart'){
+    if($scope.type==='Liste'){
       data = {
         name:sangen.year,
         x:sangen.soundSummary[xaxis.value][xaxis.name],
@@ -243,7 +243,7 @@ console.log('produsererer nå');
         ytype:yaxis.name
       }
     }
-    else if($scope.type==='Song'){
+    else if($scope.type==='Sang'){
       data = {
         name:sangen.title,
         x:sangen.soundSummary[xaxis.value][xaxis.name],

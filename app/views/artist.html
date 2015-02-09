@@ -1,6 +1,7 @@
 <style>
   text:hover { opacity: .7 !important; }
 </style>
+<div autoscroll="true">
 <h2 class="sub-header">{{artist.artist}}</h>
 <h3 class="sub-header">Lyd</h3>
 <hr>
@@ -9,31 +10,33 @@
 
 
 
-
 <div id="danceability" style="height:36px;"></div>
-
-
-<div id="duration" style="height:36px;"></div>
-
 
 <div id="energy" style="height:36px;"></div>
 
-
 <div id="loudness" style="height:36px;"></div>
 
-
 <div id="mode" style="height:36px;"></div>
+
+<div id="timesignature" style="height:36px;"></div>
+
+<div id="tempo" style="height:36px;"></div>
 
 <div id="listet" style="height:36px;"></div>
 
 <div id="sanger" style="height:36px;"></div>
 
+<div id="duration" style="height:36px;"></div>
 
-<div id="tempo" style="height:36px;"></div>
 <div ng-show="tekst">
 <h3 class="sub-header">Tekst</h3>
 <hr>
 <div id="vis" class="col-xs-12" ></div>
+</div>
+<h3 class="sub-header">{{artist.artist}} sin historie på listene</h3>
+<hr>
+<div class="col-xs-12">
+  <highchart id="chart1" config="try" data-highcharts-chart="0"></highchart>
 </div>
 
 <h3 class="sub-header">Sanger</h3>
@@ -61,14 +64,14 @@
       </a>
     </th>
     <th class="col-xs-4"> <a ng-click="sortField2='antall'; reverse2 = !reverse2">
-      #Listet <span ng-show="sortField2 == 'antall'">
+      Antall uker listet <span ng-show="sortField2 == 'antall'">
         <span ng-show="!reverse2" class="glyphicon glyphicon-arrow-up"></span>
         <span ng-show="reverse2" class="glyphicon glyphicon-arrow-down"></span>
       </span>
     </a>
   </th>
   <th class="col-xs-4"><a ng-click="sortField2='bestPos'; reverse2 = !reverse2">
-    #Posisjon <span ng-show="sortField2 == 'bestPos'">
+    Beste plassering <span ng-show="sortField2 == 'bestPos'">
       <span ng-show="!reverse2" class="glyphicon glyphicon-arrow-up"></span>
       <span ng-show="reverse2" class="glyphicon glyphicon-arrow-down"></span>
     </span>
@@ -106,7 +109,7 @@
   <table class="table table-hover table-condensed table-responsive table-striped">
     <tr>
       <th class="col-xs-3"> <a ng-click="sortField='position'; reverse = !reverse">
-        Posisjon <span ng-show="sortField == 'position'">
+        Plassering <span ng-show="sortField == 'position'">
           <span ng-show="!reverse" class="glyphicon glyphicon-arrow-up"></span>
           <span ng-show="reverse" class="glyphicon glyphicon-arrow-down"></span>
         </span>
@@ -148,4 +151,8 @@
 </tr>
 </table>
 </div>
+</div>
+<button type="button" class="btn btn-default btn-lg" style="margin-top:12px;" ng-click="goToCompare(artist._id.$oid)">
+  <span class="fa fa-pie-chart" aria-hidden="true"></span> Sammenlign
+</button>
 </div>

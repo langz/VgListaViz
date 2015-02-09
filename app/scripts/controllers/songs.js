@@ -15,25 +15,40 @@ summarySongTopMode, summarySongTopTempo, summarySongTopTimesignature, summarySon
     $scope.links = [];
     $scope.choices = [
       {
+        norsk:'Dansbarhet',
         name:'danceability',
       },
       {
-        name:'duration'
-      },
-      {
+        norsk:'Energi',
         name:'energy'
       },
       {
+        norsk:'Lydstyrke',
         name:'loudness'
       },
       {
+        norsk:'Modal skala',
         name:'mode'
       },
       {
+        norsk:'Nøkkel',
+        name:'key'
+      },
+      {
+        norsk:'Taktart',
+        name:'timesignature'
+      },
+      {
+        norsk:'Tempo',
         name:'tempo'
       },
       {
+        norsk:'Uker på listen',
         name:'antallganger'
+      },
+      {
+        norsk:'Varighet',
+        name:'duration'
       }
     ];
 
@@ -45,7 +60,9 @@ var getLink = function(input){
     }
   }
 }
-    $scope.genererChart = function(attributt){
+    $scope.genererChart = function(obj){
+      var attributt = obj.name;
+      var norskString = obj.norsk;
       $scope.links = [];
       console.log("s")
       $scope.try.series[1].data = [];
@@ -53,11 +70,11 @@ var getLink = function(input){
         $scope.try.series[0].data = [];
 
         $scope.try.loading = true;
-        $scope.try.options.tooltip.pointFormat = 'Danceability: <b>{point.y:,.2f}</b>';
+        $scope.try.options.tooltip.pointFormat = norskString +': <b>{point.y:,.2f}</b>';
         $scope.try.series[0].dataLabels.formatter=function(){
           return Highcharts.numberFormat(this.y,2);
         };
-        $scope.try.yAxis.title.text = 'Danceability';
+        $scope.try.yAxis.title.text = norskString;
         summarySongTopDanceability.all({ sort: {"soundSummary.danceability": -1} }).then(function(s){
 
           console.log(s);
@@ -83,11 +100,11 @@ var getLink = function(input){
         $scope.try.yAxis.max = 2000;
         $scope.try.series[0].data = [];
         $scope.try.loading = true;
-        $scope.try.options.tooltip.pointFormat = 'Duration: <b>{point.y:,.0f}</b> sec';
+        $scope.try.options.tooltip.pointFormat = norskString +': <b>{point.y:,.0f}</b> sec';
         $scope.try.series[0].dataLabels.formatter=function(){
           return Highcharts.numberFormat(this.y,0);
         };
-        $scope.try.yAxis.title.text = 'Duration';
+        $scope.try.yAxis.title.text = norskString;
         summarySongTopDuration.all({ sort: {"soundSummary.duration": -1} }).then(function(s){
 
           console.log(s);
@@ -111,11 +128,11 @@ var getLink = function(input){
         $scope.try.yAxis.max = 1;
         $scope.try.series[0].data = [];
         $scope.try.loading = true;
-        $scope.try.options.tooltip.pointFormat = 'Energy: <b>{point.y:,.2f}</b>';
+        $scope.try.options.tooltip.pointFormat = norskString +': <b>{point.y:,.2f}</b>';
         $scope.try.series[0].dataLabels.formatter=function(){
           return Highcharts.numberFormat(this.y,2);
         };
-        $scope.try.yAxis.title.text = 'Energy';
+        $scope.try.yAxis.title.text = norskString;
         summarySongTopEnergy.all({ sort: {"soundSummary.energy": -1} }).then(function(s){
 
           console.log(s);
@@ -139,11 +156,11 @@ var getLink = function(input){
         $scope.try.yAxis.max = 60;
         $scope.try.series[0].data = [];
         $scope.try.loading = true;
-        $scope.try.options.tooltip.pointFormat = 'Loudness: <b>-{point.y:,.2f} db</b>';
+        $scope.try.options.tooltip.pointFormat = norskString +': <b>-{point.y:,.2f} db</b>';
         $scope.try.series[0].dataLabels.formatter=function(){
           return -Highcharts.numberFormat(this.y,2);
         };
-        $scope.try.yAxis.title.text = 'Loudness';
+        $scope.try.yAxis.title.text = norskString;
         summarySongTopLoudness.all({ sort: {"soundSummary.4.loudness": 1} }).then(function(s){
 
           console.log(s);
@@ -167,11 +184,11 @@ var getLink = function(input){
         $scope.try.yAxis.max = 57;
         $scope.try.series[0].data = [];
         $scope.try.loading = true;
-        $scope.try.options.tooltip.pointFormat = 'Antall ganger listet: <b>{point.y}</b>';
+        $scope.try.options.tooltip.pointFormat = norskString +': <b>{point.y}</b>';
         $scope.try.series[0].dataLabels.formatter=function(){
           return Highcharts.numberFormat(this.y,0);
         };
-        $scope.try.yAxis.title.text = 'Antall ganger listet';
+        $scope.try.yAxis.title.text = norskString;
         summarySongTopAntall.all({ sort: {"antall": -1} }).then(function(s){
 
           console.log(s);
@@ -195,11 +212,11 @@ var getLink = function(input){
         $scope.try.yAxis.max = 1;
         $scope.try.series[0].data = [];
         $scope.try.loading = true;
-        $scope.try.options.tooltip.pointFormat = 'Mode: <b>{point.y:,.2f}</b>';
+        $scope.try.options.tooltip.pointFormat =norskString +'<b>{point.y:,.2f}</b>';
         $scope.try.series[0].dataLabels.formatter=function(){
           return Highcharts.numberFormat(this.y,2);
         };
-        $scope.try.yAxis.title.text = 'Mode';
+        $scope.try.yAxis.title.text = norskString;
         summarySongTopMode.all({ sort: {"soundSummary.mode": -1} }).then(function(s){
 
 
@@ -224,11 +241,11 @@ var getLink = function(input){
         $scope.try.yAxis.max = 220;
         $scope.try.series[0].data = [];
         $scope.try.loading = true;
-        $scope.try.options.tooltip.pointFormat = 'Tempo: <b>{point.y:,.2f}</b>';
+        $scope.try.options.tooltip.pointFormat = norskString +' <b>{point.y:,.2f}</b>';
         $scope.try.series[0].dataLabels.formatter=function(){
           return Highcharts.numberFormat(this.y,2);
         };
-        $scope.try.yAxis.title.text = 'Tempo';
+        $scope.try.yAxis.title.text = norskString;
         summarySongTopTempo.all({ sort: {"soundSummary.tempo": -1} }).then(function(s){
 
           console.log(s);
@@ -239,6 +256,35 @@ var getLink = function(input){
             $scope.links.push({tittel: $scope.songs[i].title, id:$scope.songs[i]._id.$oid});
             tempArray.push($scope.songs[i].title);
             tempArray.push($scope.songs[i].soundSummary[6]["tempo"]);
+            mainArray.push(tempArray);
+          }
+          $scope.try.loading = false;
+          $scope.try.series[0].data = mainArray;
+          $scope.try.series[1].data = [[0,120],[19,120]];
+        });
+      }
+
+      if(attributt==="timesignature"){
+        $scope.links=[];
+        $scope.try.yAxis.min = 0;
+        $scope.try.yAxis.max = 10;
+        $scope.try.series[0].data = [];
+        $scope.try.loading = true;
+        $scope.try.options.tooltip.pointFormat = norskString +' <b>{point.y:,.2f}</b>';
+        $scope.try.series[0].dataLabels.formatter=function(){
+          return Highcharts.numberFormat(this.y,2);
+        };
+        $scope.try.yAxis.title.text = norskString;
+        summarySongTopTempo.all({ sort: {"soundSummary.timesignature": -1} }).then(function(s){
+
+          console.log(s);
+          $scope.songs = s;
+          var mainArray = [];
+          for(var i=0;i<20;i++){
+            var tempArray = [];
+            $scope.links.push({tittel: $scope.songs[i].title, id:$scope.songs[i]._id.$oid});
+            tempArray.push($scope.songs[i].title);
+            tempArray.push($scope.songs[i].soundSummary[7]["timesignature"]);
             mainArray.push(tempArray);
           }
           $scope.try.loading = false;
@@ -328,7 +374,8 @@ var getLink = function(input){
         text: ''
       },
 
-      loading: true
+      loading: true,
+      exporting: { enabled: false }
     };
     $scope.goToSang = function(oid){
 
@@ -344,5 +391,8 @@ var getLink = function(input){
       });
     });
   };
-    $scope.genererChart('danceability');
+    $scope.genererChart({
+        norsk:'Dansbarhet',
+        name:'danceability',
+      });
   });

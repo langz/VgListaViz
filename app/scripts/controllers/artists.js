@@ -14,43 +14,66 @@ summaryArtistTopMode, summaryArtistTopTempo, summaryArtistTopTimesignature, summ
   $scope.item = {};
   $scope.choices = [
     {
+      norsk:'Antall sanger',
+      name:'antallunike'
+    },
+    {
+      norsk:'Dansbarhet',
       name:'danceability',
     },
     {
-      name:'duration'
-    },
-    {
+      norsk:'Energi',
       name:'energy'
     },
     {
+      norsk:'Lydstyrke',
       name:'loudness'
     },
     {
+      norsk:'Modal skala',
       name:'mode'
     },
     {
+      norsk:'Nøkkel',
+      name:'key'
+    },
+    {
+      norsk:'Taktart',
+      name:'timesignature'
+    },
+    {
+      norsk:'Tempo',
       name:'tempo'
     },
     {
+      norsk:'Uker på listen',
       name:'antallganger'
     },
     {
-      name:'antallunike'
+      norsk:'Varighet',
+      name:'duration'
     }
+
+
+
+
+
+
   ];
 
 
-  $scope.genererChart = function(attributt){
+  $scope.genererChart = function(obj){
+    var attributt = obj.name;
     $scope.try.series[1].data = [];
     if(attributt==="danceability"){
       $scope.try.series[0].data = [];
 
       $scope.try.loading = true;
-      $scope.try.options.tooltip.pointFormat = 'Danceability: <b>{point.y:,.2f}</b>';
+      $scope.try.options.tooltip.pointFormat = obj.norsk + ': <b>{point.y:,.2f}</b>';
       $scope.try.series[0].dataLabels.formatter=function(){
         return Highcharts.numberFormat(this.y,2);
       };
-      $scope.try.yAxis.title.text = 'Danceability';
+      $scope.try.yAxis.title.text = obj.norsk;
       summaryArtistTopDanceability.all({sort:{danceability:-1}}).then(function(s){
 
         console.log(s);
@@ -74,11 +97,11 @@ summaryArtistTopMode, summaryArtistTopTempo, summaryArtistTopTimesignature, summ
       $scope.try.yAxis.max = 1000;
       $scope.try.series[0].data = [];
       $scope.try.loading = true;
-      $scope.try.options.tooltip.pointFormat = 'Duration: <b>{point.y:,.0f}</b> sec';
+      $scope.try.options.tooltip.pointFormat = obj.norsk + ': <b>{point.y:,.0f}</b> sek';
       $scope.try.series[0].dataLabels.formatter=function(){
         return Highcharts.numberFormat(this.y,0);
       };
-      $scope.try.yAxis.title.text = 'Duration';
+      $scope.try.yAxis.title.text = obj.norsk;
       summaryArtistTopDuration.all({sort:{duration:-1}}).then(function(s){
 
         console.log(s);
@@ -100,11 +123,11 @@ summaryArtistTopMode, summaryArtistTopTempo, summaryArtistTopTimesignature, summ
       $scope.try.yAxis.max = 1;
       $scope.try.series[0].data = [];
       $scope.try.loading = true;
-      $scope.try.options.tooltip.pointFormat = 'Energy: <b>{point.y:,.2f}</b>';
+      $scope.try.options.tooltip.pointFormat = obj.norsk + ': <b>{point.y:,.2f}</b>';
       $scope.try.series[0].dataLabels.formatter=function(){
         return Highcharts.numberFormat(this.y,2);
       };
-      $scope.try.yAxis.title.text = 'Energy';
+      $scope.try.yAxis.title.text = obj.norsk;
       summaryArtistTopEnergy.all({sort:{energy:-1}}).then(function(s){
 
         console.log(s);
@@ -126,11 +149,11 @@ summaryArtistTopMode, summaryArtistTopTempo, summaryArtistTopTimesignature, summ
       $scope.try.yAxis.max = 60;
       $scope.try.series[0].data = [];
       $scope.try.loading = true;
-      $scope.try.options.tooltip.pointFormat = 'Loudness: <b>-{point.y:,.2f} db</b>';
+      $scope.try.options.tooltip.pointFormat = obj.norsk + ': <b>-{point.y:,.2f} db</b>';
       $scope.try.series[0].dataLabels.formatter=function(){
         return -Highcharts.numberFormat(this.y,2);
       };
-      $scope.try.yAxis.title.text = 'Loudness';
+      $scope.try.yAxis.title.text = obj.norsk;
       summaryArtistTopLoudness.all({sort:{loudness:1}}).then(function(s){
 
         console.log(s);
@@ -152,11 +175,11 @@ summaryArtistTopMode, summaryArtistTopTempo, summaryArtistTopTimesignature, summ
       $scope.try.yAxis.max = 356;
       $scope.try.series[0].data = [];
       $scope.try.loading = true;
-      $scope.try.options.tooltip.pointFormat = 'Antall ganger listet: <b>{point.y}</b>';
+      $scope.try.options.tooltip.pointFormat = obj.norsk + ': <b>{point.y}</b>';
       $scope.try.series[0].dataLabels.formatter=function(){
         return Highcharts.numberFormat(this.y,0);
       };
-      $scope.try.yAxis.title.text = 'Antall ganger listet';
+      $scope.try.yAxis.title.text = obj.norsk;
       summaryArtistTopAntall.all({sort:{antall:-1}}).then(function(s){
 
         console.log(s);
@@ -178,11 +201,11 @@ summaryArtistTopMode, summaryArtistTopTempo, summaryArtistTopTimesignature, summ
       $scope.try.yAxis.max = 37;
       $scope.try.series[0].data = [];
       $scope.try.loading = true;
-      $scope.try.options.tooltip.pointFormat = 'Antall unike sanger: <b>{point.y}</b>';
+      $scope.try.options.tooltip.pointFormat = obj.norsk + ': <b>{point.y}</b>';
       $scope.try.series[0].dataLabels.formatter=function(){
         return Highcharts.numberFormat(this.y,0);
       };
-      $scope.try.yAxis.title.text = 'Antall unike sanger';
+      $scope.try.yAxis.title.text = obj.norsk;
       summaryArtistTopUnik.all({sort:{antallunikesanger:-1}}).then(function(s){
 
         console.log(s);
@@ -204,11 +227,11 @@ summaryArtistTopMode, summaryArtistTopTempo, summaryArtistTopTimesignature, summ
       $scope.try.yAxis.max = 1;
       $scope.try.series[0].data = [];
       $scope.try.loading = true;
-      $scope.try.options.tooltip.pointFormat = 'Mode: <b>{point.y:,.2f}</b>';
+      $scope.try.options.tooltip.pointFormat = obj.norsk + ': <b>{point.y:,.2f}</b>';
       $scope.try.series[0].dataLabels.formatter=function(){
         return Highcharts.numberFormat(this.y,2);
       };
-      $scope.try.yAxis.title.text = 'Mode';
+      $scope.try.yAxis.title.text = obj.norsk;
       summaryArtistTopMode.all({sort:{mode:-1}}).then(function(s){
 
 
@@ -231,11 +254,11 @@ summaryArtistTopMode, summaryArtistTopTempo, summaryArtistTopTimesignature, summ
       $scope.try.yAxis.max = 220;
       $scope.try.series[0].data = [];
       $scope.try.loading = true;
-      $scope.try.options.tooltip.pointFormat = 'Tempo: <b>{point.y:,.2f}</b>';
+      $scope.try.options.tooltip.pointFormat = obj.norsk + ': <b>{point.y:,.2f}</b>';
       $scope.try.series[0].dataLabels.formatter=function(){
         return Highcharts.numberFormat(this.y,2);
       };
-      $scope.try.yAxis.title.text = 'Tempo';
+      $scope.try.yAxis.title.text = obj.norsk;
       summaryArtistTopTempo.all({sort:{tempo:-1}}).then(function(s){
 
         console.log(s);
@@ -250,6 +273,32 @@ summaryArtistTopMode, summaryArtistTopTempo, summaryArtistTopTimesignature, summ
         $scope.try.loading = false;
         $scope.try.series[0].data = mainArray;
         $scope.try.series[1].data = [[0,120],[19,120]];
+      });
+    }
+    if(attributt==="timesignature"){
+      $scope.try.yAxis.min = 0;
+      $scope.try.yAxis.max = 10;
+      $scope.try.series[0].data = [];
+      $scope.try.loading = true;
+      $scope.try.options.tooltip.pointFormat = obj.norsk + ': <b>{point.y:,.2f}</b>';
+      $scope.try.series[0].dataLabels.formatter=function(){
+        return Highcharts.numberFormat(this.y,2);
+      };
+      $scope.try.yAxis.title.text = obj.norsk;
+      summaryArtistTopTimesignature.all({sort:{timesignature:-1}}).then(function(s){
+
+        console.log(s);
+        $scope.summaryArtistTopAntall = s;
+        var mainArray = [];
+        for(var i=0;i<20;i++){
+          var tempArray = [];
+          tempArray.push($scope.summaryArtistTopAntall[i].artist);
+          tempArray.push($scope.summaryArtistTopAntall[i]["timesignature"]);
+          mainArray.push(tempArray);
+        }
+        $scope.try.loading = false;
+        $scope.try.series[0].data = mainArray;
+        $scope.try.series[1].data = [[0,120],[19,120]]; //MÅ FIKSES ER IKKE SNITTET PÅ TIMESIGNATURE ATM
       });
     }
 
@@ -334,7 +383,8 @@ summaryArtistTopMode, summaryArtistTopTempo, summaryArtistTopTimesignature, summ
       text: ''
     },
 
-    loading: true
+    loading: true,
+    exporting: { enabled: false }
   };
   $scope.goToArtist = function(artistNavn){
     console.log('/artist/'+artistNavn);
@@ -350,5 +400,8 @@ $scope.searchArtist = function(inputText){
     });
   });
 };
-  $scope.genererChart('danceability');
+  $scope.genererChart({
+      norsk:'Antall sanger',
+      name:'antallunike'
+    });
 });

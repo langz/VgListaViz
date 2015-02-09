@@ -45,6 +45,7 @@ angular.module('vgListaVizApp')
   var tempoAvg = 120.10330113014082;
   var hitlastingAvg = 7.2631578947368425;
   var antallUkerAvg = 9;
+  var timesignatureAvg = 2;
 
 
 
@@ -183,7 +184,7 @@ angular.module('vgListaVizApp')
     Highcharts.setOptions(optionsNormal);
     var danceability = new Highcharts.Chart({
       chart:{renderTo:'danceability'},
-      xAxis:{categories:['Danceability']},
+      xAxis:{categories:['Dansbarhet']},
       yAxis:{
         max:danceabilityMax,
         labels:{y:10,style:{fontSize:'8px'}},
@@ -198,7 +199,7 @@ angular.module('vgListaVizApp')
     Highcharts.setOptions(optionsNormal);
     var duration = new Highcharts.Chart({
       chart:{renderTo:'duration'},
-      xAxis:{categories:['Duration']},
+      xAxis:{categories:['Varighet']},
       yAxis:{
         max:durationMax,
         labels:{y:10,style:{fontSize:'8px'}},
@@ -223,7 +224,7 @@ angular.module('vgListaVizApp')
     Highcharts.setOptions(optionsNormal);
     var duration = new Highcharts.Chart({
       chart:{renderTo:'listet'},
-      xAxis:{categories:['Antall uker']},
+      xAxis:{categories:['Uker på listen']},
       yAxis:{
         max:antallUkerMax,
         labels:{y:10,style:{fontSize:'8px'}},
@@ -244,36 +245,11 @@ angular.module('vgListaVizApp')
       }
     });
   }
-  var createSanger = function(verdi){
-    Highcharts.setOptions(optionsNormal);
-    var duration = new Highcharts.Chart({
-      chart:{renderTo:'sanger'},
-      xAxis:{categories:['Sanger']},
-      yAxis:{
-        max:durationMax,
-        labels:{y:10,style:{fontSize:'8px'}},
-        plotBands:[]
-      },
-      series:[{name:'Gjennomsnitt',pointWidth:8.25,data:[durationAvg], color: 'rgba(103,103,103,.35)', zIndex:0},
-      {name:'Verdi', pointWidth:8.5, data:[verdi], zIndex:1},
-      {name:'Gjennomsnitt',pointWidth:8.25,data:[durationAvg], color: 'rgba(103,103,103,.35)', zIndex:0}],
-      tooltip:{
-        enabled:true,
-        backgroundColor:'rgba(255, 255, 255, .85)',
-        borderWidth:0,
-        shadow:true,
-        style:{fontSize:'10px',padding:2},
-        formatter:function() {
-          return this.series.name + ": <strong>" + Highcharts.numberFormat(this.y,0) + "s"+ "</strong>";
-        }
-      }
-    });
-  }
   var createEnergy = function(verdi){
     Highcharts.setOptions(optionsNormal);
     var energy = new Highcharts.Chart({
       chart:{renderTo:'energy'},
-      xAxis:{categories:['Energy']},
+      xAxis:{categories:['Energi']},
       yAxis:{
         max:energyMax,
         labels:{y:10,style:{fontSize:'8px'}},
@@ -288,7 +264,7 @@ angular.module('vgListaVizApp')
     Highcharts.setOptions(optionsLoudness);
     var loudness = new Highcharts.Chart({
       chart:{renderTo:'loudness'},
-      xAxis:{categories:['Loudness']},
+      xAxis:{categories:['Lydstyrke']},
       yAxis:{
         max:-loudnessMax,
         labels:{y:10,style:{fontSize:'8px'}},
@@ -313,7 +289,7 @@ angular.module('vgListaVizApp')
     Highcharts.setOptions(optionsNormal);
     var mode = new Highcharts.Chart({
       chart:{renderTo:'mode'},
-      xAxis:{categories:['Mode']},
+      xAxis:{categories:['Modal skala']},
       yAxis:{
         max:modeMax,
         labels:{y:10,style:{fontSize:'8px'}},
@@ -349,6 +325,31 @@ angular.module('vgListaVizApp')
       }
     });
   }
+  var createTimesignature = function(verdi){
+    Highcharts.setOptions(optionsNormal);
+    var tempo = new Highcharts.Chart({
+      chart:{renderTo:'timesignature'},
+      xAxis:{categories:['Taktart']},
+      yAxis:{
+        max:timesignatureMax,
+        labels:{y:10,style:{fontSize:'8px'}},
+        plotBands:[]
+      },
+      series:[{name:'Gjennomsnitt',pointWidth:8.25,data:[timesignatureAvg], color: 'rgba(103,103,103,.35)', zIndex:0},
+      {name:'Verdi', pointWidth:8.5, data:[verdi], zIndex:1},
+      {name:'Gjennomsnitt',pointWidth:8.25,data:[timesignatureAvg], color: 'rgba(103,103,103,.35)', zIndex:0}],
+      tooltip:{
+        enabled:true,
+        backgroundColor:'rgba(255, 255, 255, .85)',
+        borderWidth:0,
+        shadow:true,
+        style:{fontSize:'10px',padding:2},
+        formatter:function() {
+          return this.series.name + ": <strong>" + Highcharts.numberFormat(this.y,0) + "</strong>";
+        }
+      }
+    });
+  };
   var createBulletCharts = function(obj){
     createDanceability(obj.soundSummary[0].danceability);
     createDuration(obj.soundSummary[1].duration);
@@ -356,6 +357,7 @@ angular.module('vgListaVizApp')
     createLoudness(Math.abs(obj.soundSummary[4].loudness));
     createMode(obj.soundSummary[5].mode);
     createTempo(obj.soundSummary[6].tempo);
+    createTimesignature(obj.soundSummary[7].timesignature);
   }
   var omg = function(wordInput){
     fill = d3.scale.category20b();
@@ -490,7 +492,7 @@ angular.module('vgListaVizApp')
         labels: {
           formatter: function () {
             if(this.value.a){
-              return '<a href="#/chart/' + this.value.b + '"style="color:black;">' + this.value.a.substring(2,4) +
+              return '<a href="#/chart/' + this.value.b + '"style="color:black;">' + this.value.a +
               '</a>';
             }
           },
@@ -522,11 +524,14 @@ angular.module('vgListaVizApp')
         text: ''
       },
 
-      loading: true
+      loading: true,
+      exporting: { enabled: false }
     };
 
 
-
+    $scope.goToCompare = function(oid){
+      $location.path('/compare/song/'+oid);
+    };
 
     $scope.gotoSang = function(oid){
       console.log('/song/'+oid);
