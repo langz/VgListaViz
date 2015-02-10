@@ -1,57 +1,81 @@
 <div autoscroll="true">
-<div class="container marketing">
+  <div class="container marketing">
+    <div class="row">
+      <div class="span4 col-xs-12">
+        <h2>Musikk data</h2>
+        <p>
+          Echo Nest APIet  er verdens eneste "musikk lyttende" API. Den bruker proprietære maskin lytteteknikker for å simulere hvordan folk
+          oppfatter musikk. Det inneholder prinsipper for psykoakustikk, musikk persepsjon, og adaptiv læring for å modellere både
+          de fysiske og kognitive prosesser av menneskelig lytting. APIet returnerer en fullstendig beskrivelse av alle
+          musikalske begivenheter, strukturer og musikalske attributter som nøkkel, lydstyrke, taktart, tempo, beats(slag), osv.
+          Nedenfor følger forklaring av de brukte musikalske attributtene.
+        </p>
+      </div>
+    </hr>
+  </div>
   <div class="row">
-    <div class="span4 col-xs-12">
-      <h2>Music data(attributes)</h2>
-      <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</p>
+    <div class="span4 col-xs-12 col-sm-4">
+      
+      <h4>Dansbarhet</h4>
+      <p>
+        Representerer hvor egnet en sang er for å danse til, verdien er et nummer mellom 0 og 1.
+        Kombinasjonen av musikalske elementer som best karakteriserer dansbarhet inkluderer tempo,
+        rytme stabilitet, slag styrke, og samlet regularitet.
+      </p>
     </div>
-  </hr>
-</div>
-<div class="row">
-  <div class="span4 col-xs-12 col-sm-4">
+    <div class="span4 col-xs-12 col-sm-4">
 
-    <h2>Danceability</h2>
-    <p>We each groove to different music; and what constitutes dance music is inherently subjective. The Echo Nest is representing how danceable a song is by a number that ranges from 0 to 1. It is used a mix of features to compute danceability, including beat strength, tempo stability, overall tempo, and more. </p>
-  </div>
-  <div class="span4 col-xs-12 col-sm-4">
+      <h4>Energi</h4>
+      <p>Er et nummer mellom 0 og 1, som representerer hvor energisk en sang er.
+        Typisk for energiske låter er at de er raske, høylytte og bråkete.
+        For eksempel har death metal høy energi, mens et forspill av Bach skårer lavt på skalaen.</p>
+      </div>
+      <div class="span4 col-xs-12 col-sm-4">
 
-    <h2>Energy</h2>
-    <p>A number that ranges from 0 to 1, representing how energetic The Echo Nest thinks this song is. How energetic is the music? Does it make you want to bop all over the room, or fall into a coma? Compared to danceability this is less subjective. The feature mix used to compute energy includes loudness and segment durations.</p>
-  </div>
-  <div class="span4 col-xs-12 col-sm-4">
+        <h4>Lydstyrke</h4>
+        <p>
+          Den generelle lydstyrken til en sang er målt i desibel(dB).
+          En sang har forskjellig lydstyrke over flere segmenter.
+          Verdien som blir benyttet forlydstyrke er derfor gjennomsnittsverdien målt gjennom hele sangen.
 
-    <h2>Key</h2>
-    <p>The key that The Echo Nest believes the song is in. Key signatures start at 0 (C) and ascend the chromatic scale. In this case, a key of 1 represents a song in D-flat.</p>
-  </div>
-</div>
-<div class="row">
-  <div class="span4 col-xs-12 col-sm-4">
+        </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="span4 col-xs-12 col-sm-4">
 
-    <h2>Mode</h2>
-    <p>Number representing whether the song is in a minor (0) or major (1) key. Use this in conjunction with 'key'.</p>
-  </div>
-  <div class="span4 col-xs-12 col-sm-4">
+        <h4>Nøkkel</h4>
+        <p>
+          Representerer nøkkelen som The Echo Nest mener sangen er i.
+          Tonearter starter på 0 (C) og følger den kromatiske skalaen.
+        </p>
+      </div>
+      <div class="span4 col-xs-12 col-sm-4">
 
-    <h2>Time Signature</h2>
-    <p>Time signature of the key; how many beats per measure.</p>
-  </div>
-  <div class="span4 col-xs-12 col-sm-4">
+        <h4>Taktart</h4>
+        <p>Er den anslåtte og samlede taktarten til en sang.
+          Altså hvor mange slag som inngår i en gitt takt. Eller hvor mange deler en takt er delt opp i. </p>
+        </div>
+        <div class="span4 col-xs-12 col-sm-4">
 
-    <h2>Tempo</h2>
-    <p>Represents the Beats per Minute(BPM) of a song. </p>
-  </div>
-</div>
-<div class="row">
-  <div class="span4 col-xs-12 col-sm-4">
+          <h4>Tempo</h4>
+          <p>Er det estimerte tempoet til en sang, målt i taktslag per minutt(BPM).
+            I musikkteori er tempo hastigheten i et gitt stykke og stammer direkte fra den gjennomsnittlige takt varigheten.
+            F.eks så vil et stykke som går i 60 BPM ha ett taktslag i sekundet.</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="span4 col-xs-12 col-sm-4">
 
-    <h2>Duration</h2>
-    <p>Length of the song, in seconds.</p>
-  </div>
-  <div class="span4 col-xs-12 col-sm-4">
+            <h4>Skala</h4>
+            <p>Representerer om sangen er spilt moll (0) eller dur (1) nøkkel. Bør sees sammen med 'nøkkelen'.</p>
+          </div>
+          <div class="span4 col-xs-12 col-sm-4">
 
-    <h2>Loudness</h2>
-    <p>The overall loudness of a track in decibels (dB).</p>
-  </div>
-</div>
-</div>
-</div>
+            <h4>Varighet</h4>
+            <p>Sangens varighet, målt i sekunder.</p>
+          </div>
+
+        </div>
+      </div>
+    </div>

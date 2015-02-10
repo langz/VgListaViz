@@ -9,12 +9,12 @@
 </div>
 <div class="col-xs-6 form-group">
   <label for="Y">yAksen</label>
-  <select id="Y" ng-readonly="!safeToChange" class="form-control" ng-change="changeType()" ng-model="itemY" ng-init="itemY = choicesY[1]" ng-options="choice as choice.name for choice in choicesY"
+  <select id="Y" ng-readonly="!safeToChange" class="form-control" ng-change="changeAttr()" ng-model="itemY" ng-init="itemY = choicesY[0]" ng-options="choice as choice.norsk for choice in choicesY"
   ></select>
 </div>
 <div class="col-xs-6 form-group">
   <label for="X">xAksen</label>
-  <select id="X" ng-readonly="!safeToChange" class="form-control" ng-change="changeType()" ng-model="itemX" ng-init="itemX = choicesX[0]" ng-options="choice as choice.name for choice in choicesX"
+  <select id="X" ng-readonly="!safeToChange" class="form-control" ng-change="changeAttr()" ng-model="itemX" ng-init="itemX = choicesX[1]" ng-options="choice as choice.norsk for choice in choicesX"
   ></select>
 </div>
 </div>
