@@ -7,6 +7,10 @@
 <div class="col-xs-12">
   <highchart id="chart1" config="try" data-highcharts-chart="0"></highchart>
 </div>
+<div class="col-xs-12">
+  <p class="text-center">{{rangeYear}}</p>
+<input type="range" min="1960" max="2014" ng-model="rangeYear" ng-init="rangeYear = 1960" ng-change="changeRangeYear(rangeYear)" />
+</div>
 <div class="col-xs-6 form-group">
   <label for="Y">yAksen</label>
   <select id="Y" ng-readonly="!safeToChange" class="form-control" ng-change="changeAttr()" ng-model="itemY" ng-init="itemY = choicesY[0]" ng-options="choice as choice.norsk for choice in choicesY"
