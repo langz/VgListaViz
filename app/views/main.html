@@ -1,30 +1,101 @@
 <div autoscroll="true">
-<div class="container marketing">
   <div class="row">
-    <div class="span4 col-xs-12">
-      <h2>The Project</h2>
-      <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</p>
+    <div class="container marketing" style="margin-bottom:10px;">
+      <div class="span4 col-xs-12">
+        <h2 style="margin-top:0px;">Informasjon</h2>
+        <p>
+          Prosjektet tar utgangspunkt i å oppdage, studere og utforske mønstre i norsk popmusikk gjennom en tidsperiode på 60år.
+          Har popsanger i Norge store likheter, slik at de muligens følger en «oppskrift» på en «toppliste sang»?
+          Slik som at sangene er like med tanke på rytme og takt eller at de er like på et lyrisk nivå.
+          Kanskje ordet «love» var mye brukt på 60-tallet, men at det i dag er «party»?
+          Dette er bare noen av spørsmålene man kan stille dette datasettet.
+          Formuler dine egne spørsmål og prøv å finn svar på de!
+        </p>
+      </div>
+    </hr>
+    <div class="span4 col-xs-12 col-sm-12">
+
+      <p>
+        For å kunne svare på disse spørsmålene har jeg hentet ut lyd-teknisk data fra
+        <a href="http://echonest.com">EchoNest</a> og lyriske data
+        fra <a href="http://musixmatch.com">MusixMatch</a> for alle sangene på <a href="http://lista.no">VG Lista Topp 20</a>.
+
+        For å lettere se mønstre i så mye data er det presentert i form av grafer og andre visuelle komponenter.
+        I mine øyne, vil disse datavisualiseringene være interessante for generelle musikkelskere,
+        historikere, journalister, produsenter, songwriters, osv.
+      </p>
     </div>
-  </hr>
-  <div class="span4 col-xs-12 col-sm-4">
 
-    <h2>Artister</h2>
-    <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</p>
-    <p><a class="btn btn-default" href="#">View details »</a></p>
   </div>
-  <div class="span4 col-xs-12 col-sm-4">
-
-    <h2>Sanger</h2>
-    <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</p>
-    <p><a class="btn btn-default" href="#">View details »</a></p>
+</div>
+<div class="row">
+<div class="col-xs-12">
+  <div class="col-lg-4 col-md-6">
+    <div class="panel panel-green">
+      <div class="panel-heading">
+        <div class="row">
+          <div class="col-xs-3">
+            <i class="fa fa-list fa-5x"></i>
+          </div>
+          <div class="col-xs-9 text-right">
+            <div class="huge">2,768</div>
+            <div>Lister</div>
+          </div>
+        </div>
+      </div>
+      <a ng-href="#/charts">
+        <div class="panel-footer">
+          <span class="pull-left">Utforsk!</span>
+          <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+          <div class="clearfix"></div>
+        </div>
+      </a>
+    </div>
   </div>
-  <div class="span4 col-xs-12 col-sm-4">
-
-    <h2>Lister</h2>
-    <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</p>
-    <p><a class="btn btn-default" href="#">View details »</a></p>
+  <div class="col-lg-4 col-md-6">
+    <div class="panel panel-yellow">
+      <div class="panel-heading">
+        <div class="row">
+          <div class="col-xs-3">
+            <i class="fa fa-users fa-5x"></i>
+          </div>
+          <div class="col-xs-9 text-right">
+            <div class="huge">2,251</div>
+            <div>Artister</div>
+          </div>
+        </div>
+      </div>
+      <a ng-href="#/artists">
+        <div class="panel-footer">
+          <span class="pull-left">Utforsk!</span>
+          <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+          <div class="clearfix"></div>
+        </div>
+      </a>
+    </div>
   </div>
-
+  <div class="col-lg-4 col-md-6">
+    <div class="panel panel-red">
+      <div class="panel-heading">
+        <div class="row">
+          <div class="col-xs-3">
+            <i class="fa fa-music fa-5x"></i>
+          </div>
+          <div class="col-xs-9 text-right">
+            <div class="huge">4,444</div>
+            <div>Sanger</div>
+          </div>
+        </div>
+      </div>
+      <a ng-href="#/songs">
+        <div class="panel-footer">
+          <span class="pull-left">Utforsk!</span>
+          <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+          <div class="clearfix"></div>
+        </div>
+      </a>
+    </div>
+  </div>
 </div>
 </div>
 </div>
