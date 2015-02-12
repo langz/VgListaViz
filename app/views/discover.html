@@ -1,28 +1,34 @@
 <div autoscroll="true">
-<div class="col-xs-12 form-group">
-  <label for="D">Oppdag</label>
-  <select id="D" ng-readonly="!safeToChange" class="form-control" ng-change="changeType(type)" ng-model="type" ng-init="type = types[2]" ng-options="type as type for type in types"
-  ></select>
-</div>
-<div class="col-xs-12">
-  <highchart id="chart1" config="try" data-highcharts-chart="0"></highchart>
-</div>
-<div class="col-xs-6 form-group">
-  <label for="Y">yAksen</label>
-  <select id="Y" ng-readonly="!safeToChange" class="form-control" ng-change="changeAttr()" ng-model="itemY" ng-init="itemY = choicesY[0]" ng-options="choice as choice.norsk for choice in choicesY"
-  ></select>
-</div>
-<div class="col-xs-6 form-group">
-  <label for="X">xAksen</label>
-  <select id="X" ng-readonly="!safeToChange" class="form-control" ng-change="changeAttr()" ng-model="itemX" ng-init="itemX = choicesX[1]" ng-options="choice as choice.norsk for choice in choicesX"
-  ></select>
-</div>
-<div class="col-xs-12">
-  <label for="slideCheck">Filtrer etter år</label>
-<input type="checkbox" ng-model="slideCheck" id="slideCheck" ng-init="slideCheck=false" ng-click="unCheck()"/>
-<div ng-if="slideCheck" >
-  <p class="text-center"><span ng-if="rangeYear === 1959">Velg et år</span><span ng-if="rangeYear!=1959">{{rangeYear}}</span></p>
-<input id="slide" type="range" min="1959" max="2014" ng-model="rangeYear" ng-change="changeRangeYear(rangeYear)" />
-</div>
-</div>
+  <div class="col-xs-12 form-group">
+    <label for="D">Oppdag</label>
+    <select id="D" ng-readonly="!safeToChange" class="form-control" ng-change="changeType(type)" ng-model="type" ng-init="type = types[2]" ng-options="type as type for type in types"
+    ></select>
+  </div>
+  <div class="col-xs-12">
+    <highchart id="chart1" config="try" data-highcharts-chart="0"></highchart>
+  </div>
+  <div class="col-xs-6 form-group">
+    <label for="Y">yAksen</label>
+    <select id="Y" ng-readonly="!safeToChange" class="form-control" ng-change="changeAttr()" ng-model="itemY" ng-init="itemY = choicesY[0]" ng-options="choice as choice.norsk for choice in choicesY"
+    ></select>
+  </div>
+  <div class="col-xs-6 form-group">
+    <label for="X">xAksen</label>
+    <select id="X" ng-readonly="!safeToChange" class="form-control" ng-change="changeAttr()" ng-model="itemX" ng-init="itemX = choicesX[1]" ng-options="choice as choice.norsk for choice in choicesX"
+    ></select>
+  </div>
+  <div class="col-xs-12">
+    <label for="slideCheck">Filtrer etter år</label>
+    <input type="checkbox" ng-model="slideCheck" id="slideCheck" ng-init="slideCheck=false" ng-click="unCheck()"/>
+    <div ng-if="slideCheck" >
+      <p class="text-center">
+
+        <span ng-if="rangeYear === 1959">Velg et år ved å dra slideren</span>
+        <span ng-if="rangeYear!=1959"><b>{{rangeYear}}</b></span>
+        <span style="font-size:10px;" class="pull-left">1960</span>
+        <span style="font-size:10px;" class="pull-right">2014</span>
+      </p>
+      <input id="slide" type="range" min="1959" max="2014" ng-model="rangeYear" ng-change="changeRangeYear(rangeYear)" />
+    </div>
+  </div>
 </div>

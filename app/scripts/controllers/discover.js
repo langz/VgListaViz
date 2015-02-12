@@ -13,7 +13,7 @@ angular.module('vgListaVizApp')
   $scope.artists = [];
   $scope.charts = [];
   $scope.safeToChange=false;
-$scope.rangeYear = 1959;
+  $scope.rangeYear = 1959;
   $scope.types = [
   'Artist',
   'Liste',
@@ -85,6 +85,7 @@ $scope.rangeYear = 1959;
     min:0
   }
   //INIT
+
   $scope.choicesY.push({norsk:'Uker på listen', name:'antall'});
   $scope.choicesY.push({norsk:'Beste plassering', name:'bestPos'})
   $scope.choicesX.push({norsk:'Uker på listen', name:'antall'});
@@ -97,7 +98,7 @@ $scope.rangeYear = 1959;
   });
 
   $scope.changeRangeYear = function(yr){
-$scope.rangeYear = yr;
+    $scope.rangeYear = yr;
     console.log($scope.type);
     if($scope.type==='Liste'){
 
@@ -202,16 +203,16 @@ $scope.rangeYear = yr;
     $scope.try.loading = true;
     $scope.safeToChange=false;
     $scope.resetSelects(6);
-    $scope.rangeYear = 1960
+    $scope.rangeYear = 1959
     $scope.slideCheck = false;
     if($scope.type==='Artist'){
       $scope.itemY =$scope.choicesY[0];
       $scope.itemX =$scope.choicesX[1];
 
-      $scope.choicesY.push({norsk:'Uker på listen', name:'antall', max:33, min:0});
-      $scope.choicesY.push({norsk:'Antall sanger', name:'antallunikesanger', max:350, min:0})
-      $scope.choicesX.push({norsk:'Uker på listen', name:'antall', max:33, min:0});
-      $scope.choicesX.push({norsk:'Antall sanger', name:'antallunikesanger', max:350, min:0})
+      $scope.choicesY.push({norsk:'Uker på listen', name:'antall', max:320, min:0});
+      $scope.choicesY.push({norsk:'Antall sanger', name:'antallunikesanger', max:35, min:0})
+      $scope.choicesX.push({norsk:'Uker på listen', name:'antall', max:320, min:0});
+      $scope.choicesX.push({norsk:'Antall sanger', name:'antallunikesanger', max:35, min:0})
 
       $scope.getArtists();
     }
@@ -245,12 +246,12 @@ $scope.rangeYear = yr;
     }
   }
   $scope.changeAttr = function(){
-var yr = null;
-  console.log($scope.slideCheck);
+    var yr = null;
+    console.log($scope.slideCheck);
 
     if($scope.slideCheck){
       yr = $scope.rangeYear;
-console.log(yr);
+      console.log(yr);
     }
     $scope.try.loading = true;
     $scope.safeToChange=false;
@@ -458,5 +459,5 @@ console.log(yr);
 
     loading: true
   }
-
+  $scope.try.loading = true;
 });
