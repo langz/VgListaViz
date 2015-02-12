@@ -7,10 +7,6 @@
 <div class="col-xs-12">
   <highchart id="chart1" config="try" data-highcharts-chart="0"></highchart>
 </div>
-<div class="col-xs-12">
-  <p class="text-center">{{rangeYear}}</p>
-<input type="range" min="1960" max="2014" ng-model="rangeYear" ng-init="rangeYear = 1960" ng-change="changeRangeYear(rangeYear)" />
-</div>
 <div class="col-xs-6 form-group">
   <label for="Y">yAksen</label>
   <select id="Y" ng-readonly="!safeToChange" class="form-control" ng-change="changeAttr()" ng-model="itemY" ng-init="itemY = choicesY[0]" ng-options="choice as choice.norsk for choice in choicesY"
@@ -20,5 +16,13 @@
   <label for="X">xAksen</label>
   <select id="X" ng-readonly="!safeToChange" class="form-control" ng-change="changeAttr()" ng-model="itemX" ng-init="itemX = choicesX[1]" ng-options="choice as choice.norsk for choice in choicesX"
   ></select>
+</div>
+<div class="col-xs-12">
+  <label for="slideCheck">Filtrer etter år</label>
+<input type="checkbox" ng-model="slideCheck" id="slideCheck" ng-init="slideCheck=false" ng-click="unCheck()"/>
+<div ng-if="slideCheck" >
+  <p class="text-center"><span ng-if="rangeYear === 1959">Velg et år</span><span ng-if="rangeYear!=1959">{{rangeYear}}</span></p>
+<input id="slide" type="range" min="1959" max="2014" ng-model="rangeYear" ng-change="changeRangeYear(rangeYear)" />
+</div>
 </div>
 </div>

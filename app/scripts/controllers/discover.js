@@ -13,56 +13,58 @@ angular.module('vgListaVizApp')
   $scope.artists = [];
   $scope.charts = [];
   $scope.safeToChange=false;
-
+$scope.rangeYear = 1959;
   $scope.types = [
-    'Artist',
-    'Liste',
-    'Sang'
+  'Artist',
+  'Liste',
+  'Sang'
   ];
 
 
   var standard =  [
-    {
-      norsk:'Dansbarhet',
-      name:'danceability',
-      value:0,
-      max:1
-    },
-    {
-      norsk:'Energi',
-      name:'energy',
-      value:2,
-      max:1
-    },
-    {
-      norsk:'Lydstyrke',
-      name:'loudness',
-      value:4
-    },
-    {
-      norsk:'Modal skala',
-      name:'mode',
-      value:5,
-      max:1
-    },
-    {
-      norsk:'Taktart',
-      name:'timesignature',
-      value:7,
-      max:7
-    },
-    {
-      norsk:'Tempo',
-      name:'tempo',
-      value:6,
-      max:220
-    },
-    {
-      norsk:'Varighet',
-      name:'duration',
-      value:1,
-      max:1000
-    }
+  {
+    norsk:'Dansbarhet',
+    name:'danceability',
+    value:0,
+    max:1,
+    min:0
+  },
+  {
+    norsk:'Energi',
+    name:'energy',
+    value:2,
+    max:1,
+    min:0
+  },
+  {
+    norsk:'Lydstyrke',
+    name:'loudness',
+    value:4, min:-30, max:0
+  },
+  {
+    norsk:'Modal skala',
+    name:'mode',
+    value:5,
+    max:1, min:0
+  },
+  {
+    norsk:'Taktart',
+    name:'timesignature',
+    value:7,
+    max:7, min:0
+  },
+  {
+    norsk:'Tempo',
+    name:'tempo',
+    value:6,
+    max:220, min:40
+  },
+  {
+    norsk:'Varighet',
+    name:'duration',
+    value:1,
+    max:900, min:0
+  }
   ];
 
 
@@ -72,13 +74,15 @@ angular.module('vgListaVizApp')
     norsk:'Dansbarhet',
     name:'danceability',
     value:0,
-    max:1
+    max:1,
+    min:0
   }
   $scope.itemX ={
     norsk:'Energi',
     name:'energy',
     value:2,
-    max:1
+    max:1,
+    min:0
   }
   //INIT
   $scope.choicesY.push({norsk:'Uker på listen', name:'antall'});
@@ -86,13 +90,14 @@ angular.module('vgListaVizApp')
   $scope.choicesX.push({norsk:'Uker på listen', name:'antall'});
   $scope.choicesX.push({norsk:'Beste plassering', name:'bestPos'})
   $scope.type ='Sang';
-  songs.query( {soundSummary: {$not: {$size: 0}}}, {limit:100}).then(function(res){
+  songs.query( {soundSummary: {$not: {$size: 0}}}, {limit:10000}).then(function(res){
     $scope.songs = res;
     $scope.update($scope.itemX, $scope.itemY, $scope.songs);
     $scope.safeToChange=true;
   });
 
   $scope.changeRangeYear = function(yr){
+$scope.rangeYear = yr;
     console.log($scope.type);
     if($scope.type==='Liste'){
 
@@ -110,7 +115,7 @@ angular.module('vgListaVizApp')
 
   $scope.getSongs = function(yr){
     if($scope.songs.length===0){
-      songs.query({soundSummary: {$not: {$size: 0}}}, {limit:100}).then(function(res){
+      songs.query({soundSummary: {$not: {$size: 0}}}, {limit:1000}).then(function(res){
 
         $scope.songs = res;
         $scope.update($scope.itemX, $scope.itemY, $scope.songs);
@@ -119,27 +124,27 @@ angular.module('vgListaVizApp')
       });
 
     }
+    else if(yr){
+      var sortData = [];
+      for(var tell = 0 ; tell<$scope.songs.length ; tell ++){
+
+        if($scope.songs[tell].years.indexOf(yr.toString()) > -1){
+          sortData.push($scope.songs[tell]);
+        }
+      }
+      $scope.update($scope.itemX, $scope.itemY, sortData);
+    }
     else{
       $scope.try.loading = false;
       $scope.safeToChange=true;
       $scope.update($scope.itemX, $scope.itemY, $scope.songs);
 
     }
-    if(yr){
-      var sortData = [];
-      for(var tell = 0 ; tell<$scope.songs.length ; tell ++){
-        console.log($scope.songs[tell].year + " === " + yr)
-        if($scope.songs[tell].years.indexOf(String(yr))){
-          sortData.push($scope.songs[tell]);
-        }
-      }
-      $scope.update($scope.itemX, $scope.itemY, sortData);
-    }
   };
   $scope.getCharts = function(yr){
     if($scope.charts.length===0){
 
-      charts.query({soundSummary: {$not: {$size: 0}}}, {limit:100}).then(function(res){
+      charts.query({soundSummary: {$not: {$size: 0}}}, {limit:1000}).then(function(res){
         $scope.charts = res;
         $scope.update($scope.itemX, $scope.itemY, $scope.charts);
         $scope.try.loading = false;
@@ -147,13 +152,7 @@ angular.module('vgListaVizApp')
       });
 
     }
-    else{
-      $scope.try.loading = false;
-      $scope.safeToChange=true;
-      $scope.update($scope.itemX, $scope.itemY, $scope.charts);
-
-    }
-    if(yr){
+    else if(yr){
       var sortData = [];
       for(var tell = 0 ; tell<$scope.charts.length ; tell ++){
         console.log($scope.charts[tell].year + " === " + yr)
@@ -163,31 +162,37 @@ angular.module('vgListaVizApp')
       }
       $scope.update($scope.itemX, $scope.itemY, sortData);
     }
+    else{
+      $scope.try.loading = false;
+      $scope.safeToChange=true;
+      $scope.update($scope.itemX, $scope.itemY, $scope.charts);
+
+    }
+
   };
-  $scope.getArtists = function(){
+  $scope.getArtists = function(yr){
 
     if($scope.artists.length===0){
-      summaryArtist.query( { danceability: { $exists: true, $nin: [ 0 ] } }, {limit:100}).then(function(res){
+      summaryArtist.query( { danceability: { $exists: true, $nin: [ 0 ] } }, {limit:1000}).then(function(res){
         $scope.artists = res;
         $scope.update($scope.itemX, $scope.itemY, $scope.artists);
         $scope.try.loading = false;
         $scope.safeToChange=true;
       });
     }
-    else{
-      $scope.try.loading = false;
-      $scope.safeToChange=true;
-      $scope.update($scope.itemX, $scope.itemY, $scope.artists);
-    }
-    if(yr){
+    else if(yr){
       var sortData = [];
       for(var tell = 0 ; tell<$scope.artists.length ; tell ++){
-        console.log($scope.artists[tell].year + " === " + yr)
-        if($scope.songs[tell].artists.indexOf(String(yr))){
+        if($scope.artists[tell].years.indexOf(yr.toString()) > -1){
           sortData.push($scope.artists[tell]);
         }
       }
       $scope.update($scope.itemX, $scope.itemY, sortData);
+    }
+    else{
+      $scope.try.loading = false;
+      $scope.safeToChange=true;
+      $scope.update($scope.itemX, $scope.itemY, $scope.artists);
     }
   };
 
@@ -197,15 +202,16 @@ angular.module('vgListaVizApp')
     $scope.try.loading = true;
     $scope.safeToChange=false;
     $scope.resetSelects(6);
-
+    $scope.rangeYear = 1960
+    $scope.slideCheck = false;
     if($scope.type==='Artist'){
       $scope.itemY =$scope.choicesY[0];
       $scope.itemX =$scope.choicesX[1];
 
-      $scope.choicesY.push({norsk:'Uker på listen', name:'antall', max:33});
-      $scope.choicesY.push({norsk:'Antall sanger', name:'antallunikesanger', max:350})
-      $scope.choicesX.push({norsk:'Uker på listen', name:'antall', max:33});
-      $scope.choicesX.push({norsk:'Antall sanger', name:'antallunikesanger', max:350})
+      $scope.choicesY.push({norsk:'Uker på listen', name:'antall', max:33, min:0});
+      $scope.choicesY.push({norsk:'Antall sanger', name:'antallunikesanger', max:350, min:0})
+      $scope.choicesX.push({norsk:'Uker på listen', name:'antall', max:33, min:0});
+      $scope.choicesX.push({norsk:'Antall sanger', name:'antallunikesanger', max:350, min:0})
 
       $scope.getArtists();
     }
@@ -220,10 +226,10 @@ angular.module('vgListaVizApp')
       $scope.itemY =$scope.choicesY[0];
       $scope.itemX =$scope.choicesX[1];
 
-      $scope.choicesY.push({norsk:'Uker på listen', name:'antall', max: 60});
-      $scope.choicesY.push({norsk:'Beste plassering', name:'bestPos', max:20})
-      $scope.choicesX.push({norsk:'Uker på listen', name:'antall', max: 60});
-      $scope.choicesX.push({norsk:'Beste plassering', name:'bestPos', max:20})
+      $scope.choicesY.push({norsk:'Uker på listen', name:'antall', max: 60, min:0});
+      $scope.choicesY.push({norsk:'Beste plassering', name:'bestPos', max:20, min:1})
+      $scope.choicesX.push({norsk:'Uker på listen', name:'antall', max: 60, min:0});
+      $scope.choicesX.push({norsk:'Beste plassering', name:'bestPos', max:20, min:1})
       $scope.getSongs();
 
     }
@@ -232,21 +238,35 @@ angular.module('vgListaVizApp')
     }
     $scope.safeToChange=true;
   };
-
+  $scope.unCheck = function(){
+    if($scope.slideCheck){
+      $scope.slideCheck=false;
+      $scope.changeAttr();
+    }
+  }
   $scope.changeAttr = function(){
+var yr = null;
+  console.log($scope.slideCheck);
+
+    if($scope.slideCheck){
+      yr = $scope.rangeYear;
+console.log(yr);
+    }
     $scope.try.loading = true;
     $scope.safeToChange=false;
 
     if($scope.type==='Artist'){
-      $scope.getArtists();
+      $scope.getArtists(yr);
+      console.log("artist");
     }
     else if($scope.type==='Liste'){
+      console.log("liste");
 
-
-      $scope.getCharts();
+      $scope.getCharts(yr);
     }
     else if($scope.type==='Sang'){
-      $scope.getSongs();
+      console.log("sang");
+      $scope.getSongs(yr);
 
     }
     else{
@@ -280,8 +300,17 @@ angular.module('vgListaVizApp')
 
   };
   $scope.produceData = function(xaxis, yaxis, datainp){
-
+    $scope.try.xAxis.reversed = false;
+    $scope.try.yAxis.reversed = false;
+    if(xaxis.name==="bestPos"){
+      $scope.try.xAxis.reversed = true;
+    }
+    if(yaxis.name==="bestPos"){
+      $scope.try.yAxis.reversed = true;
+    }
     $scope.try.xAxis.max = xaxis.max;
+    $scope.try.xAxis.min = xaxis.min;
+    $scope.try.yAxis.min = yaxis.min;
     $scope.try.yAxis.max = yaxis.max;
 
     $scope.try.loading = true;
