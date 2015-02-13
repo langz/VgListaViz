@@ -86,10 +86,10 @@ angular.module('vgListaVizApp')
   }
   //INIT
 
-  $scope.choicesY.push({norsk:'Uker på listen', name:'antall'});
-  $scope.choicesY.push({norsk:'Beste plassering', name:'bestPos'})
-  $scope.choicesX.push({norsk:'Uker på listen', name:'antall'});
-  $scope.choicesX.push({norsk:'Beste plassering', name:'bestPos'})
+  $scope.choicesY.push({norsk:'Uker på listen', name:'antall', max: 60, min:0});
+  $scope.choicesY.push({norsk:'Beste plassering', name:'bestPos', max:20, min:1})
+  $scope.choicesX.push({norsk:'Uker på listen', name:'antall', max: 60, min:0});
+  $scope.choicesX.push({norsk:'Beste plassering', name:'bestPos', max:20, min:1})
   $scope.type ='Sang';
   songs.query( {soundSummary: {$not: {$size: 0}}}, {limit:10000}).then(function(res){
     $scope.songs = res;
