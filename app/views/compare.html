@@ -1,73 +1,71 @@
 <div autoscroll="true">
-  <h1 class="page-header">Sammenlign</h1>
-<div class="btn-group col-xs-12" data-toggle="buttons" style="margin-bottom:10px;">
-  <label class="btn btn-primary col-xs-4" ng-class="{ active: compType==='artist'}" ng-click="changeCompType('artist');">
-    <input type="radio" name="options"> Artist
-  </label>
-  <label class="btn btn-primary col-xs-4" ng-class="{ active: compType==='chart'}" ng-click="changeCompType('chart');">
-    <input type="radio" name="options"> Liste
-  </label>
-  <label class="btn btn-primary col-xs-4" ng-class="{ active: compType==='song'}" ng-click="changeCompType('song');">
-    <input type="radio" name="options"> Sang
-  </label>
-</div>
-</br>
-<div class="col-xs-12">
-  <div class="col-xs-5" ng-hide="compType==='chart'">
-    <h4 class="" style="padding-bottom:5px;"><span ng-if="compType==='artist'">Artist</span><span ng-if="compType==='song'">Sang</span> 1</h4>
-    <input type="text" ng-model="asyncSelected1" placeholder="Søk etter {{compType}}" typeahead="address.info for address in song1($viewValue)" typeahead-loading="loadingLocations1" typeahead-on-select="onSelect($item, 0)" typeahead-template-url="customTemplate.html" class="form-control">
-    <i ng-show="loadingLocations1" class="glyphicon glyphicon-refresh"></i>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-search fa-fw"></i> Sanger
+    </div>
+    <div class="panel-body">
+      <div class="btn-group col-xs-12" data-toggle="buttons" style="margin-bottom:10px;">
+        <label class="btn btn-primary col-xs-4" ng-class="{ active: compType==='artist'}" ng-click="changeCompType('artist');">
+          <input type="radio" name="options"> Artist
+        </label>
+        <label class="btn btn-primary col-xs-4" ng-class="{ active: compType==='chart'}" ng-click="changeCompType('chart');">
+          <input type="radio" name="options"> Liste
+        </label>
+        <label class="btn btn-primary col-xs-4" ng-class="{ active: compType==='song'}" ng-click="changeCompType('song');">
+          <input type="radio" name="options"> Sang
+        </label>
+      </div>
+    </br>
+    <div class="col-xs-12">
+      <div class="col-xs-5" ng-hide="compType==='chart'">
+        <h4 class="" style="padding-bottom:5px;"><span ng-if="compType==='artist'">Artist</span><span ng-if="compType==='song'">Sang</span> 1</h4>
+        <input type="text" ng-model="asyncSelected1" placeholder="Søk etter {{compType}}" typeahead="address.info for address in song1($viewValue)" typeahead-loading="loadingLocations1" typeahead-on-select="onSelect($item, 0)" typeahead-template-url="customTemplate.html" class="form-control">
+        <i ng-show="loadingLocations1" class="glyphicon glyphicon-refresh"></i>
+      </div>
+      <div class="col-xs-2" ng-hide="compType==='chart'">
+        <h3 class="text-center" style="padding-top: 25px;">VS.</h4>
+        </div>
+        <div class="col-xs-5" ng-hide="compType==='chart'">
+          <h4 class="" style="padding-bottom:5px;"><span ng-if="compType==='artist'">Artist</span><span ng-if="compType==='song'">Sang</span> 2</h4>
+          <input type="text" ng-model="asyncSelected2" placeholder="Søk etter {{compType}}" typeahead="address.info for address in song1($viewValue)" typeahead-loading="loadingLocations2" typeahead-on-select="onSelect($item, 1)" typeahead-template-url="customTemplate.html" class="form-control">
+          <i ng-show="loadingLocations2" class="glyphicon glyphicon-refresh"></i>
+        </div>
+        <div class="col-xs-5" ng-hide="compType!='chart'">
+          <h4 class="">Liste 1</h4>
+          <div class="col-xs-6 form-group">
+            <label for="year1">År</label>
+            <select class="soflow" id="year1" ng-init="selectedYear = years[0];" ng-options="year as year for year in years"
+            ng-model="selectedYear" ng-change="getChart(selectedYear, selectedWeek, 0)"></select>
+          </div>
+          <div class="col-xs-6 form-group">
+            <label for="week1">Uke</label>
+            <select class="soflow" id="week1" ng-init="selectedWeek = weeks[0];" ng-options="week as week for week in weeks"
+            ng-model="selectedWeek" ng-change="getChart(selectedYear, selectedWeek, 0)"></select>
+          </div>
+        </div>
+        <div class="col-xs-2" ng-hide="compType!='chart'">
+          <h3 class="text-center" style="padding-top: 25px;">VS.</h4>
+          </div>
+          <div class="col-xs-5" ng-hide="compType!='chart'">
+            <h4 class="">Liste 2</h4>
+            <div class="col-xs-6 form-group">
+              <label for="year2">År</label>
+              <select class="soflow"  id="year2" ng-init="selectedYear1 = years[0];" ng-options="year as year for year in years"
+              ng-model="selectedYear1" ng-change="getChart(selectedYear1, selectedWeek1, 1)"></select>
+            </div>
+            <div class="col-xs-6 form-group">
+              <label for="week2">Uke</label>
+              <select class="soflow" id="week2" ng-init="selectedWeek1 = weeks[0];" ng-options="week as week for week in weeks"
+              ng-model="selectedWeek1" ng-change="getChart(selectedYear1, selectedWeek1, 1)"></select>
+            </div>
+          </div>
+        </div>
+        <highchart ng-hide="hideValue" id="compareChart" config="compareConfig" data-highcharts-chart="0" style=""></highchart>
+      </div>
+    </div>
   </div>
-  <div class="col-xs-2" ng-hide="compType==='chart'">
-    <h3 class="text-center" style="padding-top: 25px;">VS.</h4>
-    </div>
-  <div class="col-xs-5" ng-hide="compType==='chart'">
-    <h4 class="" style="padding-bottom:5px;"><span ng-if="compType==='artist'">Artist</span><span ng-if="compType==='song'">Sang</span> 2</h4>
-    <input type="text" ng-model="asyncSelected2" placeholder="Søk etter {{compType}}" typeahead="address.info for address in song1($viewValue)" typeahead-loading="loadingLocations2" typeahead-on-select="onSelect($item, 1)" typeahead-template-url="customTemplate.html" class="form-control">
-    <i ng-show="loadingLocations2" class="glyphicon glyphicon-refresh"></i>
-  </div>
-  <div class="col-xs-5" ng-hide="compType!='chart'">
-    <h4 class="">Liste 1</h4>
-    <div class="col-xs-6 form-group">
-      <label for="year1">År</label>
-      <select class="soflow" id="year1" ng-init="selectedYear = years[0];" ng-options="year as year for year in years"
-      ng-model="selectedYear" ng-change="getChart(selectedYear, selectedWeek, 0)"></select>
-    </div>
-    <div class="col-xs-6 form-group">
-      <label for="week1">Uke</label>
-      <select class="soflow" id="week1" ng-init="selectedWeek = weeks[0];" ng-options="week as week for week in weeks"
-      ng-model="selectedWeek" ng-change="getChart(selectedYear, selectedWeek, 0)"></select>
-    </div>
-
-  </div>
-  <div class="col-xs-2" ng-hide="compType!='chart'">
-<h3 class="text-center" style="padding-top: 25px;">VS.</h4>
-</div>
-  <div class="col-xs-5" ng-hide="compType!='chart'">
-    <h4 class="">Liste 2</h4>
-    <div class="col-xs-6 form-group">
-      <label for="year2">År</label>
-      <select class="soflow"  id="year2" ng-init="selectedYear1 = years[0];" ng-options="year as year for year in years"
-      ng-model="selectedYear1" ng-change="getChart(selectedYear1, selectedWeek1, 1)"></select>
-    </div>
-    <div class="col-xs-6 form-group">
-      <label for="week2">Uke</label>
-      <select class="soflow" id="week2" ng-init="selectedWeek1 = weeks[0];" ng-options="week as week for week in weeks"
-      ng-model="selectedWeek1" ng-change="getChart(selectedYear1, selectedWeek1, 1)"></select>
-    </div>
-
-  </div>
-</div>
-
-
-<highchart ng-hide="hideValue" id="compareChart" config="compareConfig" data-highcharts-chart="0" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto;"></highchart>
-
-
-
-
-</div>
-<script type="text/ng-template" id="customTemplate.html">
-<a>
-<span bind-html-unsafe="match.label | typeaheadHighlight:query"></span>
-</a>
-</script>
+  <script type="text/ng-template" id="customTemplate.html">
+  <a>
+  <span bind-html-unsafe="match.label | typeaheadHighlight:query"></span>
+  </a>
+  </script>

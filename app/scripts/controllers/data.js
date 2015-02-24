@@ -2,11 +2,11 @@
 
 /**
  * @ngdoc function
- * @name vgListaVizApp.controller:AboutCtrl
+ * @name vgListaVizApp.controller:DataCtrl
  * @description
- * # AboutCtrl
+ * # DataCtrl
  * Controller of the vgListaVizApp
  */
 angular.module('vgListaVizApp')
-  .controller('AboutCtrl', function ($scope) {
+  .controller('DataCtrl', function ($scope) {
   });

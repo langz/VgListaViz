@@ -1,17 +1,18 @@
 <div autoscroll="true">
-  <h1 class="page-header">Artister</h1>
-<div class="col-xs-12">
-  <select class="form-control" ng-change="genererChart(item)" ng-model="item" ng-init="item = choices[0]" ng-options="choice as choice.norsk for choice in choices"
-  ></select>
-</div>
-<div class="col-xs-12">
-  <highchart id="chart1" config="try" data-highcharts-chart="0"></highchart>
-</div>
-<div class="col-xs-12">
-  <h4 class="" style="padding-bottom:5px;">Finn informasjon om en artist</h4>
-  <input type="text" ng-model="asyncSelected1" placeholder="Søk etter Artist" typeahead="address.info for address in searchArtist($viewValue)" typeahead-loading="loadingLocations1" typeahead-on-select="goToArtist($item.artist)" typeahead-template-url="customTemplate.html" class="form-control">
-  <i ng-show="loadingLocations1" class="glyphicon glyphicon-refresh"></i>
-</div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-users fa-fw"></i> Artister
+    </div>
+    <div class="panel-body">
+      <div class="col-xs-12">
+        <highchart id="chart1" config="try" data-highcharts-chart="0"></highchart>
+      </div>
+      <div class="col-xs-12">
+        <select class="form-control" ng-change="genererChart(item)" ng-model="item" ng-init="item = choices[0]" ng-options="choice as choice.norsk for choice in choices"
+        ></select>
+      </div>
+    </div>
+  </div>
 </div>
 <script type="text/ng-template" id="customTemplate.html">
 <a>

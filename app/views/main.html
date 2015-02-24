@@ -1,140 +1,135 @@
 <div autoscroll="true">
-  <h1 class="page-header">Informasjon</h1>
+  <h1 class="page-header"><i class="fa fa-home fa-fw"></i>Hjem</h1>
+  <div class="row hidden-xs">
+    <div class="col-md-4">
+      <div class="panel panel-green">
+        <div class="panel-heading">
+          <div class="row">
+            <div class="col-xs-3">
+              <i class="fa fa-list fa-5x"></i>
+            </div>
+            <div class="col-xs-9 text-right">
+              <div class="huge">2,768</div>
+              <div>Lister</div>
+            </div>
+          </div>
+        </div>
+        <a ng-href="#/charts">
+          <div class="panel-footer">
+            <span class="pull-left">Utforsk!</span>
+            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+            <div class="clearfix"></div>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="panel panel-yellow">
+        <div class="panel-heading">
+          <div class="row">
+            <div class="col-xs-3">
+              <i class="fa fa-users fa-5x"></i>
+            </div>
+            <div class="col-xs-9 text-right">
+              <div class="huge">2,251</div>
+              <div>Artister</div>
+            </div>
+          </div>
+        </div>
+        <a ng-href="#/artists">
+          <div class="panel-footer">
+            <span class="pull-left">Utforsk!</span>
+            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+            <div class="clearfix"></div>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="panel panel-red">
+        <div class="panel-heading">
+          <div class="row">
+            <div class="col-xs-3">
+              <i class="fa fa-music fa-5x"></i>
+            </div>
+            <div class="col-xs-9 text-right">
+              <div class="huge">4,444</div>
+              <div>Sanger</div>
+            </div>
+          </div>
+        </div>
+        <a ng-href="#/songs">
+          <div class="panel-footer">
+            <span class="pull-left">Utforsk!</span>
+            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+            <div class="clearfix"></div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
   <div class="row">
-    <div class="col-xs-12">
-      <div class="col-lg-4 col-md-6">
-        <div class="panel panel-green">
-          <div class="panel-heading">
-            <div class="row">
-              <div class="col-xs-3">
-                <i class="fa fa-list fa-5x"></i>
-              </div>
-              <div class="col-xs-9 text-right">
-                <div class="huge">2,768</div>
-                <div>Lister</div>
-              </div>
-            </div>
-          </div>
-          <a ng-href="#/charts">
-            <div class="panel-footer">
-              <span class="pull-left">Utforsk!</span>
-              <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-              <div class="clearfix"></div>
-            </div>
-          </a>
+    <div class="col-xs-12 col-sm-8">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa fa-home fa-fw"></i> Introduksjon
         </div>
-      </div>
-      <div class="col-lg-4 col-md-6">
-        <div class="panel panel-yellow">
-          <div class="panel-heading">
-            <div class="row">
-              <div class="col-xs-3">
-                <i class="fa fa-users fa-5x"></i>
-              </div>
-              <div class="col-xs-9 text-right">
-                <div class="huge">2,251</div>
-                <div>Artister</div>
-              </div>
-            </div>
-          </div>
-          <a ng-href="#/artists">
-            <div class="panel-footer">
-              <span class="pull-left">Utforsk!</span>
-              <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-              <div class="clearfix"></div>
-            </div>
-          </a>
-        </div>
-      </div>
-      <div class="col-lg-4 col-md-6">
-        <div class="panel panel-red">
-          <div class="panel-heading">
-            <div class="row">
-              <div class="col-xs-3">
-                <i class="fa fa-music fa-5x"></i>
-              </div>
-              <div class="col-xs-9 text-right">
-                <div class="huge">4,444</div>
-                <div>Sanger</div>
-              </div>
-            </div>
-          </div>
-          <a ng-href="#/songs">
-            <div class="panel-footer">
-              <span class="pull-left">Utforsk!</span>
-              <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-              <div class="clearfix"></div>
-            </div>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="col-xs-8">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <i class="fa fa fa-home fa-fw"></i> Introduksjon
-      </div>
-      <!-- /.panel-heading -->
-      <div class="panel-body">
-        <p>
-          Prosjektet tar utgangspunkt i å oppdage, studere og utforske mønstre i norsk popmusikk gjennom en tidsperiode på 60år.
-          Har popsanger i Norge store likheter, slik at de muligens følger en «oppskrift» på en «toppliste sang»?
-          Slik som at sangene er like med tanke på rytme og takt eller at de er like på et lyrisk nivå.
-          Kanskje ordet «love» var mye brukt på 60-tallet, men at det i dag er «party»?
-          Dette er bare noen av spørsmålene man kan stille dette datasettet.
-          Formuler dine egne spørsmål og prøv å finn svar på de!
-        </p>
-        <p>
-          For å kunne svare på disse spørsmålene har jeg hentet ut lyd-teknisk data fra
-          <a href="http://echonest.com">EchoNest</a> og lyriske data
-          fra <a href="http://musixmatch.com">MusixMatch</a> for alle sangene på <a href="http://lista.no">VG Lista Topp 20</a>.
+        <div class="panel-body">
+          <p>
+            Prosjektet tar utgangspunkt i å oppdage, studere og utforske mønstre i norsk popmusikk gjennom en tidsperiode på 60år.
+            Har popsanger i Norge store likheter, slik at de muligens følger en «oppskrift» på en «toppliste sang»?
+            Slik som at sangene er like med tanke på rytme og takt eller at de er like på et lyrisk nivå.
+            Kanskje ordet «love» var mye brukt på 60-tallet, men at det i dag er «party»?
+            Dette er bare noen av spørsmålene man kan stille dette datasettet.
+            Formuler dine egne spørsmål og prøv å finn svar på de!
+          </p>
+          <p>
+            For å kunne svare på disse spørsmålene har jeg hentet ut lyd-teknisk data fra
+            <a href="http://echonest.com">EchoNest</a> og lyriske data
+            fra <a href="http://musixmatch.com">MusixMatch</a> for alle sangene på <a href="http://lista.no">VG Lista Topp 20</a>.
 
-          For å lettere se mønstre i så mye data er det presentert i form av grafer og andre visuelle komponenter.
-          I mine øyne, vil disse datavisualiseringene være interessante for generelle musikkelskere,
-          historikere, journalister, produsenter, songwriters, osv.
-        </p>
-      </div>
-      <!-- /.panel-body -->
-    </div>
-  </div>
-  <div class="col-xs-4">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <i class="fa fa-database fa-fw"></i> Nøkkel data
-      </div>
-      <!-- /.panel-heading -->
-      <div class="panel-body">
-        <div class="list-group">
-          <a href="#" class="list-group-item">
-            <i class="fa fa fa-star fa-fw"></i> År
-            <span class="pull-right text-muted small"><em>12</em>
-            </span>
-          </a>
-          <a href="#" class="list-group-item">
-            <i class="fa fa-list fa-fw"></i> Lister
-            <span class="pull-right text-muted small"><em>2,768</em>
-            </span>
-          </a>
-          <a href="#" class="list-group-item">
-            <i class="fa fa fa-users fa-fw"></i> Artister
-            <span class="pull-right text-muted small"><em>2,251</em>
-            </span>
-          </a>
-          <a href="#" class="list-group-item">
-            <i class="fa fa-music fa-fw"></i> Sanger
-            <span class="pull-right text-muted small"><em>4,444</em>
-            </span>
-          </a>
-          <a href="#" class="list-group-item">
-            <i class="fa fa-twitter fa-fw"></i> Annet
-            <span class="pull-right text-muted small"><em>12</em>
-            </span>
-          </a>
+            For å lettere se mønstre i så mye data er det presentert i form av grafer og andre visuelle komponenter.
+            I mine øyne, vil disse datavisualiseringene være interessante for generelle musikkelskere,
+            historikere, journalister, produsenter, songwriters, osv.
+          </p>
         </div>
-        <!-- /.list-group -->
       </div>
-      <!-- /.panel-body -->
+    </div>
+    <div class="col-sm-4 col-xs-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-database fa-fw"></i> Nøkkel data
+        </div>
+        <div class="panel-body">
+          <div class="list-group">
+            <a href="#" class="list-group-item">
+              <i class="fa fa fa-star fa-fw"></i> År
+              <span class="pull-right text-muted small"><em>12</em>
+              </span>
+            </a>
+            <a href="#" class="list-group-item">
+              <i class="fa fa-list fa-fw"></i> Lister
+              <span class="pull-right text-muted small"><em>2,768</em>
+              </span>
+            </a>
+            <a href="#" class="list-group-item">
+              <i class="fa fa fa-users fa-fw"></i> Artister
+              <span class="pull-right text-muted small"><em>2,251</em>
+              </span>
+            </a>
+            <a href="#" class="list-group-item">
+              <i class="fa fa-music fa-fw"></i> Sanger
+              <span class="pull-right text-muted small"><em>4,444</em>
+              </span>
+            </a>
+            <a href="#" class="list-group-item">
+              <i class="fa fa-twitter fa-fw"></i> Annet
+              <span class="pull-right text-muted small"><em>12</em>
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

@@ -2,112 +2,114 @@
 text:hover { opacity: .7 !important; }
 </style>
 <div autoscroll="true">
-  <h1 class="page-header">Liste</h1>
-<div ng-if="listeAktiv">
-<h2 class="sub-header"><span style="cursor: pointer;" ng-click="goToChartTypeSummaryYear(chart.year)">{{chart.year}}</span>   <u><span style="font-size: 20px;">{{chart.week}}</span></u></h2>
-</div>
-<div ng-if="!listeAktiv">
-<h2 class="sub-header">Sammendrag for året {{chart.year}}</h2>
-</div>
-<h3 class="sub-header">Lyd</h3>
-
-
-
-
-
-
-
-<div id="danceability" style="height:36px;"></div>
-
-<div id="energy" style="height:36px;"></div>
-
-<div id="loudness" style="height:36px;"></div>
-
-<div id="mode" style="height:36px;"></div>
-
-<div id="timesignature" style="height:36px;"></div>
-
-<div id="tempo" style="height:36px;"></div>
-
-<div id="duration" style="height:36px;"></div>
-
-<h3 class="sub-header">Tekst</h3>
-<div id="vis" class="col-xs-12" ></div>
-</br>
-<div ng-show="listeAktiv" >
-  <h3 class="sub-header">Liste(Topp 20)</h3>
-  <div class="row">
-    <div class="col-xs-12">
-      <div class="input-group">
-        <input type="text" class="form-control" ng-model="query" id="input_search" placeholder="Filtrer listen">
-        <span class="input-group-addon btn btn-primary button1" title="tooltip" >
-          <span class="glyphicon glyphicon-search"></span>
-        </span>
-      </div>
+  <h1 class="page-header">  <i class="fa fa-list fa-fw"></i>Liste
+    <span ng-if="listeAktiv">
+      <span style="cursor: pointer; font-size:14px;" ng-click="goToChartTypeSummaryYear(chart.year)">{{chart.year}} - </span><span style="font-size:14px">{{chart.week}}</span>
+    </span>
+    <span ng-if="!listeAktiv">
+      <span style="font-size:14px">Sammendrag for året {{chart.year}}</span>
+    </span>
+  </h1>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-file-sound-o fa-fw"></i> Lyd
+    </div>
+    <div class="panel-body">
+      <div id="danceability" style="height:36px;"></div>
+      <div id="energy" style="height:36px;"></div>
+      <div id="loudness" style="height:36px;"></div>
+      <div id="mode" style="height:36px;"></div>
+      <div id="timesignature" style="height:36px;"></div>
+      <div id="tempo" style="height:36px;"></div>
+      <div id="duration" style="height:36px;"></div>
     </div>
   </div>
-</br>
-<div class="row">
-  <div class="col-xs-12">
-    <table class="table table-hover table-condensed table-responsive table-striped">
-      <tr>
-        <th class="col-xs-2"> <a ng-click="sortField2='position'; reverse2 = !reverse2">
-          Plassering <span ng-show="sortField2 == 'position'">
-            <span ng-show="!reverse2" class="glyphicon glyphicon-arrow-up"></span>
-            <span ng-show="reverse2" class="glyphicon glyphicon-arrow-down"></span>
-          </span>
-        </a>
-      </th>
-        <th class="col-xs-6"> <a ng-click="sortField2='title'; reverse2 = !reverse2">
-          Tittel <span ng-show="sortField2 == 'title'">
-            <span ng-show="!reverse2" class="glyphicon glyphicon-arrow-up"></span>
-            <span ng-show="reverse2" class="glyphicon glyphicon-arrow-down"></span>
-          </span>
-        </a>
-      </th>
-      <th class="col-xs4"> <a ng-click="sortField2='artist'; reverse2 = !reverse2">
-        Artist <span ng-show="sortField2 == 'artist'">
-          <span ng-show="!reverse2" class="glyphicon glyphicon-arrow-up"></span>
-          <span ng-show="reverse2" class="glyphicon glyphicon-arrow-down"></span>
-        </span>
-      </a>
-    </th>
-
-
-
-
-
-  </tr>
-  <tr ng-repeat="sang in chart.list | filter:query | orderBy:sortField2:reverse2" style="cursor: pointer;">
-    <td class="col-xs-2">{{sang.position}}.</td>
-    <td style="cursor: pointer;" ng-click="goToSang(sang.title)" class="col-xs-6">{{sang.title}}</td>
-    <td style="cursor: pointer;" ng-click="gotoArtist(sang.artist)" class="col-xs-4">{{sang.artist}}</td>
-
-
-  </tr>
-</table>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-file-text fa-fw"></i> Tekst
+      <span class="pull-right" style="font-size:12px">Antall unike ord: {{chart.lyricSummary.length}}</span>
+    </div>
+    <div class="panel-body">
+      <div id="vis" class="col-xs-12" ></div>
+    </div>
+  </div>
+  <div ng-show="listeAktiv" >
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-trophy fa-fw"></i>Listeplassering(Topp {{chart.list.length}})
+      </div>
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="input-group">
+              <input type="text" class="form-control" ng-model="query" id="input_search" placeholder="Filtrer listen">
+              <span class="input-group-addon btn btn-primary button1" title="tooltip" style="border: 1px solid #ccc;" >
+                <i class="fa fa-search fa-fw"></i>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <table class="table table-hover table-condensed table-responsive table-striped">
+              <tr>
+                <th class="col-xs-2"> <a ng-click="sortField2='position'; reverse2 = !reverse2">
+                  Plassering <span ng-show="sortField2 == 'position'">
+                    <span ng-show="!reverse2" class="glyphicon glyphicon-arrow-up"></span>
+                    <span ng-show="reverse2" class="glyphicon glyphicon-arrow-down"></span>
+                  </span>
+                </a>
+              </th>
+              <th class="col-xs-6"> <a ng-click="sortField2='title'; reverse2 = !reverse2">
+                Tittel <span ng-show="sortField2 == 'title'">
+                  <span ng-show="!reverse2" class="glyphicon glyphicon-arrow-up"></span>
+                  <span ng-show="reverse2" class="glyphicon glyphicon-arrow-down"></span>
+                </span>
+              </a>
+            </th>
+            <th class="col-xs4"> <a ng-click="sortField2='artist'; reverse2 = !reverse2">
+              Artist <span ng-show="sortField2 == 'artist'">
+                <span ng-show="!reverse2" class="glyphicon glyphicon-arrow-up"></span>
+                <span ng-show="reverse2" class="glyphicon glyphicon-arrow-down"></span>
+              </span>
+            </a>
+          </th>
+        </tr>
+        <tr ng-repeat="sang in chart.list | filter:query | orderBy:sortField2:reverse2" style="cursor: pointer;">
+          <td class="col-xs-2">{{sang.position}}.</td>
+          <td style="cursor: pointer;" ng-click="goToSang(sang.title)" class="col-xs-6">{{sang.title}}</td>
+          <td style="cursor: pointer;" ng-click="gotoArtist(sang.artist)" class="col-xs-4">{{sang.artist}}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
 </div>
 </div>
 </div>
 <div>
-  <h3 class="sub-header">Lister fra {{chart.year}}</h3>
-  <div class="col-xs-12">
-    <div class="col-xs-5 form-group">
-      <label for="year1">År</label>
-      <select class="soflow" id="year1" ng-init="selectedYear = years[0];" ng-options="year as year for year in years"
-      ng-model="selectedYear"></select>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-list fa-fw"></i> Andre Lister fra {{chart.year}}
     </div>
-    <div class="col-xs-5 form-group">
-      <label for="week1">Uke</label>
-      <select class="soflow" id="week1" ng-init="selectedWeek = weeks[0];" ng-options="week as week for week in weeks"
-      ng-model="selectedWeek"></select>
+    <div class="panel-body">
+      <div class="col-xs-12">
+        <div class="col-xs-5 form-group">
+          <label for="year1">År</label>
+          <select class="soflow" id="year1" ng-init="selectedYear = years[0];" ng-options="year as year for year in years"
+          ng-model="selectedYear"></select>
+        </div>
+        <div class="col-xs-5 form-group">
+          <label for="week1">Uke</label>
+          <select class="soflow" id="week1" ng-init="selectedWeek = weeks[0];" ng-options="week as week for week in weeks"
+          ng-model="selectedWeek"></select>
+        </div>
+        <div class="col-xs-2 form-group">
+          <button type="button" class="btn btn-default btn-lg" ng-click="getChart(selectedYear, selectedWeek)" style="margin-top:12px;">
+            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Gå
+          </button>
+        </div>
+      </div>
     </div>
-    <div class="col-xs-2 form-group">
-      <button type="button" class="btn btn-default btn-lg" ng-click="getChart(selectedYear, selectedWeek)" style="margin-top:12px;">
-        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Gå
-      </button>
-    </div>
-
   </div>
 </div>
 <button type="button" class="btn btn-default btn-lg" style="margin-top:12px;" ng-click="goToCompare(chart._id.$oid)">

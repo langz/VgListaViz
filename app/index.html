@@ -25,7 +25,7 @@
   <!-- Add your site or application content here -->
   <div ng-controller="NavBarCtrl">
     <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container-fluid">
+      <div class="col-xs-12">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
             <span class="sr-only">Toggle navigation</span>
@@ -39,12 +39,13 @@
           <ul class="nav navbar-nav navbar-right">
             <li ng-class="{ active: isActive('/about')}"><a ng-href="#/about"><i class="fa fa-info-circle fa-fw"></i> Om</a></li>
           </ul>
-          <form class="navbar-form navbar-right">
 
-            <i class="fa fa-search fa-fw" style="color: #777;"></i>
-            <input type="text" class="form-control" placeholder="Search...">
-
-          </form>
+          <ul class="navbar-form navbar-right">
+            <i ng-show="loadingLocations1" class="glyphicon glyphicon-refresh" style="color:white"></i>
+            <input type="text" ng-model="asyncSelected1" placeholder="Søk..." typeahead="address.info for address in search($viewValue)" typeahead-loading="loadingLocations1" typeahead-on-select="onSelect($item)" typeahead-template-url="customTemplate.html" class="form-control">
+            <select class="form-control" ng-change="asyncSelected1=null;" id="choice" ng-init="choice = choices[0];" ng-options="ch for ch in choices"
+            ng-model="choice"></select>
+          </ul>
         </div>
       </div>
     </nav>
@@ -52,6 +53,8 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
+            <li ng-class="{ active: isActive('/')}"><a ng-href="#/"><i class="fa fa-home fa-fw"></i> Hjem</a></li>
+            <li ng-class="{ active: isActive('/data')}"><a ng-href="#/data"><i class="fa fa-database fa-fw"></i> Data beskrivelse</a></li>
             <li ng-class="{ active: isActive('/charts') || isActive('/chart/')}"><a ng-href="#/charts"><i class="fa fa-list fa-fw"></i> Lister</a></li>
             <li ng-class="{ active: isActive('/artists') || isActive('/artist/')}"><a ng-href="#/artists"><i class="fa fa-users fa-fw"></i> Artister</a></li>
             <li ng-class="{ active: isActive('/songs') || isActive('/song/')}"><a ng-href="#/songs"><i class="fa fa-music fa-fw"></i> Sanger</a></li>
@@ -70,7 +73,11 @@
   </div>
 
 
-
+  <script type="text/ng-template" id="customTemplate.html">
+  <a style="   overflow: hidden;">
+  <span bind-html-unsafe="match.label | typeaheadHighlight:query"></span>
+  </a>
+  </script>
   <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
   <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -109,7 +116,7 @@
   <!-- build:js({.tmp,app}) scripts/scripts.js -->
   <script src="scripts/app.js"></script>
   <script src="scripts/controllers/main.js"></script>
-  <script src="scripts/controllers/about.js"></script>
+  <script src="scripts/controllers/data.js"></script>
   <script src="scripts/services/songs.js"></script>
   <script src="scripts/services/charts.js"></script>
   <script src="scripts/services/mongolab_config.js"></script>

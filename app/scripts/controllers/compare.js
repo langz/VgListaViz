@@ -25,7 +25,7 @@ angular.module('vgListaVizApp')
       });
 
     }
-    else if($routeParams.type==="song"){
+    else if($routeParams.type==="sang"){
       songs.query({_id:{$oid: $routeParams.id}}).then(function(res){
         var obj = res[0];
         obj.type=$routeParams.type;
@@ -166,12 +166,12 @@ angular.module('vgListaVizApp')
 
       $scope.song1 = function(inputText){
 
-        if($scope.compType==='song'){
+        if($scope.compType==='sang'){
           return songs.query({$and:[{title:{$regex:inputText, $options : 'i'}}, {soundSummary: {$not: {$size: 0}}}]}, { limit: 10 })
           .then(function(s){
             return s.map(function(item){
               item.info = item.title + " - " + item.artist;
-              item.type='song';
+              item.type='sang';
               return item;
             });
           });
@@ -188,7 +188,7 @@ angular.module('vgListaVizApp')
         }
       };
       $scope.onSelect = function(inp, number) {
-        if(inp.type==='song'){
+        if(inp.type==='sang'){
           $scope.changeComparison(inp,number);
           console.log(inp);
         }
@@ -213,7 +213,7 @@ angular.module('vgListaVizApp')
             data.push({'y':$scope.percentageOf(obj.soundSummary[a][propName], propName, number), 'color':color});
           }
         }
-        if(obj.type==="song"){
+        if(obj.type==="sang"){
           categorie.push("Beste plassering");
           data.push({'y':$scope.percentageOf(obj.bestPos, "Beste plassering", number), 'color':color});
           categorie.push("Antall Uker");

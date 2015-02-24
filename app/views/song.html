@@ -2,83 +2,97 @@
 text:hover { opacity: .7 !important; }
 </style>
 <div autoscroll="true">
-  <h1 class="page-header">Sang <span style="font-size:14px">{{song.title}}</span></h1>
-<div ng-if="soundData">
-  <h3 ng-click="metoden()" class="sub-header">Lyd</h3>
-
-  <div id="danceability" style="height:36px;"></div>
-
-
-  <div id="energy" style="height:36px;"></div>
-
-  <div id="loudness" style="height:36px;"></div>
-
-  <div id="mode" style="height:36px;"></div>
-
-  <div id="timesignature" style="height:36px;"></div>
-
-  <div id="tempo" style="height:36px;"></div>
-  <div id="listet" style="height:36px;"></div>
-  <div id="duration" style="height:36px;"></div>
-</div>
-<div ng-show="tekst">
-  <h3 class="sub-header">Tekst</h3>
-  <div id="vis" class="col-xs-12" ></div>
-</div>
-<h3 class="sub-header">{{song.title}} sin historie på listene</h3>
-<div class="col-xs-12">
-  <highchart id="chart1" config="try" data-highcharts-chart="0"></highchart>
-</div>
-<div class="col-xs-12" ng-if="artist.sanger.length!=1">
-  <h3 class="sub-header">Andre sanger av {{song.artist}}</h3>
-  <div class="row">
-    <div class="col-xs-12">
-      <div class="input-group">
-        <input type="text" class="form-control" ng-model="query" id="input_search" placeholder="Filtrer sanger">
-        <span class="input-group-addon btn btn-primary button1" title="tooltip" >
-          <span class="glyphicon glyphicon-search"></span>
-        </span>
+  <h1 class="page-header"><i class="fa fa-music fa-fw"></i> Sang <span style="font-size:14px">{{song.title}}</span><span style="font-size:14px"> - {{song.artist}}</span></h1>
+  <div ng-if="soundData">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-file-sound-o fa-fw"></i> Lyd
+      </div>
+      <div class="panel-body">
+        <div id="danceability" style="height:36px;"></div>
+        <div id="energy" style="height:36px;"></div>
+        <div id="loudness" style="height:36px;"></div>
+        <div id="mode" style="height:36px;"></div>
+        <div id="timesignature" style="height:36px;"></div>
+        <div id="tempo" style="height:36px;"></div>
+        <div id="listet" style="height:36px;"></div>
+        <div id="duration" style="height:36px;"></div>
       </div>
     </div>
   </div>
-</br>
-<div class="row">
-  <div class="col-xs-12">
-    <table class="table table-hover table-condensed table-responsive table-striped">
-      <tr>
-        <th class="col-sm-4"> <a ng-click="sortField='title'; reverse = !reverse">
-          Tittel <span ng-show="sortField == 'title'">
-            <span ng-show="!reverse" class="glyphicon glyphicon-arrow-up"></span>
-            <span ng-show="reverse" class="glyphicon glyphicon-arrow-down"></span>
-          </span>
-        </a>
-      </th>
-      <th class="col-xs-4"> <a ng-click="sortField='antall'; reverse = !reverse">
-        Antall uker listet <span ng-show="sortField == 'antall'">
-          <span ng-show="!reverse" class="glyphicon glyphicon-arrow-up"></span>
-          <span ng-show="reverse" class="glyphicon glyphicon-arrow-down"></span>
-        </span>
-      </a>
-    </th>
-    <th class="col-xs-4"><a ng-click="sortField='bestPos'; reverse = !reverse">
-      Beste plassering <span ng-show="sortField == 'bestPos'">
-        <span ng-show="!reverse" class="glyphicon glyphicon-arrow-up"></span>
-        <span ng-show="reverse" class="glyphicon glyphicon-arrow-down"></span>
-      </span>
-    </a>
-  </th>
-
-
-
-
-</tr>
-<tr ng-if="sang._id.$oid != song._id.$oid" ng-click="gotoSang(sang._id.$oid)" ng-repeat="sang in artist.sanger | filter:query | orderBy:sortField:reverse" style="cursor: pointer;">
-  <td class="col-xs-4">{{sang.title}}</td>
-  <td class="col-xs-4">{{sang.antall}}</td>
-  <td class="col-xs-4">{{sang.bestPos}}</td>
-
-</tr>
-</table>
+  <div ng-show="tekst">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-file-text-o fa-fw"></i> Tekst
+        <span class="pull-right" style="font-size:12px">Antall unike ord: {{song.bow.length}}</span>
+      </div>
+      <div class="panel-body">
+        <div id="vis" class="col-xs-12" ></div>
+        </div
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-trophy fa-fw"></i> {{song.title}} sin plassering på listene
+    </div>
+    <div class="panel-body">
+      <div class="col-xs-12">
+        <highchart id="chart1" config="try" data-highcharts-chart="0"></highchart>
+      </div>
+    </div>
+  </div>
+  <div ng-if="artist.sanger.length!=1">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-music fa-fw"></i> Andre sanger av artisten {{song.artist}}
+        <span class="pull-right" style="font-size:12px">Antall: {{artist.sanger.length -1}}</span>
+      </div>
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="input-group">
+              <input type="text" class="form-control" ng-model="query" id="input_search" placeholder="Filtrer sanger">
+              <span class="input-group-addon btn btn-primary button1" title="tooltip" >
+                <span class="glyphicon glyphicon-search"></span>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <table class="table table-hover table-condensed table-responsive table-striped">
+              <tr>
+                <th class="col-sm-4"> <a ng-click="sortField='title'; reverse = !reverse">
+                  Tittel <span ng-show="sortField == 'title'">
+                    <span ng-show="!reverse" class="glyphicon glyphicon-arrow-up"></span>
+                    <span ng-show="reverse" class="glyphicon glyphicon-arrow-down"></span>
+                  </span>
+                </a>
+              </th>
+              <th class="col-xs-4"> <a ng-click="sortField='antall'; reverse = !reverse">
+                Antall uker listet <span ng-show="sortField == 'antall'">
+                  <span ng-show="!reverse" class="glyphicon glyphicon-arrow-up"></span>
+                  <span ng-show="reverse" class="glyphicon glyphicon-arrow-down"></span>
+                </span>
+              </a>
+            </th>
+            <th class="col-xs-4"><a ng-click="sortField='bestPos'; reverse = !reverse">
+              Beste plassering <span ng-show="sortField == 'bestPos'">
+                <span ng-show="!reverse" class="glyphicon glyphicon-arrow-up"></span>
+                <span ng-show="reverse" class="glyphicon glyphicon-arrow-down"></span>
+              </span>
+            </a>
+          </th>
+        </tr>
+        <tr ng-if="sang._id.$oid != song._id.$oid" ng-click="gotoSang(sang._id.$oid)" ng-repeat="sang in artist.sanger | filter:query | orderBy:sortField:reverse" style="cursor: pointer;">
+          <td class="col-xs-4">{{sang.title}}</td>
+          <td class="col-xs-4">{{sang.antall}}</td>
+          <td class="col-xs-4">{{sang.bestPos}}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
 </div>
 </div>
 </div>
