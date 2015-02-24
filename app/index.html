@@ -35,24 +35,38 @@
           </button>
           <a class="navbar-brand" href="#">VGLista Visualisering</a>
         </div>
-        <div id="navbar" class="navbar-collapse collapse">
+        <div id="navbar1" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
             <li ng-class="{ active: isActive('/about')}"><a ng-href="#/about"><i class="fa fa-info-circle fa-fw"></i> Om</a></li>
           </ul>
 
           <ul class="navbar-form navbar-right">
-            <i ng-show="loadingLocations1" class="glyphicon glyphicon-refresh" style="color:white"></i>
-            <input type="text" ng-model="asyncSelected1" placeholder="Søk..." typeahead="address.info for address in search($viewValue)" typeahead-loading="loadingLocations1" typeahead-on-select="onSelect($item)" typeahead-template-url="customTemplate.html" class="form-control">
-            <select class="form-control" ng-change="asyncSelected1=null;" id="choice" ng-init="choice = choices[0];" ng-options="ch for ch in choices"
-            ng-model="choice"></select>
+
           </ul>
         </div>
       </div>
     </nav>
     <div class="container-fluid">
       <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
+        <div id="navbar" class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
+            <li class="sidebar-select">
+              <select class="form-control" ng-change="asyncSelected1=null;" id="choice" ng-init="choice = choices[0];" ng-options="ch for ch in choices"
+              ng-model="choice"></select>
+
+
+            </li>
+            <li class="sidebar-search">
+                            <div class="input-group custom-search-form">
+                              <input type="text" ng-model="asyncSelected1" placeholder="Søk..." typeahead="address.info for address in search($viewValue)" typeahead-loading="loadingLocations1" typeahead-on-select="onSelect($item)" typeahead-template-url="customTemplate.html" class="form-control">
+                                <span class="input-group-btn">
+                                <button class="btn btn-default" type="button" style="cursor: default;">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                            </div>
+                            <!-- /input-group -->
+                        </li>
             <li ng-class="{ active: isActive('/')}"><a ng-href="#/"><i class="fa fa-home fa-fw"></i> Hjem</a></li>
             <li ng-class="{ active: isActive('/data')}"><a ng-href="#/data"><i class="fa fa-database fa-fw"></i> Data beskrivelse</a></li>
             <li ng-class="{ active: isActive('/charts') || isActive('/chart/')}"><a ng-href="#/charts"><i class="fa fa-list fa-fw"></i> Lister</a></li>
@@ -74,7 +88,7 @@
 
 
   <script type="text/ng-template" id="customTemplate.html">
-  <a style="   overflow: hidden;">
+  <a style="   overflow: hidden; ">
   <span bind-html-unsafe="match.label | typeaheadHighlight:query"></span>
   </a>
   </script>
