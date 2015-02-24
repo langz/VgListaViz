@@ -2,10 +2,9 @@
   text:hover { opacity: .7 !important; }
 </style>
 <div autoscroll="true">
-<h2 class="sub-header">{{artist.artist}}</h>
-<h3 class="sub-header">Lyd</h3>
-<hr>
+<h1 class="page-header">Artist <span style="font-size:14px">{{artist.artist}}</span></h1>
 
+<h3 class="sub-header">Lyd</h3>
 
 
 
@@ -30,17 +29,14 @@
 
 <div ng-show="tekst">
 <h3 class="sub-header">Tekst</h3>
-<hr>
 <div id="vis" class="col-xs-12" ></div>
 </div>
 <h3 class="sub-header">{{artist.artist}} sin historie på listene</h3>
-<hr>
 <div class="col-xs-12">
   <highchart id="chart1" config="try" data-highcharts-chart="0"></highchart>
 </div>
-
+</br>
 <h3 class="sub-header">Sanger</h3>
-<hr>
 <div class="row">
   <div class="col-xs-12">
   <div class="input-group">
@@ -92,7 +88,6 @@
 </div>
 </div>
 <h3 class="sub-header">Listet i</h3>
-<hr>
 <div class="row">
   <div class="col-xs-12">
   <div class="input-group">

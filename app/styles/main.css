@@ -95,117 +95,119 @@ body {
 }
 
 .nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
-color: #fff;
-background-color: #dd2027;
+  color: #fff;
+  background-color: #dd2027;
 }
 .nav-pills > li > a{
-color: black;
+  color: black;
 }
 
 /* MARKETING CONTENT
-    -------------------------------------------------- */
+-------------------------------------------------- */
 
-    /* Center align the text within the three columns below the carousel */
-    .marketing .span4 {
-      text-align: center;
-    }
-    .marketing h2 {
-      font-weight: normal;
-    }
-    .marketing .span4 p {
-      margin-left: 10px;
-      margin-right: 10px;
-    }
+/* Center align the text within the three columns below the carousel */
+.marketing .span4 {
+  text-align: center;
+}
+.marketing h2 {
+  font-weight: normal;
+}
+.marketing .span4 p {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+a:hover{
+color:black;
+}
 
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open > .dropdown-toggle.btn-primary {
+  color: #fff;
+  background-color: #dd2027;
+  border-color: #dd2027;
+}
+.btn-primary {
+  color: black;
+  background-color: white;
+  border-color: black;
+}
 
-    .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open > .dropdown-toggle.btn-primary {
-      color: #fff;
-      background-color: #dd2027;
-      border-color: red;
-    }
-    .btn-primary {
-      color: black;
-      background-color: white;
-      border-color: black;
-    }
+select.soflow, select.soflow-color {
+  background-color: white;
+  -webkit-appearance: button;
+  -webkit-border-radius: 2px;
+  -webkit-padding-end: 20px;
+  -webkit-padding-start: 2px;
+  -webkit-user-select: none;
+  background-image: url(http://i62.tinypic.com/15xvbd5.png);
+  background-position: 92% center;
+  background-repeat: no-repeat;
+  border: 1px solid #AAA;
+  font-size: inherit;
+  overflow: hidden;
+  padding: 5px 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+}
+.huge {
+  font-size: 35px;
+}
 
-    select.soflow, select.soflow-color {
-      background-color: white;
-      -webkit-appearance: button;
-      -webkit-border-radius: 2px;
-      -webkit-padding-end: 20px;
-      -webkit-padding-start: 2px;
-      -webkit-user-select: none;
-      background-image: url(http://i62.tinypic.com/15xvbd5.png);
-      background-position: 92% center;
-      background-repeat: no-repeat;
-      border: 1px solid #AAA;
-      font-size: inherit;
-      overflow: hidden;
-      padding: 5px 10px;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      width: 100%;
-    }
-    .huge {
-        font-size: 35px;
-    }
+.panel-green {
+  border-color: #5cb85c;
+}
 
-    .panel-green {
-        border-color: #5cb85c;
-    }
+.panel-green .panel-heading {
+  border-color: #5cb85c;
+  color: #fff;
+  background-color: #5cb85c;
+}
 
-    .panel-green .panel-heading {
-        border-color: #5cb85c;
-        color: #fff;
-        background-color: #5cb85c;
-    }
+.panel-green a {
+  color: #5cb85c;
+}
 
-    .panel-green a {
-        color: #5cb85c;
-    }
+.panel-green a:hover {
+  color: #3d8b3d;
+}
 
-    .panel-green a:hover {
-        color: #3d8b3d;
-    }
+.panel-red {
+  border-color: #d9534f;
+}
 
-    .panel-red {
-        border-color: #d9534f;
-    }
+.panel-red .panel-heading {
+  border-color: #d9534f;
+  color: #fff;
+  background-color: #d9534f;
+}
 
-    .panel-red .panel-heading {
-        border-color: #d9534f;
-        color: #fff;
-        background-color: #d9534f;
-    }
+.chat-panel .panel-body {
+  height: 350px;
+  overflow-y: scroll;
+}
 
-    .chat-panel .panel-body {
-        height: 350px;
-        overflow-y: scroll;
-    }
+.panel-red a {
+  color: #d9534f;
+}
 
-    .panel-red a {
-        color: #d9534f;
-    }
+.panel-red a:hover {
+  color: #b52b27;
+}
 
-    .panel-red a:hover {
-        color: #b52b27;
-    }
+.panel-yellow {
+  border-color: #f0ad4e;
+}
 
-    .panel-yellow {
-        border-color: #f0ad4e;
-    }
+.panel-yellow .panel-heading {
+  border-color: #f0ad4e;
+  color: #fff;
+  background-color: #f0ad4e;
+}
 
-    .panel-yellow .panel-heading {
-        border-color: #f0ad4e;
-        color: #fff;
-        background-color: #f0ad4e;
-    }
+.panel-yellow a {
+  color: #f0ad4e;
+}
 
-    .panel-yellow a {
-        color: #f0ad4e;
-    }
-
-    .panel-yellow a:hover {
-        color: #df8a13;
-    }
+.panel-yellow a:hover {
+  color: #df8a13;
+}

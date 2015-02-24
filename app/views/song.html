@@ -2,10 +2,9 @@
 text:hover { opacity: .7 !important; }
 </style>
 <div autoscroll="true">
-<h2 class="sub-header">{{song.title}}   <u><span ng-click="gotoArtist(song.artist)" style="font-size: 20px; cursor: pointer;">{{song.artist}}</span></u></h2>
+  <h1 class="page-header">Sang <span style="font-size:14px">{{song.title}}</span></h1>
 <div ng-if="soundData">
   <h3 ng-click="metoden()" class="sub-header">Lyd</h3>
-  <hr>
 
   <div id="danceability" style="height:36px;"></div>
 
@@ -24,18 +23,14 @@ text:hover { opacity: .7 !important; }
 </div>
 <div ng-show="tekst">
   <h3 class="sub-header">Tekst</h3>
-  <hr>
   <div id="vis" class="col-xs-12" ></div>
 </div>
-</br>
 <h3 class="sub-header">{{song.title}} sin historie på listene</h3>
-<hr>
 <div class="col-xs-12">
   <highchart id="chart1" config="try" data-highcharts-chart="0"></highchart>
 </div>
 <div class="col-xs-12" ng-if="artist.sanger.length!=1">
   <h3 class="sub-header">Andre sanger av {{song.artist}}</h3>
-  <hr>
   <div class="row">
     <div class="col-xs-12">
       <div class="input-group">

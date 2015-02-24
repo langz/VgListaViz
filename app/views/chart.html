@@ -2,6 +2,7 @@
 text:hover { opacity: .7 !important; }
 </style>
 <div autoscroll="true">
+  <h1 class="page-header">Liste</h1>
 <div ng-if="listeAktiv">
 <h2 class="sub-header"><span style="cursor: pointer;" ng-click="goToChartTypeSummaryYear(chart.year)">{{chart.year}}</span>   <u><span style="font-size: 20px;">{{chart.week}}</span></u></h2>
 </div>
@@ -9,7 +10,6 @@ text:hover { opacity: .7 !important; }
 <h2 class="sub-header">Sammendrag for året {{chart.year}}</h2>
 </div>
 <h3 class="sub-header">Lyd</h3>
-<hr>
 
 
 
@@ -32,12 +32,10 @@ text:hover { opacity: .7 !important; }
 <div id="duration" style="height:36px;"></div>
 
 <h3 class="sub-header">Tekst</h3>
-<hr>
 <div id="vis" class="col-xs-12" ></div>
 </br>
 <div ng-show="listeAktiv" >
   <h3 class="sub-header">Liste(Topp 20)</h3>
-  <hr>
   <div class="row">
     <div class="col-xs-12">
       <div class="input-group">
@@ -93,7 +91,6 @@ text:hover { opacity: .7 !important; }
 </div>
 <div>
   <h3 class="sub-header">Lister fra {{chart.year}}</h3>
-  <hr>
   <div class="col-xs-12">
     <div class="col-xs-5 form-group">
       <label for="year1">År</label>
