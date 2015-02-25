@@ -19,6 +19,7 @@ angular.module('vgListaVizApp')
   $scope.reverse = false;
   $scope.sortField2='title';
   $scope.reverse2 = false;
+$scope.changeOverTime = [];
   var vis;
   var svg;
   var layout;
@@ -389,6 +390,44 @@ var timesignatureAvg=2;
     createTempo(obj.tempo);
     createTimesignature(obj.timesignature);
   }
+  $scope.choices = [
+    {
+      norsk:'Dansbarhet',
+      name:'danceability',
+    },
+    {
+      norsk:'Energi',
+      name:'energy'
+    },
+    {
+      norsk:'Lydstyrke',
+      name:'loudness'
+    },
+    {
+      norsk:'Modal skala',
+      name:'mode'
+    },
+    {
+      norsk:'Nøkkel',
+      name:'key'
+    },
+    {
+      norsk:'Taktart',
+      name:'timesignature'
+    },
+    {
+      norsk:'Tempo',
+      name:'tempo'
+    },
+    {
+      norsk:'Uker på listen',
+      name:'antallganger'
+    },
+    {
+      norsk:'Varighet',
+      name:'duration'
+    }
+  ];
   var omg = function(wordInput){
     fill = d3.scale.category20b();
     var maxverdien =  d3.max(wordInput.map(function(d) { return d[1]; }));
@@ -558,6 +597,70 @@ var timesignatureAvg=2;
       exporting: { enabled: false }
     };
 
+    $scope.changeLine = {
+      options: {
+        chart: {
+          type: 'line'
+        },
+        tooltip: {
+          valueDecimals:0,
+          valueSuffix:'',
+          pointFormat: '{series.name}: {point.y}',
+          headerFormat:"<b><span style=font-size: 10px>{point.key.a}, {point.key.c}</span></b><br/><span style=font-size: 10px>{point.key.d}</span></br>",
+          useHTML:true,
+        },
+
+        plotOptions: {
+          series: {
+            marker: {
+              fillColor: '#FFFFFF',
+              lineWidth: 2,
+              lineColor: '#dd2027',
+              symbol:'circle'
+            }
+          }
+        }
+      },
+      xAxis: {
+        categories: [],
+        type: 'category',
+        labels: {
+          formatter: function () {
+console.log(this.value);
+            return this.value;
+          },
+          useHTML:true
+        }
+      },
+      yAxis:{
+        min:1,
+        max:20,
+        tickInterval: 1,
+        reversed: true,
+        labels: {
+          enabled: true
+        },
+        title: {
+          text: "Plassering"
+        }
+      },
+
+      series: [{
+        name:'Plass',
+        data:'',
+        lineColor: '#dd2027',
+        fillColor: '#dd2027',
+        showInLegend: false
+      }
+      ],
+      title: {
+        text: ''
+      },
+
+      loading: true,
+      exporting: { enabled: false }
+    };
+
     $scope.goToChartTypeChart = function(oid){
 
       console.log('/chart/chart/'+oid);
@@ -606,6 +709,7 @@ var timesignatureAvg=2;
           for(var i = 0 ; i<res2[a].list.length;i++){
 
             if(res2[a].list[i].artist===$scope.artist.artist){
+
               values.push(res2[a].list[i].position);
               categorie.push({a:res2[a].year, b: "chart/" + res2[a]._id.$oid, c:res2[a].week, d:res2[a].list[i].title});
               break;
@@ -614,11 +718,15 @@ var timesignatureAvg=2;
         }
         $scope.try.series[0].data = values;
         $scope.try.xAxis.categories = categorie;
+        $scope.changeLine.series[0].data = values;
+        $scope.changeLine.xAxis.categories = categorie;
+        $scope.changeLine.loading = false;
         $scope.try.loading = false;
         for(var a = 0 ; a<res2.length; a++){
             for(var i = 0 ; i<res2[a].list.length;i++){
 
               if(res2[a].list[i].artist===$scope.artist.artist){
+
                 $scope.lister.push({position:res2[a].list[i].position, artist: res2[a].list[i].artist, title: res2[a].list[i].title, week: res2[a].week, year:res2[a].year, oid:res2[a]._id.$oid});
                 break;
               }
@@ -628,5 +736,7 @@ var timesignatureAvg=2;
 
       });
     });
-
+$scope.genererChart = function(item){
+console.log(item);
+}
   });

@@ -1,15 +1,15 @@
 'use strict';
 
 /**
- * @ngdoc function
- * @name vgListaVizApp.controller:SongsCtrl
- * @description
- * # SongsCtrl
- * Controller of the vgListaVizApp
- */
+* @ngdoc function
+* @name vgListaVizApp.controller:SongsCtrl
+* @description
+* # SongsCtrl
+* Controller of the vgListaVizApp
+*/
 angular.module('vgListaVizApp')
-  .controller('SongsCtrl', function ($scope, summaryArtist, $location, songs, summarySongTopAntall, summarySongTopDuration, summarySongTopEnergy, summarySongTopLoudness,
-summarySongTopMode, summarySongTopTempo, summarySongTopTimesignature, summarySongTopDanceability) {
+.controller('SongsCtrl', function ($scope, summaryArtist, $location, songs, summarySongTopAntall, summarySongTopDuration, summarySongTopEnergy, summarySongTopLoudness,
+  summarySongTopMode, summarySongTopTempo, summarySongTopTimesignature, summarySongTopDanceability) {
 
     $scope.item = {};
     $scope.links = [];
@@ -52,14 +52,14 @@ summarySongTopMode, summarySongTopTempo, summarySongTopTimesignature, summarySon
       }
     ];
 
-var getLink = function(input){
-  for(var o = 0 ; o < $scope.links.length; o++){
-    if($scope.links[o].tittel === input){
-      return $scope.links[o].id;
-      break;
+    var getLink = function(input){
+      for(var o = 0 ; o < $scope.links.length; o++){
+        if($scope.links[o].tittel === input){
+          return $scope.links[o].id;
+          break;
+        }
+      }
     }
-  }
-}
     $scope.genererChart = function(obj){
       var attributt = obj.name;
       var norskString = obj.norsk;
@@ -381,18 +381,18 @@ var getLink = function(input){
 
       $location.path('/song/'+oid);
     };
-  $scope.searchSong = function(inputText){
-    return songs.query({$and:[{title:{$regex:inputText, $options : 'i'}}, {soundSummary: {$not: {$size: 0}}}]}, { limit: 10 })
-    .then(function(s){
-      return s.map(function(item){
-        item.info = item.title + " - " + item.artist;
-        item.type='song';
-        return item;
+    $scope.searchSong = function(inputText){
+      return songs.query({$and:[{title:{$regex:inputText, $options : 'i'}}, {soundSummary: {$not: {$size: 0}}}]}, { limit: 10 })
+      .then(function(s){
+        return s.map(function(item){
+          item.info = item.title + " - " + item.artist;
+          item.type='song';
+          return item;
+        });
       });
-    });
-  };
+    };
     $scope.genererChart({
-        norsk:'Dansbarhet',
-        name:'danceability',
-      });
+      norsk:'Dansbarhet',
+      name:'danceability',
+    });
   });

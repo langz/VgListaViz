@@ -328,7 +328,7 @@ summaryArtistTopMode, summaryArtistTopTempo, summaryArtistTopTimesignature, summ
           fontFamily: 'Verdana, sans-serif'
         },
         formatter: function () {
-          return '<a href="#/artist/' + this.value + '"style="color:black;">' + this.value +
+          return '<a href="#/artist/' + this.value + '"style="color:black;">' + this.value.substring(0, 12) +
           '</a>';
         },
         useHTML:true
