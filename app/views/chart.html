@@ -10,29 +10,6 @@ text:hover { opacity: .7 !important; }
       <span style="font-size:14px">Sammendrag for året {{chart.year}}</span>
     </span>
   </h1>
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <i class="fa fa-file-sound-o fa-fw"></i> Lyd
-    </div>
-    <div class="panel-body">
-      <div id="danceability" style="height:36px;"></div>
-      <div id="energy" style="height:36px;"></div>
-      <div id="loudness" style="height:36px;"></div>
-      <div id="mode" style="height:36px;"></div>
-      <div id="timesignature" style="height:36px;"></div>
-      <div id="tempo" style="height:36px;"></div>
-      <div id="duration" style="height:36px;"></div>
-    </div>
-  </div>
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <i class="fa fa-file-text fa-fw"></i> Tekst
-      <span class="pull-right" style="font-size:12px">Antall unike ord: {{chart.lyricSummary.length}}</span>
-    </div>
-    <div class="panel-body">
-      <div id="vis" class="col-xs-12" ></div>
-    </div>
-  </div>
   <div ng-show="listeAktiv" >
     <div class="panel panel-default">
       <div class="panel-heading">
@@ -87,6 +64,29 @@ text:hover { opacity: .7 !important; }
 </div>
 </div>
 </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-file-sound-o fa-fw"></i> Lyd
+    </div>
+    <div class="panel-body">
+      <div id="danceability" style="height:36px;"></div>
+      <div id="energy" style="height:36px;"></div>
+      <div id="loudness" style="height:36px;"></div>
+      <div id="mode" style="height:36px;"></div>
+      <div id="timesignature" style="height:36px;"></div>
+      <div id="tempo" style="height:36px;"></div>
+      <div id="duration" style="height:36px;"></div>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-file-text fa-fw"></i> Tekst
+      <span class="pull-right" style="font-size:12px">Antall unike ord: {{chart.lyricSummary.length}}</span>
+    </div>
+    <div class="panel-body">
+      <div id="vis" class="col-xs-12" ></div>
+    </div>
+  </div>
 <div>
   <div class="panel panel-default">
     <div class="panel-heading">

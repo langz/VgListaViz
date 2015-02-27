@@ -19,7 +19,7 @@ angular.module('vgListaVizApp')
   $scope.reverse = false;
   $scope.sortField2='title';
   $scope.reverse2 = false;
-$scope.changeOverTime = [];
+  $scope.changeOverTime = [];
   var vis;
   var svg;
   var layout;
@@ -48,11 +48,86 @@ $scope.changeOverTime = [];
   var modeAvg = 0.7065017816252117;
   var tempoAvg = 120.10330113014082;
   var hitlastingAvg = 7.2631578947368425;
-var numWeeksAvg = 17;
-var numSongsAvg = 2;
-var timesignatureAvg=2;
+  var numWeeksAvg = 17;
+  var numSongsAvg = 2;
+  var timesignatureAvg=2;
 
+  $scope.changeBar = {
+    options:{
+      plotOptions: {
+        column:{
+          color:'#dd2027'
+        }
+      },
+      legend:{enabled:false},
+      tooltip: {
+        formatter : function (){
+  if(this.series.name==='Lydstyrke'){
+    return "-" + this.y;
+}
+else{
+return this.y
+}
 
+  }
+      },
+    },
+    title: {
+      text: ''
+    },
+    subtitle: {
+      text: ''
+    },
+    xAxis: {
+      type: 'category',
+      labels: {
+        rotation: -90,
+        style: {
+          fontSize: '13px',
+          fontFamily: 'Verdana, sans-serif'
+        }
+      }
+    },
+    yAxis: {
+      min: 0,
+      title: {
+        text: ''
+      }
+    },
+    series: [{
+      type: 'column',
+      name: '',
+      data: [
+
+      ],
+      dataLabels: {
+        enabled: true,
+        rotation: -90,
+        color: '#FFFFFF',
+        align: 'right',
+        format: '{point.y:.1f}', // one decimal
+        y: 10, // 10 pixels down from the top
+        style: {
+          fontSize: '13px',
+          fontFamily: 'Verdana, sans-serif'
+        }
+      }
+    },
+    {
+      type: 'line',
+      name: 'Average',
+      data: '',
+      marker: {
+        enabled: false
+      },
+      enableMouseTracking: false,
+      color:'black',
+      allowPointSelect: false,
+      tooltip: {
+        pointFormat: 'Gjennomsnittsverdi: <b>{point.y}</b>',
+      }
+    }]
+  };
 
   var optionsNormal = {
     chart:{
@@ -561,7 +636,7 @@ var timesignatureAvg=2;
         labels: {
           formatter: function () {
             if(this.value.a){
-              if(this.isFirst || this.isLast){ return '<a href="#/chart/' + this.value.b + this.value.b + + console.log(this) + '"style="color:black;">' + this.value.a +
+              if(this.isFirst || this.isLast){ return '<a href="#/chart/' + this.value.b + this.value.b + '"style="color:black;">' + this.value.a +
               '</a>'; }
             }
           },
@@ -588,155 +663,284 @@ var timesignatureAvg=2;
         fillColor: '#dd2027',
         showInLegend: false
       }
-      ],
-      title: {
-        text: ''
-      },
+    ],
+    title: {
+      text: ''
+    },
 
-      loading: true,
-      exporting: { enabled: false }
-    };
+    loading: true,
+    exporting: { enabled: false }
+  };
 
-    $scope.changeLine = {
-      options: {
-        chart: {
-          type: 'line'
-        },
-        tooltip: {
-          valueDecimals:0,
-          valueSuffix:'',
-          pointFormat: '{series.name}: {point.y}',
-          headerFormat:"<b><span style=font-size: 10px>{point.key.a}, {point.key.c}</span></b><br/><span style=font-size: 10px>{point.key.d}</span></br>",
-          useHTML:true,
-        },
 
-        plotOptions: {
-          series: {
-            marker: {
-              fillColor: '#FFFFFF',
-              lineWidth: 2,
-              lineColor: '#dd2027',
-              symbol:'circle'
-            }
-          }
+  $scope.genererChart = function(obj, artist){
+    console.log($scope.changeBar);
+    console.log($scope.artist)
+    var attributt = obj.name;
+    $scope.changeBar.series[1].data = [];
+    $scope.changeBar.series[0].name = obj.norsk;
+    if(attributt==="danceability"){
+      $scope.changeBar.series[0].data = [];
+
+      $scope.changeBar.loading = true;
+      $scope.changeBar.series[0].dataLabels.formatter=function(){
+        return Highcharts.numberFormat(this.y,2);
+      };
+      $scope.changeBar.yAxis.title.text = obj.norsk;
+
+      var mainArray = [];
+      var antall = 0
+      for(var i=0;i<artist.sanger.length;i++){
+        if(artist.sanger[i].soundSummary.length !=0){
+          antall ++;
+          console.log("VALUE" + artist.sanger[i].title);
+          var tempArray = [];
+          tempArray.push(artist.sanger[i].title);
+          tempArray.push(artist.sanger[i].soundSummary[0].danceability);
+          mainArray.push(tempArray);
         }
-      },
-      xAxis: {
-        categories: [],
-        type: 'category',
-        labels: {
-          formatter: function () {
-console.log(this.value);
-            return this.value;
-          },
-          useHTML:true
-        }
-      },
-      yAxis:{
-        min:1,
-        max:20,
-        tickInterval: 1,
-        reversed: true,
-        labels: {
-          enabled: true
-        },
-        title: {
-          text: "Plassering"
-        }
-      },
-
-      series: [{
-        name:'Plass',
-        data:'',
-        lineColor: '#dd2027',
-        fillColor: '#dd2027',
-        showInLegend: false
       }
-      ],
-      title: {
-        text: ''
-      },
+      $scope.changeBar.loading = false;
+      $scope.changeBar.series[0].data = mainArray;
+      $scope.changeBar.series[1].data = [[0,artist.danceability],[antall-1,artist.danceability]];
 
-      loading: true,
-      exporting: { enabled: false }
-    };
+    }
+    if(attributt==="duration"){
+      $scope.changeBar.series[0].data = [];
+      $scope.changeBar.loading = true;
+      $scope.changeBar.series[0].dataLabels.formatter=function(){
+        return Highcharts.numberFormat(this.y,0);
+      };
+      $scope.changeBar.yAxis.title.text = obj.norsk;
 
-    $scope.goToChartTypeChart = function(oid){
+      var mainArray = [];
+      var antall = 0;
+      for(var i=0;i<artist.sanger.length;i++){
+        if(artist.sanger[i].soundSummary.length !=0){
+          antall++;
+          var tempArray = [];
+          tempArray.push(artist.sanger[i].title);
+          tempArray.push(artist.sanger[i].soundSummary[1]["duration"]);
+          mainArray.push(tempArray);
+        }
+      }
+      $scope.changeBar.loading = false;
+      $scope.changeBar.series[0].data = mainArray;
+      $scope.changeBar.series[1].data = [[0,artist.duration],[antall-1,artist.duration]];
 
-      console.log('/chart/chart/'+oid);
-      $location.path('/chart/chart/'+oid);
+    }
+    if(attributt==="energy"){
+      $scope.changeBar.series[0].data = [];
+      $scope.changeBar.loading = true;
+      $scope.changeBar.series[0].dataLabels.formatter=function(){
+        return Highcharts.numberFormat(this.y,2);
+      };
+      $scope.changeBar.yAxis.title.text = obj.norsk;
 
-    };
-    $scope.goToCompare = function(oid){
-      $location.path('/compare/artist/'+oid);
-    };
+      var mainArray = [];
+      var antall = 0;
+      for(var i=0;i<artist.sanger.length;i++){
+        if(artist.sanger[i].soundSummary.length !=0){
+          var tempArray = [];
+          antall++;
+          tempArray.push(artist.sanger[i].title);
+          tempArray.push(artist.sanger[i].soundSummary[2]["energy"]);
+          mainArray.push(tempArray);
+        }
+      }
+      $scope.changeBar.loading = false;
+      $scope.changeBar.series[0].data = mainArray;
+      $scope.changeBar.series[1].data = [[0,artist.energy],[antall-1,artist.energy]];
+    }
+    if(attributt==="loudness"){
+      $scope.changeBar.series[0].data = [];
+      $scope.changeBar.loading = true;
+      $scope.changeBar.series[0].dataLabels.formatter=function(){
+        return -Highcharts.numberFormat(this.y,2);
+      };
+      $scope.changeBar.yAxis.title.text = obj.norsk;
 
-    $scope.gotoSang = function(oid){
-      console.log('/song/'+oid);
-      $location.path('/song/'+oid);
-    };
-    $scope.goToSangTitle = function(sangTittel, artistNavn){
-      songs.query({$and: [{title:sangTittel},{artist:artistNavn} ]}).then(function(res){
+      var mainArray = [];
+      var antall = 0;
+      for(var i=0;i<artist.sanger.length;i++){
+        if(artist.sanger[i].soundSummary.length !=0){
+          antall ++;
+          var tempArray = [];
+          tempArray.push(artist.sanger[i].title);
+          tempArray.push(Math.abs(artist.sanger[i].soundSummary[4]["loudness"]));
+          mainArray.push(tempArray);
+        }
+      }
+      $scope.changeBar.loading = false;
+      $scope.changeBar.series[0].data = mainArray;
+      $scope.changeBar.series[1].data = [[0,Math.abs(artist.loudness)],[antall-1,Math.abs(artist.loudness)]];
+    }
+    if(attributt==="antallganger"){
+      $scope.changeBar.series[0].data = [];
+      $scope.changeBar.loading = true;
+      $scope.changeBar.series[0].dataLabels.formatter=function(){
+        return Highcharts.numberFormat(this.y,0);
+      };
+      $scope.changeBar.yAxis.title.text = obj.norsk;
+
+      var mainArray = [];
+      var antall = 0;
+      for(var i=0;i<artist.sanger.length;i++){
+        if(artist.sanger[i].soundSummary.length !=0){
+          antall++;
+          var tempArray = [];
+          tempArray.push(artist.sanger[i].title);
+          tempArray.push(artist.sanger[i].antall);
+          mainArray.push(tempArray);
+        }
+      }
+      $scope.changeBar.loading = false;
+      $scope.changeBar.series[0].data = mainArray;
+      $scope.changeBar.series[1].data = [[0, 0],[antall-1, 0]];
+    }
+    if(attributt==="mode"){
+
+      $scope.changeBar.series[0].data = [];
+      $scope.changeBar.loading = true;
+      $scope.changeBar.series[0].dataLabels.formatter=function(){
+        return Highcharts.numberFormat(this.y,2);
+      };
+      $scope.changeBar.yAxis.title.text = obj.norsk;
+
+      var mainArray = [];
+      var antall = 0;
+      for(var i=0;i<artist.sanger.length;i++){
+        if(artist.sanger[i].soundSummary.length !=0){
+          var tempArray = [];
+          antall ++;
+          tempArray.push(artist.sanger[i].title);
+          tempArray.push(artist.sanger[i].soundSummary[5]["mode"]);
+          mainArray.push(tempArray);
+        }
+      }
+      $scope.changeBar.loading = false;
+      $scope.changeBar.series[0].data = mainArray;
+      $scope.changeBar.series[1].data = [[0, artist.mode],[antall-1,artist.mode]];
+    }
+    if(attributt==="tempo"){
+
+      $scope.changeBar.series[0].data = [];
+      $scope.changeBar.loading = true;
+      $scope.changeBar.series[0].dataLabels.formatter=function(){
+        return Highcharts.numberFormat(this.y,2);
+      };
+      $scope.changeBar.yAxis.title.text = obj.norsk;
+      var mainArray = [];
+      var antall = 0;
+      for(var i=0;i<artist.sanger.length;i++){
+        if(artist.sanger[i].soundSummary.length !=0){
+console.log(artist.sanger[i]);
+          var tempArray = [];
+          antall ++;
+          tempArray.push(artist.sanger[i].title);
+          tempArray.push(artist.sanger[i].soundSummary[6]["tempo"]);
+          mainArray.push(tempArray);
+        }
+      }
+      $scope.changeBar.loading = false;
+      $scope.changeBar.series[0].data = mainArray;
+      $scope.changeBar.series[1].data = [[0,artist.tempo],[antall-1,artist.tempo]];
+    }
+    if(attributt==="timesignature"){
+      $scope.changeBar.series[0].data = [];
+      $scope.changeBar.loading = true;
+      $scope.changeBar.series[0].dataLabels.formatter=function(){
+        return Highcharts.numberFormat(this.y,2);
+      };
+      $scope.changeBar.yAxis.title.text = obj.norsk;
+      var mainArray = [];
+      var antall = 0;
+      for(var i=0;i<artist.sanger.length;i++){
+        if(artist.sanger[i].soundSummary.length !=0){
+          antall ++;
+          var tempArray = [];
+          tempArray.push(artist.sanger[i].title);
+          tempArray.push(artist.sanger[i].soundSummary[7]["timesignature"]);
+          mainArray.push(tempArray);
+        }
+      }
+      $scope.changeBar.loading = false;
+      $scope.changeBar.series[0].data = mainArray;
+      $scope.changeBar.series[1].data = [[0,artist.timesignature],[antall-1,artist.timesignature]]; //MÅ FIKSES ER IKKE SNITTET PÅ TIMESIGNATURE ATM
+    }
+    console.log($scope.changeBar);
+  };
+  $scope.goToChartTypeChart = function(oid){
+
+    console.log('/chart/chart/'+oid);
+    $location.path('/chart/chart/'+oid);
+
+  };
+  $scope.goToCompare = function(oid){
+    $location.path('/compare/artist/'+oid);
+  };
+
+  $scope.gotoSang = function(oid){
+    console.log('/song/'+oid);
+    $location.path('/song/'+oid);
+  };
+  $scope.goToSangTitle = function(sangTittel, artistNavn){
+    songs.query({$and: [{title:sangTittel},{artist:artistNavn} ]}).then(function(res){
 
 
-        console.log(res);
+      console.log(res);
       console.log('/song/'+res[0]._id.$oid);
 
       $location.path('/song/'+res[0]._id.$oid);
     });
-    };
-    summaryArtist.query({ artist:$scope.artistnavn }).then(function(res){
-      console.log(res);
-      createBulletCharts(res[0]);
-      $scope.artist = res[0];
+  };
+  //Main
+  summaryArtist.query({ artist:$scope.artistnavn }).then(function(res){
+    console.log(res);
+    createBulletCharts(res[0]);
+    $scope.artist = res[0];
 
+    if($scope.artist.bow.length===0){
+      console.log("bow er null");
+      $scope.tekst = false;
+    }
+    else{
+      console.log("kke null");
+      omg(res[0].bow);
+    }
 
-      if($scope.artist.bow.length===0){
-        console.log("bow er null");
-        $scope.tekst = false;
+    $scope.genererChart({
+      norsk:'Dansbarhet',
+      name:'danceability',
+    }, res[0]);
+    charts.query({ list: { $elemMatch: {"artist": $scope.artist.artist}}}).then(function(res2){
+
+      var values = [];
+      var categorie = [];
+      for(var a = 0 ; a<res2.length; a++){
+        for(var i = 0 ; i<res2[a].list.length;i++){
+
+          if(res2[a].list[i].artist===$scope.artist.artist){
+
+            values.push(res2[a].list[i].position);
+            categorie.push({a:res2[a].year, b: "chart/" + res2[a]._id.$oid, c:res2[a].week, d:res2[a].list[i].title});
+            break;
+          }
+        }
       }
-      else{
-        console.log("kke null");
-        omg(res[0].bow);
-      }
+      $scope.try.series[0].data = values;
+      $scope.try.xAxis.categories = categorie;
+      $scope.try.loading = false;
+      for(var a = 0 ; a<res2.length; a++){
+        for(var i = 0 ; i<res2[a].list.length;i++){
 
-
-      charts.query({ list: { $elemMatch: {"artist": $scope.artist.artist}}}).then(function(res2){
-
-        var values = [];
-        var categorie = [];
-        for(var a = 0 ; a<res2.length; a++){
-          for(var i = 0 ; i<res2[a].list.length;i++){
-
-            if(res2[a].list[i].artist===$scope.artist.artist){
-
-              values.push(res2[a].list[i].position);
-              categorie.push({a:res2[a].year, b: "chart/" + res2[a]._id.$oid, c:res2[a].week, d:res2[a].list[i].title});
+          if(res2[a].list[i].artist===$scope.artist.artist){
+            $scope.lister.push({position:res2[a].list[i].position, artist: res2[a].list[i].artist,
+              title: res2[a].list[i].title, week: res2[a].week, year:res2[a].year, oid:res2[a]._id.$oid});
               break;
             }
           }
         }
-        $scope.try.series[0].data = values;
-        $scope.try.xAxis.categories = categorie;
-        $scope.changeLine.series[0].data = values;
-        $scope.changeLine.xAxis.categories = categorie;
-        $scope.changeLine.loading = false;
-        $scope.try.loading = false;
-        for(var a = 0 ; a<res2.length; a++){
-            for(var i = 0 ; i<res2[a].list.length;i++){
-
-              if(res2[a].list[i].artist===$scope.artist.artist){
-
-                $scope.lister.push({position:res2[a].list[i].position, artist: res2[a].list[i].artist, title: res2[a].list[i].title, week: res2[a].week, year:res2[a].year, oid:res2[a]._id.$oid});
-                break;
-              }
-            }
-        }
-
-
       });
     });
-$scope.genererChart = function(item){
-console.log(item);
-}
   });

@@ -513,14 +513,14 @@ angular.module('vgListaVizApp')
         omg(res[0].lyricSummary);
         console.log(res);
         console.log("Prøver spøøring : " + $scope.chart.year);
-        $scope.selectedYear = $scope.years[1960-res[0].year];
+        $scope.selectedYear = $scope.years[res[0].year - 1960];
       });
     }
     else if($scope.chartType==='chart'){
       $scope.listeAktiv = true;
       charts.query({_id:{$oid:$scope.oid}}).then(function(res){
         console.log(res);
-        $scope.selectedYear = $scope.years[1960-res[0].year];
+        $scope.selectedYear = $scope.years[res[0].year - 1960];
         $scope.selectedWeek = $scope.weeks[parseInt(res[0].week.substring(4, res[0].week.length))-1];
         $scope.chart = res[0];
         createBulletCharts2(res[0]);

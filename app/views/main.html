@@ -103,7 +103,7 @@
         <div class="panel-body">
           <div class="list-group">
             <a href="#" class="list-group-item">
-              <i class="fa fa fa-star fa-fw"></i> År
+              <i class="fa fa fa-calendar fa-fw"></i> År
               <span class="pull-right text-muted small"><em>54</em>
               </span>
             </a>
@@ -132,4 +132,60 @@
       </div>
     </div>
   </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-8">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa fa-list fa-fw"></i> Liste {{year}} - Uke {{week}}
+        </div>
+        <div class="panel-body">
+          <div class="row" ng-style="myStyle">
+            <div class="col-xs-12" ng-if="chart">
+              <table class="table table-hover table-condensed table-bordered table-responsive table-striped">
+                <tr>
+                  <th class="col-xs-2"> <a ng-click="sortField2='position'; reverse2 = !reverse2">
+                    Plassering <span ng-show="sortField2 == 'position'">
+                      <span ng-show="!reverse2" class="glyphicon glyphicon-arrow-up"></span>
+                      <span ng-show="reverse2" class="glyphicon glyphicon-arrow-down"></span>
+                    </span>
+                  </a>
+                </th>
+                <th class="col-xs-6"> <a ng-click="sortField2='title'; reverse2 = !reverse2">
+                  Tittel <span ng-show="sortField2 == 'title'">
+                    <span ng-show="!reverse2" class="glyphicon glyphicon-arrow-up"></span>
+                    <span ng-show="reverse2" class="glyphicon glyphicon-arrow-down"></span>
+                  </span>
+                </a>
+              </th>
+              <th class="col-xs4"> <a ng-click="sortField2='artist'; reverse2 = !reverse2">
+                Artist <span ng-show="sortField2 == 'artist'">
+                  <span ng-show="!reverse2" class="glyphicon glyphicon-arrow-up"></span>
+                  <span ng-show="reverse2" class="glyphicon glyphicon-arrow-down"></span>
+                </span>
+              </a>
+            </th>
+          </tr>
+          <tr ng-repeat="sang in chart.list | filter:query | orderBy:sortField2:reverse2" style="cursor: pointer;">
+            <td class="col-xs-2">{{sang.position}}.</td>
+            <td style="cursor: pointer;" ng-click="goToSang(sang.title)" class="col-xs-6">{{sang.title}}</td>
+            <td style="cursor: pointer;" ng-click="gotoArtist(sang.artist)" class="col-xs-4">{{sang.artist}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="col-xs-12">
+      <p class="text-center">
+        <pagination style="margin:0px;" ng-change="changePagination()" items-per-page="one" total-items="years" ng-model="year" max-size="maxSize" class="pagination-sm" boundary-links="true" rotate="false" num-pages="numPages1" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+      </p>
+    </div>
+    <div class="col-xs-12">
+      <p class="text-center">
+        <pagination style="margin:0px; " ng-change="changePagination()" items-per-page="one" total-items="weeks" ng-model="week" max-size="maxSize2" class="pagination-sm" boundary-links="true" rotate="false" num-pages="numPages2" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+      </p>
+    </div>
+  </div>
+</div>
+</div>
+</div>
 </div>
