@@ -21,7 +21,7 @@ angular.module('vgListaVizApp')
   $scope.produceChart = function(year, week){
     charts.query({ $and: [{"year": ""+year+""}, {"week": "Uke " +week}]}).then(function(res){
       if(res.length===0){
-        alert('Det er dessverre ikke publisert noen liste for denne uken');
+        $scope.chart.feil="Det finnes dessverre ingen liste for Uke " + week + " i " + year;
       }
       else{
         console.log(res)
@@ -44,12 +44,13 @@ angular.module('vgListaVizApp')
     $scope.chart = {};
     if($scope.year < 1960){
       $scope.year=1960;
-      console.log('Det finnes dessverre ikke data for år < 1960')
+      $scope.chart.feil="Det finnes dessverre ikke lister fra før 1960"
     }
     else{
       $scope.produceChart($scope.year, $scope.week);
     }
     console.log("page");
   }
+
   $scope.produceChart($scope.year, $scope.week);
 });

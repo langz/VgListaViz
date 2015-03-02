@@ -221,6 +221,9 @@ select.soflow, select.soflow-color {
 .pagination > li > a, .pagination > li > span{
 color:black;
 }
+.pagination > li > a:hover{
+color:black;
+}
 .pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus{
 background-color:#dd2027;
 border-color:#dd2027;

@@ -52,9 +52,9 @@
               <select class="form-control" ng-change="asyncSelected1=null;" id="choice" ng-init="choice = choices[0];" ng-options="ch for ch in choices"
               ng-model="choice"></select>
             </li>
-            <li class="sidebar-search" ng-if="choice != 'Lister'">
+            <li class="sidebar-search" ng-show="choice != 'Liste'">
               <div class="input-group custom-search-form">
-                <input type="text" ng-model="asyncSelected1" placeholder="Søk..." typeahead="address.info for address in search($viewValue)" typeahead-loading="loadingLocations1" typeahead-on-select="onSelect($item)" typeahead-template-url="customTemplate.html" class="form-control">
+                <input type="text" ng-model="asyncSelected1" placeholder="Søk..." typeahead="address.info for address in search($viewValue)" typeahead-on-select="onSelect($item)" typeahead-template-url="customTemplate.html" class="form-control">
                 <span class="input-group-btn">
                   <button class="btn btn-default" type="button" style="cursor: default;">
                     <i class="fa fa-search"></i>
@@ -62,7 +62,7 @@
                 </span>
               </div>
             </li>
-            <li class="sidebar-search" ng-if="choice === 'Lister'">
+            <li class="sidebar-search" ng-show="choice === 'Liste'">
               <select ng-change="onChangeSelect(selectedYear, selectedWeek)" class="soflow" id="year" ng-init="selectedYear = years[0];" ng-options="year as year for year in years"
               ng-model="selectedYear"></select>
               <select ng-change="onChangeSelect(selectedYear, selectedWeek)" class="soflow" id="week" ng-init="selectedWeek = weeks[0];" ng-options="week as week for week in weeks"

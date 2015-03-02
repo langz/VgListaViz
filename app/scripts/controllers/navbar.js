@@ -9,11 +9,12 @@
 */
 angular.module('vgListaVizApp')
 .controller('NavBarCtrl', function ($scope, $location, songs, summaryArtist, charts) {
+  $scope.asyncSelected1 = null;
   $scope.choice = '';
   $scope.choices = [
-    'Sanger',
-    'Artister',
-    'Lister'
+    'Sang',
+    'Artist',
+    'Liste'
   ];
   $scope.isActive = function (viewLocation) {
     var chart ='/chart/';
@@ -46,7 +47,6 @@ angular.module('vgListaVizApp')
     }
   };
   $scope.search = function(inputText){
-
     if($scope.choice==='Sang'){
       return songs.query({$and:[{title:{$regex:inputText, $options : 'i'}}, {soundSummary: {$not: {$size: 0}}}]}, { limit: 10 })
       .then(function(s){
@@ -68,7 +68,10 @@ angular.module('vgListaVizApp')
       });
     }
   };
-
+$scope.clearField = function(){
+console.log('sesae')
+$scope.asyncSelected1='';
+}
   $scope.gotoSang = function(oid){
     console.log('/song/'+oid);
     $location.path('/song/'+oid);
