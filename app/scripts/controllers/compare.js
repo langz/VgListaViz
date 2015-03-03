@@ -97,6 +97,7 @@ angular.module('vgListaVizApp')
           }
           else{
             s[0].title = s[0].year + " - " + s[0].week;
+            $scope.createCloud(s[0].lyricSummary, number);
             $scope.changeComparison(s[0], number);
           }
 
@@ -187,12 +188,51 @@ angular.module('vgListaVizApp')
           });
         }
       };
+      $scope.createCloud = function(bow, number){
+        console.log(bow);
+        if(bow.length===0){
+          console.log(bow.length + '=== 0');
+          if(number===0){
+            d3.select("#vis").select("svg")
+            .remove();
+            $scope.venVisible = true;
+            console.log('$scope.venVisible er:' +$scope.venVisible );
+
+          }
+          else if(number===1){
+            d3.select("#vis1").select("svg")
+            .remove();
+            $scope.rightVisible = true;
+            console.log('$scope.rightVisible er:' +$scope.rightVisible );
+
+          }
+        }
+        else{
+          console.log("Ikke tom nå da");
+          if(number===0){
+            d3.select("#vis").select("svg")
+            .remove();
+            $scope.venVisible = false;
+            console.log('$scope.venVisible er:' +$scope.venVisible );
+            omg(bow);
+          }
+          else if(number===1){
+            d3.select("#vis1").select("svg")
+            .remove();
+            $scope.rightVisible = false;
+            console.log('$scope.rightVisible er:' +$scope.rightVisible );
+            omg1(bow);
+          }
+        }
+      }
       $scope.onSelect = function(inp, number) {
         if(inp.type==='song'){
+          $scope.createCloud(inp.bow, number);
           $scope.changeComparison(inp,number);
           console.log(inp);
         }
         else if(inp.type==='artist'){
+          $scope.createCloud(inp.bow, number);
           $scope.artist(inp, number)
           console.log(inp);
         }
@@ -247,15 +287,15 @@ angular.module('vgListaVizApp')
         data.push({'y':$scope.percentageOf(obj.antall, "Antall uker", number), 'color':color});
         data.push({'y':$scope.percentageOf(obj.antallunikesanger, "Antall sanger", number), 'color':color});
 
-        categorie.push('danceability');
-        categorie.push('duration');
-        categorie.push('energy');
-        categorie.push('key');
-        categorie.push('loudness');
-        categorie.push('mode');
-        categorie.push('tempo');
-        categorie.push('timesignature');
-        categorie.push("Antall uker");
+        categorie.push('Dansbarhet');
+        categorie.push('Varighet');
+        categorie.push('Energi');
+        categorie.push('Nøkkel');
+        categorie.push('Lydstyrke');
+        categorie.push('Modal Skala');
+        categorie.push('Tempo');
+        categorie.push('Taktart');
+        categorie.push("Uker på listen");
         categorie.push("Antall sanger");
         serie.data = data;
         serie.name=obj.artist;
@@ -277,6 +317,8 @@ angular.module('vgListaVizApp')
       $scope.changeCompType = function(inp){
         $scope.asyncSelected1 = null;
         $scope.asyncSelected2 = null;
+        clearAll();
+        clearBothSVGs();
         $scope.compType = inp;
       };
 
@@ -307,14 +349,14 @@ angular.module('vgListaVizApp')
           plotOptions: {
             series: {
               stacking: 'normal',
-              dataLabels: {
-                enabled: true,
-                borderColor:'black',
-                color:'white',
-                formatter: function () {
-                  return Highcharts.numberFormat(Math.abs(getValue(this.point.y, this.point.category)), 1);
-                }
-              }
+              // dataLabels: {
+              //   enabled: true,
+              //   borderColor:'black',
+              //   color:'white',
+              //   formatter: function () {
+              //     return Highcharts.numberFormat(Math.abs(getValue(this.point.y, this.point.category)), 1);
+              //   }
+              // }
             },
             column: {
               colorByPoint: false
@@ -353,41 +395,44 @@ angular.module('vgListaVizApp')
         series: [],
         exporting: { enabled: false }
       };
+      var clearAll = function(){
+        $scope.compareConfig.series=[];
+      }
       var getValue = function(value, category){
-        if(category==='timesignature'){
+        if(category==='Taktart'){
           return (value/100) * timesignatureMax;
         }
-        else if(category==='tempo'){
+        else if(category==='Tempo'){
           return (value/100) * tempoMax;
         }
-        else if(category==='mode'){
+        else if(category==='Modal Skala'){
           return (value/100) * modeMax;
         }
-        else if(category==='loudness'){
+        else if(category==='Lydstyrke'){
           return (value/100) * loudnessMax;
         }
-        else if(category==='key'){
+        else if(category==='Nøkkel'){
           return (value/100) * keyMax;
         }
-        else if(category==='energy'){
+        else if(category==='Energi'){
           return (value/100) * energyMax;
         }
-        else if(category==='duration'){
+        else if(category==='Varighet'){
           return (value/100) * durationMax;
         }
-        else if(category==='danceability'){
+        else if(category==='Dansbarhet'){
           return (value/100) * danceabilityMax;
         }
-        else if(category==='Antall uker'){
+        else if(category==='Uker på listen'){
           return (value/100) * artistlistetMax;
         }
         else if(category==="Beste plassering"){
           return (value/100) * bestplassMax;
         }
-        else if(category==='Antall Uker'){
+        else if(category==='Uker på listen'){
           return (value/100) * sanglistetMax;
         }
-        else if(category==='Antall sanger'){
+        else if(category==='Unike sanger'){
           return (value/100) * antallunikesangerMax;
         }
         else{
@@ -396,13 +441,13 @@ angular.module('vgListaVizApp')
       };
       var getText = function(category){
 
-        if(category==='loudness'){
+        if(category==='Lydstyrke'){
           return "dB";
         }
-        else if(category==='duration'){
+        else if(category==='Varighet'){
           return "s";
         }
-        else if(category==='listet'){
+        else if(category==='Uker på listen'){
           return " ganger";
         }
         else{
@@ -410,6 +455,233 @@ angular.module('vgListaVizApp')
         }
       };
 
+      var vis;
+      var svg;
+      var layout;
+      var max;
+      var fontSize;
+      var w;
+      var h;
+      var fill;
 
+      var omg = function(wordInput){
+        fill = d3.scale.category20b();
+        var maxverdien =  d3.max(wordInput.map(function(d) { return d[1]; }));
+        var minverdien =  d3.min(wordInput.map(function(d) { return d[1]; }));
+        w = document.getElementById('vis').offsetWidth,
+        h = 500;
+        var vedien = 0;
+        max,
+        fontSize;
 
-    });
+        layout = d3.layout.cloud()
+        .timeInterval(Infinity)
+        .size([w, h])
+        .fontSize(function(d) {
+          vedien = d[1];
+          return fontSize(+d[1])
+          ;
+        })
+        .text(function(d) {
+          return d[0];
+        })
+        .on("end", draw);
+        svg = d3.select("#vis").append("svg")
+        .attr("width", w)
+        .attr("height", h);
+
+        vis = svg.append("g").attr("transform", "translate(" + [w >> 1, h >> 1] + ")");
+
+        update();
+
+        window.onresize = function(event) {
+          d3.select("#vis").select("svg")
+          .remove();
+          svg = d3.select("#vis").append("svg")
+          .attr("width", w)
+          .attr("height", h);
+
+          vis = svg.append("g").attr("transform", "translate(" + [w >> 1, h >> 1] + ")");
+
+          update();
+        };
+
+        function draw(data, bounds) {
+          var w = document.getElementById('vis').offsetWidth,
+          h = 500;
+          svg.attr("width", w).attr("height", h);
+
+          var scale = bounds ? Math.min(
+            w / Math.abs(bounds[1].x - w / 2),
+            w / Math.abs(bounds[0].x - w / 2),
+            h / Math.abs(bounds[1].y - h / 2),
+            h / Math.abs(bounds[0].y - h / 2)) / 2 : 1;
+
+            var text = vis.selectAll("text")
+            .data(data, function(d) {
+              return d.text.toLowerCase();
+            });
+            text.transition()
+            .duration(1000)
+            .attr("transform", function(d) {
+              return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+            })
+            .style("font-size", function(d) {
+              return d.size + "px";
+            });
+            text.enter().append("text")
+            .attr("text-anchor", "middle")
+            .attr("transform", function(d) {
+              return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+            })
+            .style("font-size", function(d) {
+              return d.size + "px";
+            })
+            .style("opacity", 1e-6)
+            .transition()
+            .duration(1000)
+            .style("opacity", 1);
+            text.style("font-family", function(d) {
+              return d.font;
+            })
+            .style("fill", function(d) {
+              return fill(d.text.toLowerCase());
+            })
+            .text(function(d) {
+              return d.text;
+            });
+            text.append("svg:title")
+            .text(function(d){return Math.round(fontSize.invert(d.size))});
+
+            vis.transition().attr("transform", "translate(" + [w >> 1, h >> 1] + ")scale(" + scale + ")");
+          }
+
+          function update() {
+            layout.font('impact').spiral('archimedean');
+            fontSize = d3.scale['linear']().range([10, 100]);
+            if (wordInput.length){
+              fontSize.domain([1, d3.max(wordInput.map(function(d) { return d[1]; }))]);
+            }
+            layout.stop().words(wordInput).start();
+          }
+
+        };
+
+        var vis;
+        var svg;
+        var layout;
+        var max;
+        var fontSize;
+        var w;
+        var h;
+        var fill;
+
+        var omg1 = function(wordInput){
+          fill = d3.scale.category20b();
+          var maxverdien =  d3.max(wordInput.map(function(d) { return d[1]; }));
+          var minverdien =  d3.min(wordInput.map(function(d) { return d[1]; }));
+          w = document.getElementById('vis').offsetWidth,
+          h = 500;
+          var vedien = 0;
+          max,
+          fontSize;
+
+          layout = d3.layout.cloud()
+          .timeInterval(Infinity)
+          .size([w, h])
+          .fontSize(function(d) {
+            vedien = d[1];
+            return fontSize(+d[1])
+            ;
+          })
+          .text(function(d) {
+            return d[0];
+          })
+          .on("end", draw);
+          svg = d3.select("#vis1").append("svg")
+          .attr("width", w)
+          .attr("height", h);
+
+          vis = svg.append("g").attr("transform", "translate(" + [w >> 1, h >> 1] + ")");
+
+          update();
+
+          window.onresize = function(event) {
+            d3.select("#vis1").select("svg")
+            .remove();
+            svg = d3.select("#vis1").append("svg")
+            .attr("width", w)
+            .attr("height", h);
+
+            vis = svg.append("g").attr("transform", "translate(" + [w >> 1, h >> 1] + ")");
+
+            update();
+          };
+
+          function draw(data, bounds) {
+            var w = document.getElementById('vis').offsetWidth,
+            h = 500;
+            svg.attr("width", w).attr("height", h);
+
+            var scale = bounds ? Math.min(
+              w / Math.abs(bounds[1].x - w / 2),
+              w / Math.abs(bounds[0].x - w / 2),
+              h / Math.abs(bounds[1].y - h / 2),
+              h / Math.abs(bounds[0].y - h / 2)) / 2 : 1;
+
+              var text = vis.selectAll("text")
+              .data(data, function(d) {
+                return d.text.toLowerCase();
+              });
+              text.transition()
+              .duration(1000)
+              .attr("transform", function(d) {
+                return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+              })
+              .style("font-size", function(d) {
+                return d.size + "px";
+              });
+              text.enter().append("text")
+              .attr("text-anchor", "middle")
+              .attr("transform", function(d) {
+                return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+              })
+              .style("font-size", function(d) {
+                return d.size + "px";
+              })
+              .style("opacity", 1e-6)
+              .transition()
+              .duration(1000)
+              .style("opacity", 1);
+              text.style("font-family", function(d) {
+                return d.font;
+              })
+              .style("fill", function(d) {
+                return fill(d.text.toLowerCase());
+              })
+              .text(function(d) {
+                return d.text;
+              });
+              text.append("svg:title")
+              .text(function(d){return Math.round(fontSize.invert(d.size))});
+
+              vis.transition().attr("transform", "translate(" + [w >> 1, h >> 1] + ")scale(" + scale + ")");
+            }
+
+            function update() {
+              layout.font('impact').spiral('archimedean');
+              fontSize = d3.scale['linear']().range([10, 100]);
+              if (wordInput.length){
+                fontSize.domain([1, d3.max(wordInput.map(function(d) { return d[1]; }))]);
+              }
+              layout.stop().words(wordInput).start();
+            }
+
+          };
+          var clearBothSVGs = function(){
+            d3.select("#vis").select("svg")
+            .remove();
+            d3.select("#vis1").select("svg")
+            .remove();
+          }
+        });

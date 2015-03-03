@@ -59,17 +59,30 @@ angular.module('vgListaVizApp')
           color:'#dd2027'
         }
       },
-      legend:{enabled:false},
+      legend:{
+        enabled:true
+      },
       tooltip: {
         formatter : function (){
-  if(this.series.name==='Lydstyrke'){
-    return "-" + this.y;
-}
-else{
-return this.y
-}
+          var a = '';
+          var b = '';
+          if(this.series.name==='Lydstyrke'){
+            a = "-" + Highcharts.numberFormat(this.y,2);
+          }
+          else{
+            a= Highcharts.numberFormat(this.y,2);
+          }
+          if(typeof this.key ==='number'){
+            b = $scope.artist.artist +  '</br>';
+          }
+          else{
+            b = this.key +  '</br>';
+          }
 
-  }
+          return b + this.series.name + ': <b>' + a + '</b>';
+
+        },
+        useHTML:true
       },
     },
     title: {
@@ -80,13 +93,6 @@ return this.y
     },
     xAxis: {
       type: 'category',
-      labels: {
-        rotation: -90,
-        style: {
-          fontSize: '13px',
-          fontFamily: 'Verdana, sans-serif'
-        }
-      }
     },
     yAxis: {
       min: 0,
@@ -100,32 +106,15 @@ return this.y
       data: [
 
       ],
-      dataLabels: {
-        enabled: true,
-        rotation: -90,
-        color: '#FFFFFF',
-        align: 'right',
-        format: '{point.y:.1f}', // one decimal
-        y: 10, // 10 pixels down from the top
-        style: {
-          fontSize: '13px',
-          fontFamily: 'Verdana, sans-serif'
-        }
-      }
+      legend:{enabled:false},
     },
     {
       type: 'line',
-      name: 'Average',
+      name: 'Gjennomsnitt',
       data: '',
-      marker: {
-        enabled: false
-      },
-      enableMouseTracking: false,
+      enableMouseTracking: true,
       color:'black',
       allowPointSelect: false,
-      tooltip: {
-        pointFormat: 'Gjennomsnittsverdi: <b>{point.y}</b>',
-      }
     }]
   };
 
@@ -683,9 +672,6 @@ return this.y
       $scope.changeBar.series[0].data = [];
 
       $scope.changeBar.loading = true;
-      $scope.changeBar.series[0].dataLabels.formatter=function(){
-        return Highcharts.numberFormat(this.y,2);
-      };
       $scope.changeBar.yAxis.title.text = obj.norsk;
 
       var mainArray = [];
@@ -708,9 +694,7 @@ return this.y
     if(attributt==="duration"){
       $scope.changeBar.series[0].data = [];
       $scope.changeBar.loading = true;
-      $scope.changeBar.series[0].dataLabels.formatter=function(){
-        return Highcharts.numberFormat(this.y,0);
-      };
+
       $scope.changeBar.yAxis.title.text = obj.norsk;
 
       var mainArray = [];
@@ -732,9 +716,6 @@ return this.y
     if(attributt==="energy"){
       $scope.changeBar.series[0].data = [];
       $scope.changeBar.loading = true;
-      $scope.changeBar.series[0].dataLabels.formatter=function(){
-        return Highcharts.numberFormat(this.y,2);
-      };
       $scope.changeBar.yAxis.title.text = obj.norsk;
 
       var mainArray = [];
@@ -755,9 +736,6 @@ return this.y
     if(attributt==="loudness"){
       $scope.changeBar.series[0].data = [];
       $scope.changeBar.loading = true;
-      $scope.changeBar.series[0].dataLabels.formatter=function(){
-        return -Highcharts.numberFormat(this.y,2);
-      };
       $scope.changeBar.yAxis.title.text = obj.norsk;
 
       var mainArray = [];
@@ -778,17 +756,16 @@ return this.y
     if(attributt==="antallganger"){
       $scope.changeBar.series[0].data = [];
       $scope.changeBar.loading = true;
-      $scope.changeBar.series[0].dataLabels.formatter=function(){
-        return Highcharts.numberFormat(this.y,0);
-      };
       $scope.changeBar.yAxis.title.text = obj.norsk;
 
       var mainArray = [];
       var antall = 0;
+      var verdi = 0;
       for(var i=0;i<artist.sanger.length;i++){
         if(artist.sanger[i].soundSummary.length !=0){
           antall++;
           var tempArray = [];
+          verdi += artist.sanger[i].antall;
           tempArray.push(artist.sanger[i].title);
           tempArray.push(artist.sanger[i].antall);
           mainArray.push(tempArray);
@@ -796,15 +773,12 @@ return this.y
       }
       $scope.changeBar.loading = false;
       $scope.changeBar.series[0].data = mainArray;
-      $scope.changeBar.series[1].data = [[0, 0],[antall-1, 0]];
+      $scope.changeBar.series[1].data = [[0, Math.floor(verdi/antall)],[antall-1, Math.floor(verdi/antall)]];
     }
     if(attributt==="mode"){
 
       $scope.changeBar.series[0].data = [];
       $scope.changeBar.loading = true;
-      $scope.changeBar.series[0].dataLabels.formatter=function(){
-        return Highcharts.numberFormat(this.y,2);
-      };
       $scope.changeBar.yAxis.title.text = obj.norsk;
 
       var mainArray = [];
@@ -826,15 +800,12 @@ return this.y
 
       $scope.changeBar.series[0].data = [];
       $scope.changeBar.loading = true;
-      $scope.changeBar.series[0].dataLabels.formatter=function(){
-        return Highcharts.numberFormat(this.y,2);
-      };
       $scope.changeBar.yAxis.title.text = obj.norsk;
       var mainArray = [];
       var antall = 0;
       for(var i=0;i<artist.sanger.length;i++){
         if(artist.sanger[i].soundSummary.length !=0){
-console.log(artist.sanger[i]);
+          console.log(artist.sanger[i]);
           var tempArray = [];
           antall ++;
           tempArray.push(artist.sanger[i].title);
@@ -849,9 +820,6 @@ console.log(artist.sanger[i]);
     if(attributt==="timesignature"){
       $scope.changeBar.series[0].data = [];
       $scope.changeBar.loading = true;
-      $scope.changeBar.series[0].dataLabels.formatter=function(){
-        return Highcharts.numberFormat(this.y,2);
-      };
       $scope.changeBar.yAxis.title.text = obj.norsk;
       var mainArray = [];
       var antall = 0;

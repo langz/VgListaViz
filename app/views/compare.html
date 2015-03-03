@@ -60,7 +60,47 @@
             </div>
           </div>
         </div>
-        <highchart ng-hide="hideValue" id="compareChart" config="compareConfig" data-highcharts-chart="0" style=""></highchart>
+      </div>
+    </div>
+    <div class="">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-file-sound-o fa-fw"></i> Lyd
+        </div>
+        <div class="panel-body">
+
+
+          <highchart ng-hide="hideValue" id="compareChart" config="compareConfig" data-highcharts-chart="0" style=""></highchart>
+        </div>
+      </div>
+    </div>
+    <div class="">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-file-text-o fa-fw"></i> Tekst
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <div ng-show="venVisible" class="col-xs-6">
+              <div class="text-center">
+                <i class="fa fa-frown-o fa-6x" style="font-size:200px"></i>
+              </div>
+              <p class="text-center">Det finnes ingen tekst data om denne sangen</p>
+            </div>
+            <div id="vis" class="col-xs-6" style="padding-right: 0px; padding-left:0px;">
+
+            </div>
+            <div ng-show="rightVisible" class="col-xs-6">
+              <div class="text-center">
+                <i class="fa fa-frown-o fa-6x" style="font-size:200px"></i>
+              </div>
+              <p class="text-center">Det finnes ingen tekst data om denne sangen</p>
+            </div>
+            <div id="vis1" class="col-xs-6" style="padding-right: 0px; padding-left:0px;">
+
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

@@ -19,9 +19,9 @@ text:hover { opacity: .7 !important; }
       <div id="duration" style="height:36px;"></div>
     </div>
   </div>
-  <div class="panel panel-default">
+  <div class="panel panel-default" ng-if="artist.sanger > 1" >
     <div class="panel-heading">
-      <i class="fa fa-line-chart fa-fw"></i> {{artist.artist}} sin endring i lyd over årene
+      <i class="fa fa-line-chart fa-fw"></i> Lydforskjeller i {{artist.artist}} sine sanger
     </div>
     <div class="panel-body">
       <div class="col-xs-12">
@@ -44,7 +44,7 @@ text:hover { opacity: .7 !important; }
       </div>
     </div>
   </div>
-  <div class="panel panel-default">
+  <div class="panel panel-default" ng-hide="try.series[0].data.length =< 1">
     <div class="panel-heading">
       <i class="fa fa-trophy fa-fw"></i> {{artist.artist}} sin plassering på listene
     </div>
@@ -122,47 +122,47 @@ text:hover { opacity: .7 !important; }
           </span>
         </div>
       </br>
-      </div>
     </div>
-    <div class="row">
-      <div class="col-xs-12">
-        <table class="table table-hover table-condensed table-responsive table-striped">
-          <tr>
-            <th class="col-xs-3"> <a ng-click="sortField='position'; reverse = !reverse">
-              Plassering <span ng-show="sortField == 'position'">
-                <span ng-show="!reverse" class="glyphicon glyphicon-arrow-up"></span>
-                <span ng-show="reverse" class="glyphicon glyphicon-arrow-down"></span>
-              </span>
-            </a>
-          </th>
-          <th class="col-xs-3"> <a ng-click="sortField='title'; reverse = !reverse">
-            Sang <span ng-show="sortField == 'title'">
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <table class="table table-hover table-condensed table-responsive table-striped">
+        <tr>
+          <th class="col-xs-3"> <a ng-click="sortField='position'; reverse = !reverse">
+            Plassering <span ng-show="sortField == 'position'">
               <span ng-show="!reverse" class="glyphicon glyphicon-arrow-up"></span>
               <span ng-show="reverse" class="glyphicon glyphicon-arrow-down"></span>
             </span>
           </a>
         </th>
-        <th class="col-xs-3"> <a ng-click="sortField='week'; reverse = !reverse">
-          Uke <span ng-show="sortField == 'week'">
+        <th class="col-xs-3"> <a ng-click="sortField='title'; reverse = !reverse">
+          Sang <span ng-show="sortField == 'title'">
             <span ng-show="!reverse" class="glyphicon glyphicon-arrow-up"></span>
             <span ng-show="reverse" class="glyphicon glyphicon-arrow-down"></span>
           </span>
         </a>
       </th>
-      <th class="col-xs-3"> <a ng-click="sortField='year'; reverse = !reverse">
-        År <span ng-show="sortField == 'year'">
+      <th class="col-xs-3"> <a ng-click="sortField='week'; reverse = !reverse">
+        Uke <span ng-show="sortField == 'week'">
           <span ng-show="!reverse" class="glyphicon glyphicon-arrow-up"></span>
           <span ng-show="reverse" class="glyphicon glyphicon-arrow-down"></span>
         </span>
       </a>
     </th>
-  </tr>
-  <tr ng-repeat="list in lister | filter:query1 | orderBy:sortField:reverse" style="cursor: pointer;">
-    <td class="col-xs-4">{{list.position}}</td>
-    <td ng-click="goToSangTitle(list.title, list.artist)" class="col-xs-4">{{list.title}}</td>
-    <td ng-click="goToChartTypeChart(list.oid)" class="col-xs-4">{{list.week}}</td>
-    <td class="col-xs-4">{{list.year}}</td>
-  </tr>
+    <th class="col-xs-3"> <a ng-click="sortField='year'; reverse = !reverse">
+      År <span ng-show="sortField == 'year'">
+        <span ng-show="!reverse" class="glyphicon glyphicon-arrow-up"></span>
+        <span ng-show="reverse" class="glyphicon glyphicon-arrow-down"></span>
+      </span>
+    </a>
+  </th>
+</tr>
+<tr ng-repeat="list in lister | filter:query1 | orderBy:sortField:reverse" style="cursor: pointer;">
+  <td class="col-xs-4">{{list.position}}</td>
+  <td ng-click="goToSangTitle(list.title, list.artist)" class="col-xs-4">{{list.title}}</td>
+  <td ng-click="goToChartTypeChart(list.oid)" class="col-xs-4">{{list.week}}</td>
+  <td class="col-xs-4">{{list.year}}</td>
+</tr>
 </table>
 </div>
 </div>
