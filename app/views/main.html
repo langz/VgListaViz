@@ -103,8 +103,8 @@
           </tr>
           <tr ng-repeat="sang in chart.list | filter:query | orderBy:sortField2:reverse2" style="cursor: pointer;">
             <td class="col-xs-2">{{sang.position}}.</td>
-            <td style="cursor: pointer;" ng-click="goToSangTitle(sang.title, sang.artist)" class="col-xs-6">{{sang.title}}</td>
-            <td style="cursor: pointer;" ng-click="gotoArtist(sang.artist)" class="col-xs-4">{{sang.artist}}</td>
+            <td style="cursor: pointer;" ng-click="goToSangTitle(sang.title, sang.artist)" class="col-xs-6">{{sang.title.substring(0,30)}}</td>
+            <td style="cursor: pointer;" ng-click="gotoArtist(sang.artist)" class="col-xs-4">{{sang.artist.substring(0,25)}}</td>
           </tr>
         </table>
       </div>
