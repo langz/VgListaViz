@@ -492,8 +492,8 @@ angular.module('vgListaVizApp')
         labels: {
           formatter: function () {
             if(this.value.a){
-              return '<a href="#/chart/' + this.value.b + '"style="color:black;">' + this.value.a +
-              '</a>';
+              if(this.isFirst || this.isLast){ return '<a href="#/chart/' + this.value.b + '"style="color:black;">' + this.value.a +
+              '</a>'; }
             }
           },
           useHTML:true

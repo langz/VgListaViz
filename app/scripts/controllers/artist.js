@@ -642,7 +642,7 @@ angular.module('vgListaVizApp')
         labels: {
           formatter: function () {
             if(this.value.a){
-              if(this.isFirst || this.isLast){ return '<a href="#/chart/' + this.value.b + this.value.b + '"style="color:black;">' + this.value.a +
+              if(this.isFirst || this.isLast){ return '<a href="#/chart/' + this.value.b + '"style="color:black;">' + this.value.a +
               '</a>'; }
             }
           },

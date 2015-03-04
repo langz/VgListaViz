@@ -2,7 +2,7 @@
 text:hover { opacity: .7 !important; }
 </style>
 <div autoscroll="true">
-  <h1 class="page-header"><i class="fa fa-music fa-fw"></i> Sang <span style="font-size:14px">{{song.title}}</span><span style="font-size:14px"> - {{song.artist}}</span>
+  <h1 class="page-header"><i class="fa fa-music fa-fw"></i> Sang <span style="font-size:14px">{{song.title}}  - </span><span style="font-size:14px ; cursor: pointer;" ng-click="gotoArtist(song.artist)">{{song.artist}}</span>
     <div class="pull-right"><button type="button" class="btn btn-default btn-lg" ng-click="goToCompare(song._id.$oid)">
       <span class="fa fa-pie-chart" aria-hidden="true"></span> Sammenlign
     </button></div></h1>
@@ -35,7 +35,7 @@ text:hover { opacity: .7 !important; }
         </div>
       </div>
     </div>
-    <div class="panel panel-default" ng-show="$scope.try.series[0].data > 1">
+    <div class="panel panel-default" >
       <div class="panel-heading">
         <i class="fa fa-trophy fa-fw"></i> {{song.title}} sin plassering på listene
       </div>

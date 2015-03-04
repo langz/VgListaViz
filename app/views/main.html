@@ -72,28 +72,68 @@
     <div class="col-xs-12 col-sm-8">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <i class="fa fa fa-info fa-fw"></i> Introduksjon
+        <i class="fa fa fa-list fa-fw"></i> <span style="cursor: pointer;" ng-click="goToChartTypeChart(chart._id.$oid)">Liste {{year}} - Uke {{week}}</span>
         </div>
         <div class="panel-body">
-          <p>
-            Prosjektet tar utgangspunkt i å oppdage, studere og utforske mønstre i norsk popmusikk gjennom en tidsperiode på 60år.
-            Har popsanger i Norge store likheter, slik at de muligens følger en «oppskrift» på en «toppliste sang»?
-            Slik som at sangene er like med tanke på rytme og takt eller at de er like på et lyrisk nivå.
-            Kanskje ordet «love» var mye brukt på 60-tallet, men at det i dag er «party»?
-            Dette er bare noen av spørsmålene man kan stille dette datasettet.
-            Formuler dine egne spørsmål og prøv å finn svar på de!
-          </p>
-          <p>
-            For å kunne svare på disse spørsmålene har jeg hentet ut lyd-teknisk data fra
-            <a href="http://echonest.com">EchoNest</a> og lyriske data
-            fra <a href="http://musixmatch.com">MusixMatch</a> for alle sangene på <a href="http://lista.no">VG Lista Topp 20</a>.
-
-            For å lettere se mønstre i så mye data er det presentert i form av grafer og andre visuelle komponenter.
-            I mine øyne, vil disse datavisualiseringene være interessante for generelle musikkelskere,
-            historikere, journalister, produsenter, songwriters, osv.
-          </p>
-        </div>
+          <div class="row" ng-style="myStyle">
+            <div class="col-xs-12" ng-if="chart.list">
+              <table class="table table-hover table-condensed table-bordered table-responsive table-striped">
+                <tr>
+                  <th class="col-xs-2"> <a ng-click="sortField2='position'; reverse2 = !reverse2">
+                    Plassering <span ng-show="sortField2 == 'position'">
+                      <span ng-show="!reverse2" class="glyphicon glyphicon-arrow-up"></span>
+                      <span ng-show="reverse2" class="glyphicon glyphicon-arrow-down"></span>
+                    </span>
+                  </a>
+                </th>
+                <th class="col-xs-6"> <a ng-click="sortField2='title'; reverse2 = !reverse2">
+                  Tittel <span ng-show="sortField2 == 'title'">
+                    <span ng-show="!reverse2" class="glyphicon glyphicon-arrow-up"></span>
+                    <span ng-show="reverse2" class="glyphicon glyphicon-arrow-down"></span>
+                  </span>
+                </a>
+              </th>
+              <th class="col-xs4"> <a ng-click="sortField2='artist'; reverse2 = !reverse2">
+                Artist <span ng-show="sortField2 == 'artist'">
+                  <span ng-show="!reverse2" class="glyphicon glyphicon-arrow-up"></span>
+                  <span ng-show="reverse2" class="glyphicon glyphicon-arrow-down"></span>
+                </span>
+              </a>
+            </th>
+          </tr>
+          <tr ng-repeat="sang in chart.list | filter:query | orderBy:sortField2:reverse2" style="cursor: pointer;">
+            <td class="col-xs-2">{{sang.position}}.</td>
+            <td style="cursor: pointer;" ng-click="goToSangTitle(sang.title, sang.artist)" class="col-xs-6">{{sang.title}}</td>
+            <td style="cursor: pointer;" ng-click="gotoArtist(sang.artist)" class="col-xs-4">{{sang.artist}}</td>
+          </tr>
+        </table>
       </div>
+      <div ng-if="chart.feil">
+
+        <div class="text-center">
+          <i class="fa fa-frown-o fa-6x" style="font-size:75px"></i>
+        </div>
+
+
+        <p class="text-center">
+          {{chart.feil}}
+        </p>
+
+      </div>
+    </div>
+
+    <div class="col-xs-12">
+      <p class="text-center">
+        <pagination style="margin:0px;" ng-change="changePagination()" items-per-page="one" total-items="years" ng-model="year" max-size="maxSize" class="pagination-sm" boundary-links="true" rotate="false" num-pages="numPages1" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+      </p>
+    </div>
+    <div class="col-xs-12">
+      <p class="text-center">
+        <pagination style="margin:0px; " ng-change="changePagination()" items-per-page="one" total-items="weeks" ng-model="week" max-size="maxSize2" class="pagination-sm" boundary-links="true" rotate="false" num-pages="numPages2" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+      </p>
+    </div>
+  </div>
+</div>
     </div>
     <div class="col-sm-4 col-xs-12">
       <div class="panel panel-default">
@@ -132,72 +172,4 @@
       </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col-xs-12 col-sm-8">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <i class="fa fa fa-list fa-fw"></i> Liste {{year}} - Uke {{week}}
-        </div>
-        <div class="panel-body">
-          <div class="row" ng-style="myStyle">
-            <div class="col-xs-12" ng-if="chart.list">
-              <table class="table table-hover table-condensed table-bordered table-responsive table-striped">
-                <tr>
-                  <th class="col-xs-2"> <a ng-click="sortField2='position'; reverse2 = !reverse2">
-                    Plassering <span ng-show="sortField2 == 'position'">
-                      <span ng-show="!reverse2" class="glyphicon glyphicon-arrow-up"></span>
-                      <span ng-show="reverse2" class="glyphicon glyphicon-arrow-down"></span>
-                    </span>
-                  </a>
-                </th>
-                <th class="col-xs-6"> <a ng-click="sortField2='title'; reverse2 = !reverse2">
-                  Tittel <span ng-show="sortField2 == 'title'">
-                    <span ng-show="!reverse2" class="glyphicon glyphicon-arrow-up"></span>
-                    <span ng-show="reverse2" class="glyphicon glyphicon-arrow-down"></span>
-                  </span>
-                </a>
-              </th>
-              <th class="col-xs4"> <a ng-click="sortField2='artist'; reverse2 = !reverse2">
-                Artist <span ng-show="sortField2 == 'artist'">
-                  <span ng-show="!reverse2" class="glyphicon glyphicon-arrow-up"></span>
-                  <span ng-show="reverse2" class="glyphicon glyphicon-arrow-down"></span>
-                </span>
-              </a>
-            </th>
-          </tr>
-          <tr ng-repeat="sang in chart.list | filter:query | orderBy:sortField2:reverse2" style="cursor: pointer;">
-            <td class="col-xs-2">{{sang.position}}.</td>
-            <td style="cursor: pointer;" ng-click="goToSang(sang.title)" class="col-xs-6">{{sang.title}}</td>
-            <td style="cursor: pointer;" ng-click="gotoArtist(sang.artist)" class="col-xs-4">{{sang.artist}}</td>
-          </tr>
-        </table>
-      </div>
-      <div ng-if="chart.feil">
-
-        <div class="text-center">
-          <i class="fa fa-frown-o fa-6x" style="font-size:75px"></i>
-        </div>
-
-
-        <p class="text-center">
-          {{chart.feil}}
-        </p>
-
-      </div>
-    </div>
-
-    <div class="col-xs-12">
-      <p class="text-center">
-        <pagination style="margin:0px;" ng-change="changePagination()" items-per-page="one" total-items="years" ng-model="year" max-size="maxSize" class="pagination-sm" boundary-links="true" rotate="false" num-pages="numPages1" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
-      </p>
-    </div>
-    <div class="col-xs-12">
-      <p class="text-center">
-        <pagination style="margin:0px; " ng-change="changePagination()" items-per-page="one" total-items="weeks" ng-model="week" max-size="maxSize2" class="pagination-sm" boundary-links="true" rotate="false" num-pages="numPages2" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
-      </p>
-    </div>
-  </div>
-</div>
-</div>
-</div>
 </div>

@@ -8,7 +8,9 @@
 * Controller of the vgListaVizApp
 */
 angular.module('vgListaVizApp')
-.controller('MainCtrl', function ($scope, charts, songs, summaryDecade) {
+.controller('MainCtrl', function ($scope, charts, songs, summaryDecade, $location) {
+  $scope.sortField2 = 'position';
+  $scope.reverse2 = false;
   $scope.one=1;
   $scope.maxSize = 5;
   $scope.maxSize2 = 7;
@@ -36,6 +38,17 @@ angular.module('vgListaVizApp')
 
     });
 
+  };
+  $scope.goToChartTypeChart = function(oid){
+
+    $location.path('/chart/chart/'+oid);
+
+  };
+  $scope.goToSangTitle = function(sangTittel, artistNavn){
+    songs.query({$and: [{title:sangTittel},{artist:artistNavn} ]}).then(function(res){
+
+      $location.path('/song/'+res[0]._id.$oid);
+    });
   };
   $scope.getChart = function(){
     return $scope.chart;
