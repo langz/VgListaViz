@@ -120,49 +120,39 @@
                 </div>
                 <div class="panel-body">
                   <div class="col-xs-12" style="margin-bottom: 20px;">
-                    Echo Nest APIet  er verdens eneste "musikk lyttende" API. Den bruker proprietære maskin lytteteknikker for å simulere hvordan folk
-                    oppfatter musikk. Det inneholder prinsipper for psykoakustikk, musikk persepsjon, og adaptiv læring for å modellere både
-                    de fysiske og kognitive prosesser av menneskelig lytting. APIet returnerer en fullstendig beskrivelse av alle
-                    musikalske begivenheter, strukturer og musikalske attributter som nøkkel, lydstyrke, taktart, tempo, beats(slag), osv.
-                    Nedenfor følger forklaring av de brukte musikalske attributtene.
+                    Musixmatch APIet tilbyr mer enn 20 millioner sanger i 50 forskjellige språk fra 1 million artister.
+Jeg har benyttet meg av tjenesten for å hente lyrikken til alle sangene som har blitt analysert. 
+MusiXmatch presenterer seg som den raskeste, mest kraftige og lovlige måten å vise lyrikk på din nettside eller i din applikasjon på.
+Det beste med tjenesten er at all lyrikken er lisensiert og de har avtaler med blant annet Warner Chappel, Universal Bmg, Emi og fler.
+På grunn av disse avtalene er det fullt lovlig å benytte meg av den lisensierte lyrikken.
+Dette er viktig for meg ettersom rettigheter innenfor musikk er en masteroppgave i seg selv.
+Selv om APIet er veldig omfattende, så har det vist seg at det er enkelte sanger fra VG-Lista topp 20 som ikke er i MusixMatch APIet.
                   </div>
                   <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                       <div class="panel panel-default">
                         <div class="panel-heading">
-                          <i class="fa fa-child fa-fw"></i> Dansbarhet
+                          <i class="fa fa-table fa-fw"></i> Term Frekvens
                         </div>
                         <div class="panel-body">
                           <p>
-                            Representerer hvor egnet en sang er for å danse til, verdien er et nummer mellom 0 og 1.
-                            Kombinasjonen av musikalske elementer som best karakteriserer dansbarhet inkluderer tempo,
-                            rytme stabilitet, slag styrke, og samlet regularitet.
+                            Representerer hvor mange ganger et ord er representert i et dokument(sang).
+Blir i prosjektet brukt til å se antall ganger et ord har blitt nevnt av en artist i sanger, lister, år.
                           </p>
                         </div>
                       </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                       <div class="panel panel-default">
                         <div class="panel-heading">
-                          <i class="fa fa-flash fa-fw"></i> Energi
+                          <i class="fa fa-remove fa-fw"></i> Fjerning av stoppord
                         </div>
                         <div class="panel-body">
-                          <p>Er et nummer mellom 0 og 1, som representerer hvor energisk en sang er.
-                            Typisk for energiske låter er at de er raske, høylytte og bråkete.
-                            For eksempel har death metal høy energi, mens et forspill av Bach skårer lavt på skalaen.</p>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="panel panel-default">
-                          <div class="panel-heading">
-                            <i class="fa fa-volume-up fa-fw"></i> Lydstyrke
-                          </div>
-                          <div class="panel-body">
-                            <p>  Den generelle lydstyrken til en sang er målt i desibel(dB).
-                              En sang har forskjellig lydstyrke over flere segmenter.
-                              Verdien som blir benyttet forlydstyrke er derfor gjennomsnittsverdien målt gjennom hele sangen.
-                            </p>
+                          <p>
+                            Stoppord er ord som er blitt filtrert ut før behandling av tekst dataen.
+Det finnes dessverre ingen universell liste over stoppord brukt av all behandling av naturlige språkverktøy.
+Den stoppordslisten jeg har benyttet meg av er fra <a href="www.Uib.no"> UiB </a> og dekker mine behov.
+</p>
                           </div>
                         </div>
                       </div>
