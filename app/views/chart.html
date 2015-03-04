@@ -9,6 +9,9 @@ text:hover { opacity: .7 !important; }
     <span ng-if="!listeAktiv">
       <span style="font-size:14px">Sammendrag for året {{chart.year}}</span>
     </span>
+    <div class="pull-right"><button type="button" class="btn btn-default btn-lg" ng-click="goToCompare(chart._id.$oid)">
+      <span class="fa fa-pie-chart" aria-hidden="true"></span> Sammenlign
+    </button></div>
   </h1>
   <div ng-show="listeAktiv" >
     <div class="panel panel-default">
@@ -113,7 +116,4 @@ text:hover { opacity: .7 !important; }
     </div>
   </div>
 </div>
-<button type="button" class="btn btn-default btn-lg" style="margin-top:12px;" ng-click="goToCompare(chart._id.$oid)">
-  <span class="fa fa-pie-chart" aria-hidden="true"></span> Sammenlign
-</button>
 </div>

@@ -83,7 +83,6 @@ angular.module('vgListaVizApp')
     });
     $scope.safeToChange = true;
     $scope.try.loading = false;
-    console.log(res);
 
   });
 
@@ -94,9 +93,8 @@ angular.module('vgListaVizApp')
     var values = [];
     var count = 0;
     var regs = [];
-    for(var i = 0; i< $scope.summaryDecade.length; i=i+3){
+    for(var i = 0; i< $scope.summaryDecade.length; i++){
       var reg = [];
-
       reg.push(i);
       reg.push($scope.summaryDecade[i][dataString]);
 
@@ -106,8 +104,8 @@ angular.module('vgListaVizApp')
       $scope.try.xAxis.categories.push({a:$scope.summaryDecade[i].year, b: "summaryYear/" + $scope.summaryDecade[i]._id.$oid });
     }
     var regres = regression('linear', regs);
-    $scope.try.series[1].data = [regres.points[0], [18,regres.points[regres.points.length-1][1]]];
-    $scope.try.xAxis.categories.push(2014);
+    $scope.try.series[1].name = 'Lineær regresjon(' + regres.string + ')';
+    $scope.try.series[1].data = [regres.points[0], [$scope.summaryDecade.length-1,regres.points[regres.points.length-1][1]]];
     return values;
   };
 
@@ -208,7 +206,7 @@ angular.module('vgListaVizApp')
           lineWidth: 0
         }
       },
-      enableMouseTracking: false
+      enableMouseTracking: true
     }
   ],
   title: {

@@ -2,108 +2,115 @@
 text:hover { opacity: .7 !important; }
 </style>
 <div autoscroll="true">
-  <h1 class="page-header"> <i class="fa fa-user fa-fw"></i> Artist <span style="font-size:14px">{{artist.artist}}</span></h1>
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <i class="fa fa-file-sound-o fa-fw"></i> Lyd
-    </div>
-    <div class="panel-body">
-      <div id="danceability" style="height:36px;"></div>
-      <div id="energy" style="height:36px;"></div>
-      <div id="loudness" style="height:36px;"></div>
-      <div id="mode" style="height:36px;"></div>
-      <div id="timesignature" style="height:36px;"></div>
-      <div id="tempo" style="height:36px;"></div>
-      <div id="listet" style="height:36px;"></div>
-      <div id="sanger" style="height:36px;"></div>
-      <div id="duration" style="height:36px;"></div>
-    </div>
-  </div>
-  <div class="panel panel-default" ng-if="artist.sanger > 1" >
-    <div class="panel-heading">
-      <i class="fa fa-line-chart fa-fw"></i> Lydforskjeller i {{artist.artist}} sine sanger
-    </div>
-    <div class="panel-body">
-      <div class="col-xs-12">
-        <highchart id="chart2"  config="changeBar"></highchart>
-      </div>
-      <div class="col-xs-12">
-        <select class="form-control" ng-change="genererChart(item, artist)" ng-model="item" ng-init="item = choices[0]" ng-options="choice as choice.norsk for choice in choices"
-        ></select>
-      </div>
-    </div>
-  </div>
-  <div ng-show="tekst">
+  <h1 class="page-header"> <i class="fa fa-user fa-fw"></i> Artist <span style="font-size:14px">{{artist.artist}}</span>
+    <div class="pull-right"><button type="button" class="btn btn-default btn-lg" ng-click="goToCompare(artist._id.$oid)">
+      <span class="fa fa-pie-chart" aria-hidden="true"></span> Sammenlign
+    </button></div></h1>
     <div class="panel panel-default">
       <div class="panel-heading">
-        <i class="fa fa-file-text-o fa-fw"></i> Tekst
-        <span class="pull-right" style="font-size:12px">Antall unike ord: {{artist.bow.length}}</span>
+        <i class="fa fa-file-sound-o fa-fw"></i> Lyd
       </div>
       <div class="panel-body">
-        <div id="vis" class="col-xs-12"></div>
+        <div id="danceability" style="height:36px;"></div>
+        <div id="energy" style="height:36px;"></div>
+        <div id="loudness" style="height:36px;"></div>
+        <div id="mode" style="height:36px;"></div>
+        <div id="timesignature" style="height:36px;"></div>
+        <div id="tempo" style="height:36px;"></div>
+        <div id="listet" style="height:36px;"></div>
+        <div id="sanger" style="height:36px;"></div>
+        <div id="duration" style="height:36px;"></div>
       </div>
     </div>
-  </div>
-  <div class="panel panel-default" ng-hide="try.series[0].data.length =< 1">
-    <div class="panel-heading">
-      <i class="fa fa-trophy fa-fw"></i> {{artist.artist}} sin plassering på listene
-    </div>
-    <div class="panel-body">
-      <div class="col-xs-12">
-        <highchart id="chart1" config="try"></highchart>
+    <div class="panel panel-default" ng-show="artist.sanger.length > 1" >
+      <div class="panel-heading">
+        <i class="fa fa-line-chart fa-fw"></i> Lydforskjeller i {{artist.artist}} sine sanger
+      </div>
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-xs-12">
+            <highchart id="chart2" config="changeBar"></highchart>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <select class="form-control" ng-change="genererChart(item, artist)" ng-model="item" ng-init="item = choices[0]" ng-options="choice as choice.norsk for choice in choices"
+            ></select>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <i class="fa fa-music fa-fw"></i><span> Sanger</span>
-      <span class="pull-right" style="font-size:12px">Antall: {{artist.sanger.length}}</span>
+    <div ng-show="tekst">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-file-text-o fa-fw"></i> Tekst
+          <span class="pull-right" style="font-size:12px">Antall unike ord: {{artist.bow.length}}</span>
+        </div>
+        <div class="panel-body">
+          <div id="vis" class="col-xs-12"></div>
+        </div>
+      </div>
     </div>
-    <div class="panel-body">
+    <div class="panel panel-default" ng-hide="try.series[0].data.length < 2">
+      <div class="panel-heading">
+        <i class="fa fa-trophy fa-fw"></i> {{artist.artist}} sin plassering på listene
+      </div>
+      <div class="panel-body">
+        <div class="col-xs-12">
+          <highchart id="chart1" config="try"></highchart>
+        </div>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-music fa-fw"></i><span> Sanger</span>
+        <span class="pull-right" style="font-size:12px">Antall: {{artist.sanger.length}}</span>
+      </div>
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="input-group">
+              <input type="text" class="form-control" ng-model="query" id="input_search" placeholder="Filtrer sanger">
+              <span class="input-group-addon btn btn-primary" title="tooltip" style="border: 1px solid #ccc;" >
+                <i class="fa fa-search fa-fw"></i>
+              </span>
+            </div>
+          </br>
+        </div>
+      </div>
       <div class="row">
         <div class="col-xs-12">
-          <div class="input-group">
-            <input type="text" class="form-control" ng-model="query" id="input_search" placeholder="Filtrer sanger">
-            <span class="input-group-addon btn btn-primary" title="tooltip" style="border: 1px solid #ccc;" >
-              <i class="fa fa-search fa-fw"></i>
-            </span>
-          </div>
-        </br>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-xs-12">
-        <table class="table table-hover table-condensed table-responsive table-striped">
-          <tr>
-            <th class="col-sm-4"> <a ng-click="sortField2='title'; reverse2 = !reverse2">
-              Tittel <span ng-show="sortField2 == 'title'">
+          <table class="table table-hover table-condensed table-responsive table-striped">
+            <tr>
+              <th class="col-sm-4"> <a ng-click="sortField2='title'; reverse2 = !reverse2">
+                Tittel <span ng-show="sortField2 == 'title'">
+                  <span ng-show="!reverse2" class="glyphicon glyphicon-arrow-up"></span>
+                  <span ng-show="reverse2" class="glyphicon glyphicon-arrow-down"></span>
+                </span>
+              </a>
+            </th>
+            <th class="col-xs-4"> <a ng-click="sortField2='antall'; reverse2 = !reverse2">
+              Antall uker listet <span ng-show="sortField2 == 'antall'">
                 <span ng-show="!reverse2" class="glyphicon glyphicon-arrow-up"></span>
                 <span ng-show="reverse2" class="glyphicon glyphicon-arrow-down"></span>
               </span>
             </a>
           </th>
-          <th class="col-xs-4"> <a ng-click="sortField2='antall'; reverse2 = !reverse2">
-            Antall uker listet <span ng-show="sortField2 == 'antall'">
+          <th class="col-xs-4"><a ng-click="sortField2='bestPos'; reverse2 = !reverse2">
+            Beste plassering <span ng-show="sortField2 == 'bestPos'">
               <span ng-show="!reverse2" class="glyphicon glyphicon-arrow-up"></span>
               <span ng-show="reverse2" class="glyphicon glyphicon-arrow-down"></span>
             </span>
           </a>
         </th>
-        <th class="col-xs-4"><a ng-click="sortField2='bestPos'; reverse2 = !reverse2">
-          Beste plassering <span ng-show="sortField2 == 'bestPos'">
-            <span ng-show="!reverse2" class="glyphicon glyphicon-arrow-up"></span>
-            <span ng-show="reverse2" class="glyphicon glyphicon-arrow-down"></span>
-          </span>
-        </a>
-      </th>
-    </tr>
-    <tr ng-click="gotoSang(sang._id.$oid)" ng-repeat="sang in artist.sanger | filter:query | orderBy:sortField2:reverse2" style="cursor: pointer;">
-      <td class="col-xs-4">{{sang.title}}</td>
-      <td class="col-xs-4">{{sang.antall}}</td>
-      <td class="col-xs-4">{{sang.bestPos}}</td>
-    </tr>
-  </table>
-</div>
+      </tr>
+      <tr ng-click="gotoSang(sang._id.$oid)" ng-repeat="sang in artist.sanger | filter:query | orderBy:sortField2:reverse2" style="cursor: pointer;">
+        <td class="col-xs-4">{{sang.title}}</td>
+        <td class="col-xs-4">{{sang.antall}}</td>
+        <td class="col-xs-4">{{sang.bestPos}}</td>
+      </tr>
+    </table>
+  </div>
 </div>
 </div>
 </div>
@@ -168,7 +175,4 @@ text:hover { opacity: .7 !important; }
 </div>
 </div>
 </div>
-<button type="button" class="btn btn-default btn-lg" style="margin-top:12px;" ng-click="goToCompare(artist._id.$oid)">
-  <span class="fa fa-pie-chart" aria-hidden="true"></span> Sammenlign
-</button>
 </div>

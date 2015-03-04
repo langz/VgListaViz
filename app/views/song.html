@@ -2,62 +2,65 @@
 text:hover { opacity: .7 !important; }
 </style>
 <div autoscroll="true">
-  <h1 class="page-header"><i class="fa fa-music fa-fw"></i> Sang <span style="font-size:14px">{{song.title}}</span><span style="font-size:14px"> - {{song.artist}}</span></h1>
-  <div ng-if="soundData">
-    <div class="panel panel-default">
+  <h1 class="page-header"><i class="fa fa-music fa-fw"></i> Sang <span style="font-size:14px">{{song.title}}</span><span style="font-size:14px"> - {{song.artist}}</span>
+    <div class="pull-right"><button type="button" class="btn btn-default btn-lg" ng-click="goToCompare(song._id.$oid)">
+      <span class="fa fa-pie-chart" aria-hidden="true"></span> Sammenlign
+    </button></div></h1>
+    <div ng-if="soundData">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-file-sound-o fa-fw"></i> Lyd
+        </div>
+        <div class="panel-body">
+          <div id="danceability" style="height:36px;"></div>
+          <div id="energy" style="height:36px;"></div>
+          <div id="loudness" style="height:36px;"></div>
+          <div id="mode" style="height:36px;"></div>
+          <div id="timesignature" style="height:36px;"></div>
+          <div id="tempo" style="height:36px;"></div>
+          <div id="listet" style="height:36px;"></div>
+          <div id="duration" style="height:36px;"></div>
+        </div>
+      </div>
+    </div>
+    <div ng-show="tekst">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-file-text-o fa-fw"></i> Tekst
+          <span class="pull-right" style="font-size:12px">Antall unike ord: {{song.bow.length}}</span>
+        </div>
+        <div class="panel-body">
+          <div id="vis" class="col-xs-12" ></div>
+          </div
+        </div>
+      </div>
+    </div>
+    <div class="panel panel-default" ng-show="$scope.try.series[0].data > 1">
       <div class="panel-heading">
-        <i class="fa fa-file-sound-o fa-fw"></i> Lyd
+        <i class="fa fa-trophy fa-fw"></i> {{song.title}} sin plassering på listene
       </div>
       <div class="panel-body">
-        <div id="danceability" style="height:36px;"></div>
-        <div id="energy" style="height:36px;"></div>
-        <div id="loudness" style="height:36px;"></div>
-        <div id="mode" style="height:36px;"></div>
-        <div id="timesignature" style="height:36px;"></div>
-        <div id="tempo" style="height:36px;"></div>
-        <div id="listet" style="height:36px;"></div>
-        <div id="duration" style="height:36px;"></div>
+        <div class="col-xs-12">
+          <highchart id="chart1" config="try" data-highcharts-chart="0"></highchart>
+        </div>
       </div>
     </div>
-  </div>
-  <div ng-show="tekst">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <i class="fa fa-file-text-o fa-fw"></i> Tekst
-        <span class="pull-right" style="font-size:12px">Antall unike ord: {{song.bow.length}}</span>
-      </div>
-      <div class="panel-body">
-        <div id="vis" class="col-xs-12" ></div>
-        </div
-      </div>
-    </div>
-  </div>
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <i class="fa fa-trophy fa-fw"></i> {{song.title}} sin plassering på listene
-    </div>
-    <div class="panel-body">
-      <div class="col-xs-12">
-        <highchart id="chart1" config="try" data-highcharts-chart="0"></highchart>
-      </div>
-    </div>
-  </div>
-  <div ng-if="artist.sanger.length!=1">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <i class="fa fa-music fa-fw"></i> Andre sanger av artisten {{song.artist}}
-        <span class="pull-right" style="font-size:12px">Antall: {{artist.sanger.length -1}}</span>
-      </div>
-      <div class="panel-body">
-        <div class="row">
-          <div class="col-xs-12">
-            <div class="input-group">
-              <input type="text" class="form-control" ng-model="query" id="input_search" placeholder="Filtrer sanger">
-              <span class="input-group-addon btn btn-primary button1" title="tooltip" >
-                <span class="glyphicon glyphicon-search"></span>
-              </span>
-            </div>
-          </br>
+    <div ng-if="artist.sanger.length!=1">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-music fa-fw"></i> Andre sanger av artisten {{song.artist}}
+          <span class="pull-right" style="font-size:12px">Antall: {{artist.sanger.length -1}}</span>
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="input-group">
+                <input type="text" class="form-control" ng-model="query" id="input_search" placeholder="Filtrer sanger">
+                <span class="input-group-addon btn btn-primary button1" title="tooltip" style="border: 1px solid #ccc;" >
+                  <span class="glyphicon glyphicon-search"></span>
+                </span>
+              </div>
+            </br>
           </div>
         </div>
         <div class="row">
@@ -97,7 +100,4 @@ text:hover { opacity: .7 !important; }
 </div>
 </div>
 </div>
-<button type="button" class="btn btn-default btn-lg" style="margin-top:12px;" ng-click="goToCompare(song._id.$oid)">
-  <span class="fa fa-pie-chart" aria-hidden="true"></span> Sammenlign
-</button>
 </div>

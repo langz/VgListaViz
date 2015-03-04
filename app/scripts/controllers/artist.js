@@ -20,6 +20,7 @@ angular.module('vgListaVizApp')
   $scope.sortField2='title';
   $scope.reverse2 = false;
   $scope.changeOverTime = [];
+  $scope.tempOid = [];
   var vis;
   var svg;
   var layout;
@@ -51,6 +52,15 @@ angular.module('vgListaVizApp')
   var numWeeksAvg = 17;
   var numSongsAvg = 2;
   var timesignatureAvg=2;
+
+  var getOid = function(title){
+    for(var a = 0 ; a < $scope.tempOid.length; a++){
+      if($scope.tempOid[a].title===title){
+        return $scope.tempOid[a].oid;
+        break;
+      }
+    }
+  };
 
   $scope.changeBar = {
     options:{
@@ -93,6 +103,13 @@ angular.module('vgListaVizApp')
     },
     xAxis: {
       type: 'category',
+      labels:{
+        formatter: function () {
+          return '<a href="#/song/' + getOid(this.value) + '"style="color:black;">' + this.value.substring(0, 12) +
+          '</a>';
+        },
+        useHTML:true
+      }
     },
     yAxis: {
       min: 0,
@@ -663,8 +680,7 @@ angular.module('vgListaVizApp')
 
 
   $scope.genererChart = function(obj, artist){
-    console.log($scope.changeBar);
-    console.log($scope.artist)
+    $scope.tempOid = [];
     var attributt = obj.name;
     $scope.changeBar.series[1].data = [];
     $scope.changeBar.series[0].name = obj.norsk;
@@ -679,11 +695,11 @@ angular.module('vgListaVizApp')
       for(var i=0;i<artist.sanger.length;i++){
         if(artist.sanger[i].soundSummary.length !=0){
           antall ++;
-          console.log("VALUE" + artist.sanger[i].title);
           var tempArray = [];
           tempArray.push(artist.sanger[i].title);
           tempArray.push(artist.sanger[i].soundSummary[0].danceability);
           mainArray.push(tempArray);
+          $scope.tempOid.push({title:artist.sanger[i].title, oid :artist.sanger[i]._id.$oid});
         }
       }
       $scope.changeBar.loading = false;
@@ -706,6 +722,7 @@ angular.module('vgListaVizApp')
           tempArray.push(artist.sanger[i].title);
           tempArray.push(artist.sanger[i].soundSummary[1]["duration"]);
           mainArray.push(tempArray);
+          $scope.tempOid.push({title:artist.sanger[i].title, oid :artist.sanger[i]._id.$oid});
         }
       }
       $scope.changeBar.loading = false;
@@ -727,6 +744,7 @@ angular.module('vgListaVizApp')
           tempArray.push(artist.sanger[i].title);
           tempArray.push(artist.sanger[i].soundSummary[2]["energy"]);
           mainArray.push(tempArray);
+          $scope.tempOid.push({title:artist.sanger[i].title, oid :artist.sanger[i]._id.$oid});
         }
       }
       $scope.changeBar.loading = false;
@@ -747,6 +765,7 @@ angular.module('vgListaVizApp')
           tempArray.push(artist.sanger[i].title);
           tempArray.push(Math.abs(artist.sanger[i].soundSummary[4]["loudness"]));
           mainArray.push(tempArray);
+          $scope.tempOid.push({title:artist.sanger[i].title, oid :artist.sanger[i]._id.$oid});
         }
       }
       $scope.changeBar.loading = false;
@@ -769,6 +788,7 @@ angular.module('vgListaVizApp')
           tempArray.push(artist.sanger[i].title);
           tempArray.push(artist.sanger[i].antall);
           mainArray.push(tempArray);
+          $scope.tempOid.push({title:artist.sanger[i].title, oid :artist.sanger[i]._id.$oid});
         }
       }
       $scope.changeBar.loading = false;
@@ -790,6 +810,7 @@ angular.module('vgListaVizApp')
           tempArray.push(artist.sanger[i].title);
           tempArray.push(artist.sanger[i].soundSummary[5]["mode"]);
           mainArray.push(tempArray);
+          $scope.tempOid.push({title:artist.sanger[i].title, oid :artist.sanger[i]._id.$oid});
         }
       }
       $scope.changeBar.loading = false;
@@ -805,12 +826,12 @@ angular.module('vgListaVizApp')
       var antall = 0;
       for(var i=0;i<artist.sanger.length;i++){
         if(artist.sanger[i].soundSummary.length !=0){
-          console.log(artist.sanger[i]);
           var tempArray = [];
           antall ++;
           tempArray.push(artist.sanger[i].title);
           tempArray.push(artist.sanger[i].soundSummary[6]["tempo"]);
           mainArray.push(tempArray);
+          $scope.tempOid.push({title:artist.sanger[i].title, oid :artist.sanger[i]._id.$oid});
         }
       }
       $scope.changeBar.loading = false;
@@ -830,17 +851,16 @@ angular.module('vgListaVizApp')
           tempArray.push(artist.sanger[i].title);
           tempArray.push(artist.sanger[i].soundSummary[7]["timesignature"]);
           mainArray.push(tempArray);
+          $scope.tempOid.push({title:artist.sanger[i].title, oid :artist.sanger[i]._id.$oid});
         }
       }
       $scope.changeBar.loading = false;
       $scope.changeBar.series[0].data = mainArray;
       $scope.changeBar.series[1].data = [[0,artist.timesignature],[antall-1,artist.timesignature]]; //MÅ FIKSES ER IKKE SNITTET PÅ TIMESIGNATURE ATM
     }
-    console.log($scope.changeBar);
   };
   $scope.goToChartTypeChart = function(oid){
 
-    console.log('/chart/chart/'+oid);
     $location.path('/chart/chart/'+oid);
 
   };
@@ -849,31 +869,23 @@ angular.module('vgListaVizApp')
   };
 
   $scope.gotoSang = function(oid){
-    console.log('/song/'+oid);
     $location.path('/song/'+oid);
   };
   $scope.goToSangTitle = function(sangTittel, artistNavn){
     songs.query({$and: [{title:sangTittel},{artist:artistNavn} ]}).then(function(res){
-
-
-      console.log(res);
-      console.log('/song/'+res[0]._id.$oid);
 
       $location.path('/song/'+res[0]._id.$oid);
     });
   };
   //Main
   summaryArtist.query({ artist:$scope.artistnavn }).then(function(res){
-    console.log(res);
     createBulletCharts(res[0]);
     $scope.artist = res[0];
 
     if($scope.artist.bow.length===0){
-      console.log("bow er null");
       $scope.tekst = false;
     }
     else{
-      console.log("kke null");
       omg(res[0].bow);
     }
 
