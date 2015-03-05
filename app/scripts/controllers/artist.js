@@ -105,7 +105,7 @@ angular.module('vgListaVizApp')
       type: 'category',
       labels:{
         formatter: function () {
-          return '<a href="#/song/' + getOid(this.value) + '"style="color:black;">' + this.value.substring(0, 12) +
+          return '<a href="#/song/' + getOid(this.value) + '"style="color:black;">' + this.value +
           '</a>';
         },
         useHTML:true

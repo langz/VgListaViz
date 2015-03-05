@@ -46,7 +46,7 @@ angular.module('vgListaVizApp')
         name:'tempo'
       },
       {
-        norsk:'Uker på listen',
+        norsk:'Antall ganger listet',
         name:'antallganger'
       },
       {

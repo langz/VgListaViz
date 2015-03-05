@@ -435,6 +435,9 @@ angular.module('vgListaVizApp')
         else if(category==='Unike sanger'){
           return (value/100) * antallunikesangerMax;
         }
+        else if(category==='Antall sanger'){
+          return (value/100) * antallunikesangerMax;
+        }
         else{
           return value;
         }
