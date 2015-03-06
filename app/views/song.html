@@ -2,7 +2,7 @@
 text:hover { opacity: .7 !important; }
 </style>
 <div autoscroll="true">
-  <h1 class="page-header"><i class="fa fa-music fa-fw"></i> Sang <span style="font-size:14px">{{song.title}}  - </span><span style="font-size:14px ; cursor: pointer;" ng-click="gotoArtist(song.artist)">{{song.artist}}</span>
+  <h1 class="page-header"><i class="fa fa-music fa-fw"></i> Sang <a style="font-size:14px; cursor: pointer; text-decoration: underline;">{{song.title}}</a><span style="font-size:14px"> - </span><a style="font-size:14px; cursor: pointer; text-decoration: underline;" ng-click="gotoArtist(song.artist)">{{song.artist}}</a>
     <div class="pull-right"><button type="button" class="btn btn-default btn-lg" ng-click="goToCompare(song._id.$oid)">
       <span class="fa fa-pie-chart" aria-hidden="true"></span> Sammenlign
     </button></div></h1>

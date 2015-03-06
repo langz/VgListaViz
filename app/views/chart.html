@@ -4,10 +4,13 @@ text:hover { opacity: .7 !important; }
 <div autoscroll="true">
   <h1 class="page-header">  <i class="fa fa-list fa-fw"></i>Liste
     <span ng-if="listeAktiv">
-      <span style="cursor: pointer; font-size:14px;" ng-click="goToChartTypeSummaryYear(chart.year)">{{chart.year}} - </span><span style="font-size:14px">{{chart.week}}</span>
+      <a style="font-size:14px; cursor: pointer; text-decoration: underline;" ng-click="goToChartTypeSummaryYear(chart.year)">{{chart.year}}</a><span style="font-size:14px;"> - </span><a style="font-size:14px; cursor: pointer; text-decoration: underline;">{{chart.week}}</a>
     </span>
     <span ng-if="!listeAktiv">
-      <span style="font-size:14px">Sammendrag for året {{chart.year}}</span>
+      <span style="font-size:14px;">
+        Sammendrag for året
+      </span>
+      <a style="font-size:14px; cursor: pointer; text-decoration: underline;">{{chart.year}}</a>
     </span>
     <div class="pull-right"><button type="button" class="btn btn-default btn-lg" ng-click="goToCompare(chart._id.$oid)">
       <span class="fa fa-pie-chart" aria-hidden="true"></span> Sammenlign
@@ -28,68 +31,68 @@ text:hover { opacity: .7 !important; }
               </span>
             </div>
           </br>
-          </div>
         </div>
-        <div class="row">
-          <div class="col-xs-12">
-            <table class="table table-hover table-condensed table-responsive table-striped">
-              <tr>
-                <th class="col-xs-2"> <a ng-click="sortField2='position'; reverse2 = !reverse2">
-                  Plassering <span ng-show="sortField2 == 'position'">
-                    <span ng-show="!reverse2" class="glyphicon glyphicon-arrow-up"></span>
-                    <span ng-show="reverse2" class="glyphicon glyphicon-arrow-down"></span>
-                  </span>
-                </a>
-              </th>
-              <th class="col-xs-6"> <a ng-click="sortField2='title'; reverse2 = !reverse2">
-                Tittel <span ng-show="sortField2 == 'title'">
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <table class="table table-hover table-condensed table-responsive table-striped">
+            <tr>
+              <th class="col-xs-2"> <a ng-click="sortField2='position'; reverse2 = !reverse2">
+                Plassering <span ng-show="sortField2 == 'position'">
                   <span ng-show="!reverse2" class="glyphicon glyphicon-arrow-up"></span>
                   <span ng-show="reverse2" class="glyphicon glyphicon-arrow-down"></span>
                 </span>
               </a>
             </th>
-            <th class="col-xs4"> <a ng-click="sortField2='artist'; reverse2 = !reverse2">
-              Artist <span ng-show="sortField2 == 'artist'">
+            <th class="col-xs-6"> <a ng-click="sortField2='title'; reverse2 = !reverse2">
+              Tittel <span ng-show="sortField2 == 'title'">
                 <span ng-show="!reverse2" class="glyphicon glyphicon-arrow-up"></span>
                 <span ng-show="reverse2" class="glyphicon glyphicon-arrow-down"></span>
               </span>
             </a>
           </th>
-        </tr>
-        <tr ng-repeat="sang in chart.list | filter:query | orderBy:sortField2:reverse2" style="cursor: pointer;">
-          <td class="col-xs-2">{{sang.position}}.</td>
-          <td style="cursor: pointer;" ng-click="goToSang(sang.title)" class="col-xs-6">{{sang.title}}</td>
-          <td style="cursor: pointer;" ng-click="gotoArtist(sang.artist)" class="col-xs-4">{{sang.artist}}</td>
-        </tr>
-      </table>
-    </div>
+          <th class="col-xs4"> <a ng-click="sortField2='artist'; reverse2 = !reverse2">
+            Artist <span ng-show="sortField2 == 'artist'">
+              <span ng-show="!reverse2" class="glyphicon glyphicon-arrow-up"></span>
+              <span ng-show="reverse2" class="glyphicon glyphicon-arrow-down"></span>
+            </span>
+          </a>
+        </th>
+      </tr>
+      <tr ng-repeat="sang in chart.list | filter:query | orderBy:sortField2:reverse2" style="cursor: pointer;">
+        <td class="col-xs-2">{{sang.position}}.</td>
+        <td style="cursor: pointer;" ng-click="goToSang(sang.title)" class="col-xs-6">{{sang.title}}</td>
+        <td style="cursor: pointer;" ng-click="gotoArtist(sang.artist)" class="col-xs-4">{{sang.artist}}</td>
+      </tr>
+    </table>
   </div>
 </div>
 </div>
 </div>
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <i class="fa fa-file-sound-o fa-fw"></i> Lyd
-    </div>
-    <div class="panel-body">
-      <div id="danceability" style="height:36px;"></div>
-      <div id="energy" style="height:36px;"></div>
-      <div id="loudness" style="height:36px;"></div>
-      <div id="mode" style="height:36px;"></div>
-      <div id="timesignature" style="height:36px;"></div>
-      <div id="tempo" style="height:36px;"></div>
-      <div id="duration" style="height:36px;"></div>
-    </div>
+</div>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-file-sound-o fa-fw"></i> Lyd
   </div>
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <i class="fa fa-file-text fa-fw"></i> Tekst
-      <span class="pull-right" style="font-size:12px">Antall unike ord: {{chart.lyricSummary.length}}</span>
-    </div>
-    <div class="panel-body">
-      <div id="vis" class="col-xs-12" ></div>
-    </div>
+  <div class="panel-body">
+    <div id="danceability" style="height:36px;"></div>
+    <div id="energy" style="height:36px;"></div>
+    <div id="loudness" style="height:36px;"></div>
+    <div id="mode" style="height:36px;"></div>
+    <div id="timesignature" style="height:36px;"></div>
+    <div id="tempo" style="height:36px;"></div>
+    <div id="duration" style="height:36px;"></div>
   </div>
+</div>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-file-text fa-fw"></i> Tekst
+    <span class="pull-right" style="font-size:12px">Antall unike ord: {{chart.lyricSummary.length}}</span>
+  </div>
+  <div class="panel-body">
+    <div id="vis" class="col-xs-12" ></div>
+  </div>
+</div>
 <div>
   <div class="panel panel-default">
     <div class="panel-heading">

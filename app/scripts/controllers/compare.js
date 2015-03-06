@@ -247,17 +247,49 @@ angular.module('vgListaVizApp')
         }
 
 
-        for(var a = 0 ; a < obj.soundSummary.length; a++){
-          for(var propName in obj.soundSummary[a]){
-            categorie.push(propName);
-            data.push({'y':$scope.percentageOf(obj.soundSummary[a][propName], propName, number), 'color':color});
-          }
+        if(obj.list){
+          data.push({'y':$scope.percentageOf(obj.soundSummary[0].danceability, 'danceability', number), 'color':color});
+          data.push({'y':$scope.percentageOf(obj.soundSummary[1].duration, 'duration', number), 'color':color});
+          data.push({'y':$scope.percentageOf(obj.soundSummary[2].energy, 'energy', number), 'color':color});
+          data.push({'y':$scope.percentageOf(obj.soundSummary[3].loudness, 'loudness', number), 'color':color});
+          data.push({'y':$scope.percentageOf(obj.soundSummary[4].mode, 'mode', number), 'color':color});
+          data.push({'y':$scope.percentageOf(obj.soundSummary[5].tempo, 'tempo', number), 'color':color});
+          data.push({'y':$scope.percentageOf(obj.soundSummary[7].timesignature, 'timesignature', number), 'color':color});
+
+          categorie.push('Dansbarhet');
+          categorie.push('Varighet');
+          categorie.push('Energi');
+          categorie.push('Lydstyrke');
+          categorie.push('Modal Skala');
+          categorie.push('Tempo');
+          categorie.push('Taktart');
+        }
+        else{
+          data.push({'y':$scope.percentageOf(obj.soundSummary[0].danceability, 'danceability', number), 'color':color});
+          data.push({'y':$scope.percentageOf(obj.soundSummary[1].duration, 'duration', number), 'color':color});
+          data.push({'y':$scope.percentageOf(obj.soundSummary[2].energy, 'energy', number), 'color':color});
+          data.push({'y':$scope.percentageOf(obj.soundSummary[3].key, 'key', number), 'color':color});
+          data.push({'y':$scope.percentageOf(obj.soundSummary[4].loudness, 'loudness', number), 'color':color});
+          data.push({'y':$scope.percentageOf(obj.soundSummary[5].mode, 'mode', number), 'color':color});
+          data.push({'y':$scope.percentageOf(obj.soundSummary[6].tempo, 'tempo', number), 'color':color});
+          data.push({'y':$scope.percentageOf(obj.soundSummary[7].timesignature, 'timesignature', number), 'color':color});
+
+          categorie.push('Dansbarhet');
+          categorie.push('Varighet');
+          categorie.push('Energi');
+          categorie.push('Nøkkel');
+          categorie.push('Lydstyrke');
+          categorie.push('Modal Skala');
+          categorie.push('Tempo');
+          categorie.push('Taktart');
+          categorie.push("Uker på listen");
+          categorie.push("Antall sanger");
         }
         if(obj.type==="song"){
           categorie.push("Beste plassering");
-          data.push({'y':$scope.percentageOf(obj.bestPos, "Beste plassering", number), 'color':color});
+          data.push({'y':$scope.percentageOf(Math.floor(obj.bestPos), "Beste plassering", number), 'color':color});
           categorie.push("Antall Uker");
-          data.push({'y':$scope.percentageOf(obj.antall, "Antall Uker", number), 'color':color});
+          data.push({'y':$scope.percentageOf(Math.floor(obj.antall), "Antall Uker", number), 'color':color});
         }
         serie.data = data;
         serie.name=obj.title;
@@ -284,8 +316,8 @@ angular.module('vgListaVizApp')
         data.push({'y':$scope.percentageOf(obj.mode, 'mode', number), 'color':color});
         data.push({'y':$scope.percentageOf(obj.tempo, 'tempo', number), 'color':color});
         data.push({'y':$scope.percentageOf(obj.timesignature, 'timesignature', number), 'color':color});
-        data.push({'y':$scope.percentageOf(obj.antall, "Antall uker", number), 'color':color});
-        data.push({'y':$scope.percentageOf(obj.antallunikesanger, "Antall sanger", number), 'color':color});
+        data.push({'y':$scope.percentageOf(Math.floor(obj.antall), "Antall uker", number), 'color':color});
+        data.push({'y':$scope.percentageOf(Math.floor(obj.antallunikesanger), "Antall sanger", number), 'color':color});
 
         categorie.push('Dansbarhet');
         categorie.push('Varighet');
