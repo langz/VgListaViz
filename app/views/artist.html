@@ -22,24 +22,6 @@ text:hover { opacity: .7 !important; }
         <div id="duration" style="height:36px;"></div>
       </div>
     </div>
-    <div class="panel panel-default" ng-show="artist.sanger.length > 2" >
-      <div class="panel-heading">
-        <i class="fa fa-line-chart fa-fw"></i> Lydforskjeller i {{artist.artist}} sine sanger
-      </div>
-      <div class="panel-body">
-        <div class="row">
-          <div class="col-xs-12">
-            <highchart id="chart2" config="changeBar"></highchart>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-12">
-            <select class="form-control" ng-change="genererChart(item, artist)" ng-model="item" ng-init="item = choices[0]" ng-options="choice as choice.norsk for choice in choices"
-            ></select>
-          </div>
-        </div>
-      </div>
-    </div>
     <div ng-show="tekst">
       <div class="panel panel-default">
         <div class="panel-heading">
@@ -58,6 +40,24 @@ text:hover { opacity: .7 !important; }
       <div class="panel-body">
         <div class="col-xs-12">
           <highchart id="chart1" config="try"></highchart>
+        </div>
+      </div>
+    </div>
+    <div class="panel panel-default" ng-show="artist.sanger.length > 2" >
+      <div class="panel-heading">
+        <i class="fa fa-line-chart fa-fw"></i> Lydforskjeller i {{artist.artist}} sine sanger
+      </div>
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-xs-12">
+            <highchart id="chart2" config="changeBar"></highchart>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <select class="form-control" ng-change="genererChart(item, artist)" ng-model="item" ng-init="item = choices[0]" ng-options="choice as choice.norsk for choice in choices"
+            ></select>
+          </div>
         </div>
       </div>
     </div>
