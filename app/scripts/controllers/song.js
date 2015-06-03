@@ -8,10 +8,24 @@
 * Controller of the vgListaVizApp
 */
 angular.module('vgListaVizApp')
-.controller('SongCtrl',function ($scope, $routeParams, $location, songs, summaryArtist, charts) {
+.controller('SongCtrl',function ($scope, $routeParams, $location, songs, summaryArtist, charts, related) {
+  $scope.item = {};
+  $scope.gjort1 = false;
+  $scope.hideit=false;
+  $scope.choices = [
+    {
+      norsk:'Tekstlig',
+      name:'Tekstlig'
+    },
+    {
+      norsk:'Akustisk',
+      name:'Akustisk',
+    }
+  ];
   $scope.isCollapsed = false;
   $scope.lydClick = true;
   $scope.song = {};
+  $scope.related = {};
   $scope.song.artist = "";
   $scope.oid = $routeParams.oid;
   $scope.tekst = true;
@@ -519,78 +533,236 @@ angular.module('vgListaVizApp')
         fillColor: '#dd2027',
         showInLegend: false
       }
-      ],
-      title: {
-        text: ''
-      },
+    ],
+    title: {
+      text: ''
+    },
 
-      loading: true,
-      exporting: { enabled: false }
-    };
+    loading: true,
+    exporting: { enabled: false }
+  };
+  $scope.genererRelated = function(obj){
+    $scope.gjort1 = false;
+    var attributt = obj.name;
 
+    if(attributt==="Tekstlig"){
+      d3.select("#similar").select("svg")
+      .remove();
+      createSim($scope.related.tekst);
 
-    $scope.goToCompare = function(oid){
-      $location.path('/compare/song/'+oid);
-    };
+    }
+    else if(attributt==="Akustisk"){
+      d3.select("#similar").select("svg")
+      .remove();
+      createSim($scope.related.musikk);
+    }
+  }
 
-    $scope.gotoSang = function(oid){
-      console.log('/song/'+oid);
-      $location.path('/song/'+oid);
-    };
-    $scope.gotoArtist = function(artistNavn){
-      console.log('/artist/'+artistNavn);
-      $location.path('/artist/'+artistNavn);
-    };
+  $scope.goToCompare = function(oid){
+    $location.path('/compare/song/'+oid);
+  };
 
-    songs.query({_id:{$oid: $scope.oid }}).then(function(res){
-      console.log(res);
+  $scope.gotoSang = function(oid){
+    console.log('/song/'+oid);
+    $location.path('/song/'+oid);
+  };
+  $scope.gotoArtist = function(artistNavn){
+    console.log('/artist/'+artistNavn);
+    $location.path('/artist/'+artistNavn);
+  };
 
-      $scope.song = res[0];
+  songs.query({_id:{$oid: $scope.oid }}).then(function(res){
+    console.log(res);
 
-      if($scope.song.soundSummary.length===0){
-        console.log("null");
+    $scope.song = res[0];
+    related.query({$and: [{title:res[0].title},{artist:res[0].artist} ]}).then(function(res2){
+      if(res2.length===0){
+        $scope.hideit = true;
       }
-
-      else{
-        createBulletCharts($scope.song);
-      }
-
-
-      if($scope.song.bow.length===0){
-        console.log("null");
-        $scope.tekst = false;
-      }
-
-      else{
-        console.log("kke null");
-        omg(res[0].bow);
-      }
-      charts.query({ list: { $elemMatch: {"artist": $scope.song.artist, "title": $scope.song.title}}}).then(function(res2){
-        console.log("det shit")
-        console.log(res2);
-        var values = [];
-        var categorie = [];
-        for(var a = 0 ; a<res2.length; a++){
-          for(var i = 0 ; i<res2[a].list.length;i++){
-
-            if(res2[a].list[i].artist===$scope.song.artist && res2[a].list[i].title===$scope.song.title){
-              values.push(res2[a].list[i].position);
-              categorie.push({a:res2[a].year, b: "chart/" + res2[a]._id.$oid, c:res2[a].week});
-              break;
+      related.query({title:res2[0].tekst[0].target}).then(function(res3){
+        for(var a = 0 ; a < res3[0].tekst.length; a++){
+          res2[0].tekst.push(res3[0].tekst[a]);
+        }
+        related.query({title:res2[0].tekst[1].target}).then(function(res4){
+          for(var a = 0 ; a < res4[0].tekst.length; a++){
+            res2[0].tekst.push(res4[0].tekst[a]);
+          }
+          related.query({title:res2[0].tekst[2].target}).then(function(res5){
+            for(var a = 0 ; a < res5[0].tekst.length; a++){
+              res2[0].tekst.push(res5[0].tekst[a]);
             }
+            related.query({title:res2[0].tekst[3].target}).then(function(res6){
+              for(var a = 0 ; a < res6[0].tekst.length; a++){
+                res2[0].tekst.push(res6[0].tekst[a]);
+              }
+              related.query({title:res2[0].tekst[4].target}).then(function(res7){
+                for(var a = 0 ; a < res7[0].tekst.length; a++){
+                  res2[0].tekst.push(res7[0].tekst[a]);
+                }
+                createSim(res2[0].tekst);
+              });
+            });
+          });
+        });
+      });
+      related.query({title:res2[0].musikk[0].target}).then(function(res3){
+        for(var a = 0 ; a < res3[0].musikk.length; a++){
+          res2[0].musikk.push(res3[0].musikk[a]);
+        }
+        related.query({title:res2[0].musikk[1].target}).then(function(res4){
+          for(var a = 0 ; a < res4[0].musikk.length; a++){
+            res2[0].musikk.push(res4[0].musikk[a]);
+          }
+          related.query({title:res2[0].musikk[2].target}).then(function(res5){
+            for(var a = 0 ; a < res5[0].musikk.length; a++){
+              res2[0].musikk.push(res5[0].musikk[a]);
+            }
+            related.query({title:res2[0].musikk[3].target}).then(function(res6){
+              for(var a = 0 ; a < res6[0].musikk.length; a++){
+                res2[0].musikk.push(res6[0].musikk[a]);
+              }
+              related.query({title:res2[0].musikk[4].target}).then(function(res7){
+                for(var a = 0 ; a < res7[0].musikk.length; a++){
+                  res2[0].musikk.push(res7[0].musikk[a]);
+                }
+              });
+            });
+          });
+        });
+      });
+      $scope.related = res2[0];
+
+
+    });
+
+    if($scope.song.soundSummary.length===0){
+      console.log("null");
+    }
+
+    else{
+      createBulletCharts($scope.song);
+    }
+
+
+    if($scope.song.bow.length===0){
+      console.log("null");
+      $scope.tekst = false;
+    }
+
+    else{
+      console.log("kke null");
+      omg(res[0].bow);
+    }
+    charts.query({ list: { $elemMatch: {"artist": $scope.song.artist, "title": $scope.song.title}}}).then(function(res2){
+      console.log("det shit")
+      console.log(res2);
+      var values = [];
+      var categorie = [];
+      for(var a = 0 ; a<res2.length; a++){
+        for(var i = 0 ; i<res2[a].list.length;i++){
+
+          if(res2[a].list[i].artist===$scope.song.artist && res2[a].list[i].title===$scope.song.title){
+            values.push(res2[a].list[i].position);
+            categorie.push({a:res2[a].year, b: "chart/" + res2[a]._id.$oid, c:res2[a].week});
+            break;
           }
         }
-        $scope.try.series[0].data = values;
-        $scope.try.xAxis.categories = categorie;
-        $scope.try.loading = false;
-        createListet(res2.length);
+      }
+      $scope.try.series[0].data = values;
+      $scope.try.xAxis.categories = categorie;
+      $scope.try.loading = false;
+      createListet(res2.length);
 
-      });
-
-      summaryArtist.query({ artist:$scope.song.artist }).then(function(res){
-        console.log(res);
-        $scope.artist = res[0];
-      });
     });
+
+    summaryArtist.query({ artist:$scope.song.artist }).then(function(res){
+      console.log(res);
+      $scope.artist = res[0];
+    });
+  });
+
+  var createSim = function(links){
+
+    var linksene = angular.copy(links);
+
+    var nodes = {};
+    if(!links[0].source.hasOwnProperty('index')){
+
+    }
+    // Compute the distinct nodes from the links.
+    linksene.forEach(function(link) {
+      link.source = nodes[link.source] || (nodes[link.source] = {name: link.source});
+      link.target = nodes[link.target] || (nodes[link.target] = {name: link.target});
+    });
+
+    var width = document.getElementById('similar').offsetWidth,
+    height = 500;
+
+    var force = d3.layout.force()
+    .nodes(d3.values(nodes))
+    .links(linksene)
+    .size([width, height])
+    .linkDistance(175)
+    .charge(-300)
+    .on("tick", tick)
+    .start();
+
+    var svg = d3.select("#similar").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+    var link = svg.selectAll(".link")
+    .data(force.links())
+    .enter().append("line")
+    .attr("class", "link");
+
+    var node = svg.selectAll(".node")
+    .data(force.nodes())
+    .enter().append("g")
+    .attr("class", "node")
+    .on("mouseover", mouseover)
+    .on("mouseout", mouseout)
+    .call(force.drag);
+
+    node.append("circle")
+    .attr("r", 8)
+    .style("fill", function(d){
+      if(d.name === $scope.related.title && !$scope.gjort1){
+        $scope.gjort1 = true;
+        return d3.rgb('red');
+      }
+
+       });
+
+      node.append("text")
+      .attr("x", 12)
+      .attr("dy", ".35em")
+      .text(function(d) { return d.name; });
+
+      function tick() {
+        link
+        .attr("x1", function(d) { return d.source.x; })
+        .attr("y1", function(d) { return d.source.y; })
+        .attr("x2", function(d) { return d.target.x; })
+        .attr("y2", function(d) { return d.target.y; });
+
+        node
+        .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+      }
+
+      function mouseover() {
+        d3.select(this).select("circle").transition()
+        .duration(750)
+        .attr("r", 16);
+      }
+
+      function mouseout() {
+        d3.select(this).select("circle").transition()
+        .duration(750)
+        .attr("r", 8);
+      }
+    }
+
+
 
   });

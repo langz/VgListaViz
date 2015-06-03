@@ -45,6 +45,19 @@ text:hover { opacity: .7 !important; }
         </div>
       </div>
     </div>
+    <div class="panel panel-default" ng-hide="hideit" >
+      <div class="panel-heading">
+        <i class="fa fa-user fa-fw"></i> Relaterte Sanger
+
+      </div>
+      <div class="panel-body">
+        <div id="similar" class="col-xs-12"></div>
+        <div class="col-xs-12">
+          <select class="form-control" ng-change="genererRelated(item)" ng-model="item" ng-init="item = choices[0]" ng-options="choice as choice.norsk for choice in choices"
+          ></select>
+        </div>
+      </div>
+    </div>
     <div ng-if="artist.sanger.length!=1">
       <div class="panel panel-default">
         <div class="panel-heading">

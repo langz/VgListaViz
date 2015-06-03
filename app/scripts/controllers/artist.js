@@ -1025,5 +1025,4 @@ function mouseout() {
       .attr("r", 8);
 }
 }
-createSim();
   });

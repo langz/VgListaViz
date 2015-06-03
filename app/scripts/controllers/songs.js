@@ -392,7 +392,7 @@ angular.module('vgListaVizApp')
       });
     };
     $scope.genererChart({
-      norsk:'Dansbarhet',
-      name:'danceability',
+      norsk:'Uker på listen',
+      name:'antallganger',
     });
   });
