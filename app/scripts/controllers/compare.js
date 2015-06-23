@@ -968,8 +968,5 @@ angular.module('vgListaVizApp')
 
               }
             }
-
-
-
           };
         });

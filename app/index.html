@@ -62,25 +62,24 @@
                 </span>
               </div>
             </li>
-            <li class="sidebar-search" ng-show="choice === 'Liste'">
+            <li class="sidebar-search" ng-cloak ng-show="choice === 'Liste'">
               <select ng-change="onChangeSelect(selectedYear, selectedWeek)" class="soflow" id="year" ng-init="selectedYear = years[0];" ng-options="year as year for year in years"
               ng-model="selectedYear"></select>
               <select ng-change="onChangeSelect(selectedYear, selectedWeek)" class="soflow" id="week" ng-init="selectedWeek = weeks[0];" ng-options="week as week for week in weeks"
               ng-model="selectedWeek"></select>
-              <i ng-show="selectLoad" class="glyphicon glyphicon-refresh"></i>
             </li>
             <li ng-class="{ active: isActive('/')}"><a ng-href="#/"><i class="fa fa-home fa-fw"></i> Hjem</a></li>
             <li ng-class="{ active: isActive('/data')}"><a ng-href="#/data"><i class="fa fa-database fa-fw"></i> Data beskrivelse</a></li>
-            <li ng-class="{ active: isActive('/charts') || isActive('/chart/')}"><a ng-href="#/charts"><i class="fa fa-list fa-fw"></i> Lister</a></li>
-            <li ng-class="{ active: isActive('/artists') || isActive('/artist/')}"><a ng-href="#/artists"><i class="fa fa-users fa-fw"></i> Artister</a></li>
-            <li ng-class="{ active: isActive('/songs') || isActive('/song/')}"><a ng-href="#/songs"><i class="fa fa-music fa-fw"></i> Sanger</a></li>
-            <li ng-class="{ active: isActive('/discover')}"><a ng-href="#/discover"><i class="fa fa-search fa-fw"></i> Oppdag</a></li>
-            <li ng-class="{ active: isActive('/compare/')}"><a ng-href="#/compare/empty/empty"><i class="fa fa-pie-chart fa-fw"></i> Sammenlign</a></li>
+            <li ng-class="{ active: isActive('/charts') || isActive('/chart/')}"><a ng-href="#/charts" ng-click="reloadRoute();"><i class="fa fa-list fa-fw"></i> Lister</a></li>
+            <li ng-class="{ active: isActive('/artists') || isActive('/artist/')}"><a ng-href="#/artists" ng-click="reloadRoute();"><i class="fa fa-users fa-fw"></i> Artister</a></li>
+            <li ng-class="{ active: isActive('/songs') || isActive('/song/')}"><a ng-href="#/songs" ng-click="reloadRoute();"><i class="fa fa-music fa-fw"></i> Sanger</a></li>
+            <li ng-class="{ active: isActive('/discover')}"><a ng-href="#/discover" ng-click="reloadRoute();"><i class="fa fa-search fa-fw"></i> Oppdag</a></li>
+            <li ng-class="{ active: isActive('/compare/')}"><a ng-href="#/compare/empty/empty" ng-click="reloadRoute();"><i class="fa fa-pie-chart fa-fw"></i> Sammenlign</a></li>
 
           </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <div  autoscroll="true" ng-view="">
+          <div autoscroll="true" ng-view>
 
           </div>
         </div>
@@ -122,9 +121,7 @@
   <script src="bower_components/highcharts-ng/dist/highcharts-ng.js"></script>
   <!-- endbower -->
   <!-- endbuild -->
-  <script src="http://code.highcharts.com/highcharts.js"></script>
-  <script src="http://code.highcharts.com/highcharts-more.js"></script>
-  <script src="http://code.highcharts.com/modules/exporting.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/4.1.5/highcharts.js"></script>
   <script src="bower_components/highcharts-ng/src/highcharts-ng.js"></script>
   <script src="mongolab/angular-mongolab.js"></script>
   <script src="regression/regression.js"></script>

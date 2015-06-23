@@ -8,7 +8,7 @@
 * Controller of the vgListaVizApp
 */
 angular.module('vgListaVizApp')
-.controller('NavBarCtrl', function ($scope, $location, songs, summaryArtist, charts) {
+.controller('NavBarCtrl', function ($scope, $location, songs, summaryArtist, charts, $window) {
   $scope.asyncSelected1 = null;
   $scope.choice = '';
   $scope.choices = [
@@ -16,6 +16,10 @@ angular.module('vgListaVizApp')
     'Artist',
     'Liste'
   ];
+
+  $scope.reloadRoute = function() {
+    $window.location.reload();
+  }
   $scope.isActive = function (viewLocation) {
     var chart ='/chart/';
     if(viewLocation === $location.path()){

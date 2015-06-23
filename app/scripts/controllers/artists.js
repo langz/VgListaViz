@@ -9,7 +9,7 @@
 */
 angular.module('vgListaVizApp')
 .controller('ArtistsCtrl', function ($scope, summaryArtist, $location, summaryArtistTopAntall, summaryArtistTopDuration, summaryArtistTopEnergy, summaryArtistTopLoudness,
-  summaryArtistTopMode, summaryArtistTopTempo, summaryArtistTopTimesignature, summaryArtistTopUnik, summaryArtistTopDanceability) {
+  summaryArtistTopMode, summaryArtistTopTempo, summaryArtistTopTimesignature, summaryArtistTopUnik, summaryArtistTopDanceability, $timeout) {
 
     $scope.item = {};
     $scope.choices = [
@@ -390,6 +390,11 @@ angular.module('vgListaVizApp')
       loading: true,
       exporting: { enabled: false }
     };
+  $scope.tempclick = function(){
+console.log($scope.try.getHighcharts());
+console.log($scope.try);
+$scope.try.getHighcharts().reflow();
+};
     $scope.goToArtist = function(artistNavn){
       console.log('/artist/'+artistNavn);
       $location.path('/artist/'+artistNavn);
