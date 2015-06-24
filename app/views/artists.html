@@ -1,11 +1,12 @@
+
 <div autoscroll="true">
   <div class="panel panel-default">
     <div class="panel-heading">
       <i class="fa fa-users fa-fw"></i> Artister
     </div>
     <div class="panel-body">
-      <div class="col-xs-12">
-        <highchart  config="try" data-highcharts-chart="0"></highchart>
+      <div>
+        <highchart config="try"></highchart>
       </div>
       <div class="col-xs-12">
         <select class="form-control" ng-change="genererChart(item)" ng-model="item" ng-init="item = choices[0]" ng-options="choice as choice.norsk for choice in choices"

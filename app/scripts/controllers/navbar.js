@@ -18,7 +18,7 @@ angular.module('vgListaVizApp')
   ];
 
   $scope.reloadRoute = function() {
-    $window.location.reload();
+
   }
   $scope.isActive = function (viewLocation) {
     var chart ='/chart/';

@@ -9,7 +9,7 @@
 */
 angular.module('vgListaVizApp')
 .controller('ArtistsCtrl', function ($scope, summaryArtist, $location, summaryArtistTopAntall, summaryArtistTopDuration, summaryArtistTopEnergy, summaryArtistTopLoudness,
-  summaryArtistTopMode, summaryArtistTopTempo, summaryArtistTopTimesignature, summaryArtistTopUnik, summaryArtistTopDanceability, $timeout) {
+  summaryArtistTopMode, summaryArtistTopTempo, summaryArtistTopTimesignature, summaryArtistTopUnik, summaryArtistTopDanceability, $window) {
 
     $scope.item = {};
     $scope.choices = [
