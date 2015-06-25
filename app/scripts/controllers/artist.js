@@ -8,7 +8,7 @@
 * Controller of the vgListaVizApp
 */
 angular.module('vgListaVizApp')
-.controller('ArtistCtrl',function ($scope, $routeParams, $location, summaryArtist, charts, songs) {
+.controller('ArtistCtrl',function ($scope, $routeParams, $location, summaryArtist, charts, songs, stopword) {
   $scope.isCollapsed = false;
   console.log("HEI");
   $scope.omgBool = false;
@@ -1369,7 +1369,9 @@ angular.module('vgListaVizApp')
       $scope.tekst = false;
     }
     else{
-      omg(res[0].bow);
+      $scope.artist.bow = stopword.checkForStopWord(res[0].bow)
+                  omg($scope.artist.bow );
+
     }
 
     $scope.genererChart({

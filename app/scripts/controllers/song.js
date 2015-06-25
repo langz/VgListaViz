@@ -8,7 +8,7 @@
 * Controller of the vgListaVizApp
 */
 angular.module('vgListaVizApp')
-.controller('SongCtrl',function ($scope, $routeParams, $location, songs, summaryArtist, charts, related) {
+.controller('SongCtrl',function ($scope, $routeParams, $location, songs, summaryArtist, charts, related, stopword) {
   $scope.item = {};
   $scope.gjort1 = false;
   $scope.hideit=false;
@@ -870,6 +870,8 @@ angular.module('vgListaVizApp')
     createTimesignature(obj.soundSummary[7].timesignature);
   }
   var omg = function(wordInput){
+    d3.select("#vis").select("svg")
+    .remove();
     fill = d3.scale.category20b();
     var maxverdien =  d3.max(wordInput.map(function(d) { return d[1]; }));
     var minverdien =  d3.min(wordInput.map(function(d) { return d[1]; }));
@@ -1147,7 +1149,8 @@ angular.module('vgListaVizApp')
 
     else{
       console.log("kke null");
-      omg(res[0].bow);
+      $scope.song.bow = stopword.checkForStopWord(res[0].bow)
+                  omg($scope.song.bow );
     }
     charts.query({ list: { $elemMatch: {"artist": $scope.song.artist, "title": $scope.song.title}}}).then(function(res2){
       console.log("det shit")

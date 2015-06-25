@@ -8,7 +8,7 @@
 * Controller of the vgListaVizApp
 */
 angular.module('vgListaVizApp')
-.controller('CompareCtrl', function ($scope, songs, summaryArtist, charts, $http, $routeParams, related) {
+.controller('CompareCtrl', function ($scope, songs, summaryArtist, charts, $http, $routeParams, related, stopword) {
   console.log('hei');
   $scope.related = false;
   $scope.gjort1 = false;
@@ -248,14 +248,14 @@ angular.module('vgListaVizApp')
             .remove();
             $scope.venVisible = false;
             console.log('$scope.venVisible er:' +$scope.venVisible );
-            omg(bow);
+            omg(stopword.checkForStopWord(bow));
           }
           else if(number===1){
             d3.select("#vis1").select("svg")
             .remove();
             $scope.rightVisible = false;
             console.log('$scope.rightVisible er:' +$scope.rightVisible );
-            omg1(bow);
+            omg1(stopword.checkForStopWord(bow));
           }
         }
       }
