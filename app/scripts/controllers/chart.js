@@ -193,33 +193,126 @@ angular.module('vgListaVizApp')
 
   //-------------------------------------------------------
   var createDanceability = function(verdi){
-    Highcharts.setOptions(optionsNormal);
+
     var danceability = new Highcharts.Chart({
-      chart:{renderTo:'danceability'},
-      xAxis:{categories:['Dansbarhet']},
+      chart:{
+        type:'bar',
+        margin:[5,15,10,100],
+        renderTo:'danceability',
+      },
+      credits:{enabled:false},
+      exporting:{enabled:false},
+      legend:{enabled:false},
+      title:{text:''},
+      xAxis:{
+        tickLength:0,
+        lineColor:'#999',
+        lineWidth:1,
+        labels:{style:{fontWeight:'bold'}},
+        categories:['Dansbarhet']
+      },
       yAxis:{
+        min:0,
+        minPadding:0,
+        maxPadding:0,
+        tickColor:'#ccc',
+        tickWidth:1,
+        tickLength:3,
+        gridLineWidth:0,
+        endOnTick:true,
         max:danceabilityMax,
-        labels:{y:10,style:{fontSize:'8px'}},
-        plotBands:[]
+        plotBands:[],
+        title:{text: ''},
+        labels:{
+          y:10,
+          style:{
+            fontSize:'8px'
+          },
+          formatter:function(){
+
+            return this.value;
+
+          }
+        }
       },
       series:[{name:'Gjennomsnitt',pointWidth:8.25,data:[danceabilityAvg], color: 'rgba(103,103,103,.35)'},
       {name:'Verdi', pointWidth:7, data:[verdi], zIndex:1},
-      {name:'Gjennomsnitt',pointWidth:8.25,data:[danceabilityAvg], color: 'rgba(103,103,103,.35)'}]
+      {name:'Gjennomsnitt',pointWidth:8.25,data:[danceabilityAvg], color: 'rgba(103,103,103,.35)'}],
+      tooltip:{
+        enabled:true,
+        backgroundColor:'rgba(255, 255, 255, .85)',
+        borderWidth:0,
+        shadow:true,
+        style:{fontSize:'10px',padding:2},
+        formatter:function() {
+          return this.series.name + ": <strong>" + Highcharts.numberFormat(this.y,2) + "</strong>";
+        }
+      },
+      plotOptions:{
+        bar:{
+          color:'#000',
+          shadow:false,
+          borderWidth:0,
+        },
+        scatter:{
+          marker:{
+            symbol:'line',
+            lineWidth:3,
+            radius:8,
+            lineColor:'#000'
+          }
+        }
+      }
     });
+
   }
   var createDuration = function(verdi){
-    Highcharts.setOptions(optionsNormal);
+
     var duration = new Highcharts.Chart({
-      chart:{renderTo:'duration'},
-      xAxis:{categories:['Varighet']},
+      chart:{
+        type:'bar',
+        margin:[5,15,10,100],
+        renderTo:'duration'
+      },
+      credits:{enabled:false},
+      exporting:{enabled:false},
+      legend:{enabled:false},
+      title:{text:''},
+      xAxis:{
+        tickLength:0,
+        lineColor:'#999',
+        lineWidth:1,
+        labels:{style:{fontWeight:'bold'}},
+        categories:['Varighet']
+      },
       yAxis:{
+        min:0,
+        minPadding:0,
+        maxPadding:0,
+        tickColor:'#ccc',
+        tickWidth:1,
+        tickLength:3,
+        gridLineWidth:0,
+        endOnTick:true,
         max:durationMax,
-        labels:{y:10,style:{fontSize:'8px'}},
-        plotBands:[]
+        plotBands:[],
+        title:{text: ''},
+        labels:{
+          y:10,
+          style:{
+            fontSize:'8px'
+          },
+          formatter:function(){
+
+            return this.value;
+
+          }
+        }
       },
       series:[{name:'Gjennomsnitt',pointWidth:8.25,data:[durationAvg], color: 'rgba(103,103,103,.35)', zIndex:0},
       {name:'Verdi', pointWidth:8.5, data:[verdi], zIndex:1},
       {name:'Gjennomsnitt',pointWidth:8.25,data:[durationAvg], color: 'rgba(103,103,103,.35)', zIndex:0}],
+
       tooltip:{
         enabled:true,
         backgroundColor:'rgba(255, 255, 255, .85)',
@@ -229,37 +322,294 @@ angular.module('vgListaVizApp')
         formatter:function() {
           return this.series.name + ": <strong>" + Highcharts.numberFormat(this.y,0) + "s"+ "</strong>";
         }
+      },
+      plotOptions:{
+        bar:{
+          color:'#000',
+          shadow:false,
+          borderWidth:0,
+        },
+        scatter:{
+          marker:{
+            symbol:'line',
+            lineWidth:3,
+            radius:8,
+            lineColor:'#000'
+          }
+        }
+      }
+    });
+
+  }
+  var createListet = function(verdi){
+    var duration = new Highcharts.Chart({
+      chart:{
+        type:'bar',
+        margin:[5,15,10,100],
+        renderTo:'listet'
+      },
+      credits:{enabled:false},
+      exporting:{enabled:false},
+      legend:{enabled:false},
+      title:{text:''},
+      xAxis:{
+        tickLength:0,
+        lineColor:'#999',
+        lineWidth:1,
+        labels:{style:{fontWeight:'bold'}},
+        categories:['Uker på listen']
+      },
+      yAxis:{
+        min:0,
+        minPadding:0,
+        maxPadding:0,
+        tickColor:'#ccc',
+        tickWidth:1,
+        tickLength:3,
+        gridLineWidth:0,
+        endOnTick:true,
+        max:numWeeksMax,
+        plotBands:[],
+        title:{text: ''},
+        labels:{
+          y:10,
+          style:{
+            fontSize:'8px'
+          },
+          formatter:function(){
+
+            return this.value;
+
+          }
+        }
+      },
+      series:[{name:'Gjennomsnitt',pointWidth:8.25,data:[numWeeksAvg], color: 'rgba(103,103,103,.35)', zIndex:0},
+      {name:'Verdi', pointWidth:8.5, data:[verdi], zIndex:1},
+      {name:'Gjennomsnitt',pointWidth:8.25,data:[numWeeksAvg], color: 'rgba(103,103,103,.35)', zIndex:0}],
+
+      tooltip:{
+        enabled:true,
+        backgroundColor:'rgba(255, 255, 255, .85)',
+        borderWidth:0,
+        shadow:true,
+        style:{fontSize:'10px',padding:2},
+        formatter:function() {
+          return this.series.name + ": <strong>" + Highcharts.numberFormat(this.y,0) + "</strong>";
+        }
+      },
+      plotOptions:{
+        bar:{
+          color:'#000',
+          shadow:false,
+          borderWidth:0,
+        },
+        scatter:{
+          marker:{
+            symbol:'line',
+            lineWidth:3,
+            radius:8,
+            lineColor:'#000'
+          }
+        }
       }
     });
   }
-  var createEnergy = function(verdi){
-    Highcharts.setOptions(optionsNormal);
-    var energy = new Highcharts.Chart({
-      chart:{renderTo:'energy'},
-      xAxis:{categories:['Energi']},
+  var createSanger = function(verdi){
+
+    var duration = new Highcharts.Chart({
+      chart:{
+        type:'bar',
+        margin:[5,15,10,100],
+        renderTo:'sanger'
+      },
+      credits:{enabled:false},
+      exporting:{enabled:false},
+      legend:{enabled:false},
+      title:{text:''},
+      xAxis:{
+        tickLength:0,
+        lineColor:'#999',
+        lineWidth:1,
+        labels:{style:{fontWeight:'bold'}},
+        categories:['Antall Sanger']
+      },
       yAxis:{
+        min:0,
+        minPadding:0,
+        maxPadding:0,
+        tickColor:'#ccc',
+        tickWidth:1,
+        tickLength:3,
+        gridLineWidth:0,
+        endOnTick:true,
+        max:numSongsMax,
+        plotBands:[],
+        title:{text: ''},
+        labels:{
+          y:10,
+          style:{
+            fontSize:'8px'
+          },
+          formatter:function(){
+
+            return this.value;
+
+          }
+        }
+      },
+      series:[{name:'Gjennomsnitt',pointWidth:8.25,data:[numSongsAvg], color: 'rgba(103,103,103,.35)', zIndex:0},
+      {name:'Verdi', pointWidth:8.5, data:[verdi], zIndex:1},
+      {name:'Gjennomsnitt',pointWidth:8.25,data:[numSongsAvg], color: 'rgba(103,103,103,.35)', zIndex:0}],
+
+      tooltip:{
+        enabled:true,
+        backgroundColor:'rgba(255, 255, 255, .85)',
+        borderWidth:0,
+        shadow:true,
+        style:{fontSize:'10px',padding:2},
+        formatter:function() {
+          return this.series.name + ": <strong>" + Highcharts.numberFormat(this.y,0) + "</strong>";
+        }
+      },
+      plotOptions:{
+        bar:{
+          color:'#000',
+          shadow:false,
+          borderWidth:0,
+        },
+        scatter:{
+          marker:{
+            symbol:'line',
+            lineWidth:3,
+            radius:8,
+            lineColor:'#000'
+          }
+        }
+      }
+    });
+  };
+
+  var createEnergy = function(verdi){
+
+    var duration = new Highcharts.Chart({
+      chart:{
+        type:'bar',
+        margin:[5,15,10,100],
+        renderTo:'energy'
+      },
+      credits:{enabled:false},
+      exporting:{enabled:false},
+      legend:{enabled:false},
+      title:{text:''},
+      xAxis:{
+        tickLength:0,
+        lineColor:'#999',
+        lineWidth:1,
+        labels:{style:{fontWeight:'bold'}},
+        categories:['Energi']
+      },
+      yAxis:{
+        min:0,
+        minPadding:0,
+        maxPadding:0,
+        tickColor:'#ccc',
+        tickWidth:1,
+        tickLength:3,
+        gridLineWidth:0,
+        endOnTick:true,
         max:energyMax,
-        labels:{y:10,style:{fontSize:'8px'}},
-        plotBands:[]
+        plotBands:[],
+        title:{text: ''},
+        labels:{
+          y:10,
+          style:{
+            fontSize:'8px'
+          },
+          formatter:function(){
+
+            return this.value;
+
+          }
+        }
       },
       series:[{name:'Gjennomsnitt',pointWidth:8.25,data:[energyAvg], color: 'rgba(103,103,103,.35)', zIndex:0},
       {name:'Verdi', pointWidth:8.5, data:[verdi], zIndex:1},
-      {name:'Gjennomsnitt',pointWidth:8.25,data:[energyAvg], color: 'rgba(103,103,103,.35)', zIndex:0}]
+      {name:'Gjennomsnitt',pointWidth:8.25,data:[energyAvg], color: 'rgba(103,103,103,.35)', zIndex:0}],
+
+      tooltip:{
+        enabled:true,
+        backgroundColor:'rgba(255, 255, 255, .85)',
+        borderWidth:0,
+        shadow:true,
+        style:{fontSize:'10px',padding:2},
+        formatter:function() {
+          return this.series.name + ": <strong>" + Highcharts.numberFormat(this.y,2) + "</strong>";
+        }
+      },
+      plotOptions:{
+        bar:{
+          color:'#000',
+          shadow:false,
+          borderWidth:0,
+        },
+        scatter:{
+          marker:{
+            symbol:'line',
+            lineWidth:3,
+            radius:8,
+            lineColor:'#000'
+          }
+        }
+      }
     });
   }
   var createLoudness = function(verdi){
-    Highcharts.setOptions(optionsLoudness);
-    var loudness = new Highcharts.Chart({
-      chart:{renderTo:'loudness'},
-      xAxis:{categories:['Lydstyrke']},
+
+    var duration = new Highcharts.Chart({
+      chart:{
+        type:'bar',
+        margin:[5,15,10,100],
+        renderTo:'loudness'
+      },
+      credits:{enabled:false},
+      exporting:{enabled:false},
+      legend:{enabled:false},
+      title:{text:''},
+      xAxis:{
+        tickLength:0,
+        lineColor:'#999',
+        lineWidth:1,
+        labels:{style:{fontWeight:'bold'}},
+        categories:['Lydstyrke']
+      },
       yAxis:{
+        min:0,
+        minPadding:0,
+        maxPadding:0,
+        tickColor:'#ccc',
+        tickWidth:1,
+        tickLength:3,
+        gridLineWidth:0,
+        endOnTick:true,
         max:-loudnessMax,
-        labels:{y:10,style:{fontSize:'8px'}},
-        plotBands:[]
+        plotBands:[],
+        title:{text: ''},
+        labels:{
+          y:10,
+          style:{
+            fontSize:'8px'
+          },
+          formatter:function(){
+
+            return "-"+ this.value;
+
+          }
+        }
       },
       series:[{name:'Gjennomsnitt',pointWidth:8.25,data:[-loudnessAvg], color: 'rgba(103,103,103,.35)', zIndex:0},
       {name:'Verdi', pointWidth:8.5, data:[verdi], zIndex:1},
       {name:'Gjennomsnitt',pointWidth:8.25,data:[-loudnessAvg], color: 'rgba(103,103,103,.35)', zIndex:0}],
+
       tooltip:{
         enabled:true,
         backgroundColor:'rgba(255, 255, 255, .85)',
@@ -269,37 +619,145 @@ angular.module('vgListaVizApp')
         formatter:function() {
           return this.series.name + ": <strong>" +"-"+ Highcharts.numberFormat(this.y,2) + "dB" + "</strong>";
         }
+      },
+      plotOptions:{
+        bar:{
+          color:'#000',
+          shadow:false,
+          borderWidth:0,
+        },
+        scatter:{
+          marker:{
+            symbol:'line',
+            lineWidth:3,
+            radius:8,
+            lineColor:'#000'
+          }
+        }
       }
     });
   }
   var createMode = function(verdi){
-    Highcharts.setOptions(optionsNormal);
-    var mode = new Highcharts.Chart({
-      chart:{renderTo:'mode'},
-      xAxis:{categories:['Modal skala']},
+
+    var duration = new Highcharts.Chart({
+      chart:{
+        type:'bar',
+        margin:[5,15,10,100],
+        renderTo:'mode'
+      },
+      credits:{enabled:false},
+      exporting:{enabled:false},
+      legend:{enabled:false},
+      title:{text:''},
+      xAxis:{
+        tickLength:0,
+        lineColor:'#999',
+        lineWidth:1,
+        labels:{style:{fontWeight:'bold'}},
+        categories:['Modal skala']
+      },
       yAxis:{
+        min:0,
+        minPadding:0,
+        maxPadding:0,
+        tickColor:'#ccc',
+        tickWidth:1,
+        tickLength:3,
+        gridLineWidth:0,
+        endOnTick:true,
         max:modeMax,
-        labels:{y:10,style:{fontSize:'8px'}},
-        plotBands:[]
+        plotBands:[],
+        title:{text: ''},
+        labels:{
+          y:10,
+          style:{
+            fontSize:'8px'
+          },
+          formatter:function(){
+
+            return this.value;
+
+          }
+        }
       },
       series:[{name:'Gjennomsnitt',pointWidth:8.25,data:[modeAvg], color: 'rgba(103,103,103,.35)', zIndex:0},
       {name:'Verdi', pointWidth:8.5, data:[verdi], zIndex:1},
-      {name:'Gjennomsnitt',pointWidth:8.25,data:[modeAvg], color: 'rgba(103,103,103,.35)', zIndex:0}]
+      {name:'Gjennomsnitt',pointWidth:8.25,data:[modeAvg], color: 'rgba(103,103,103,.35)', zIndex:0}],
+
+      tooltip:{
+        enabled:true,
+        backgroundColor:'rgba(255, 255, 255, .85)',
+        borderWidth:0,
+        shadow:true,
+        style:{fontSize:'10px',padding:2},
+        formatter:function() {
+          return this.series.name + ": <strong>" + Highcharts.numberFormat(this.y,2) + "</strong>";
+        }
+      },
+      plotOptions:{
+        bar:{
+          color:'#000',
+          shadow:false,
+          borderWidth:0,
+        },
+        scatter:{
+          marker:{
+            symbol:'line',
+            lineWidth:3,
+            radius:8,
+            lineColor:'#000'
+          }
+        }
+      }
     });
   }
   var createTempo = function(verdi){
-    Highcharts.setOptions(optionsNormal);
-    var tempo = new Highcharts.Chart({
-      chart:{renderTo:'tempo'},
-      xAxis:{categories:['Tempo']},
+
+    var duration = new Highcharts.Chart({
+      chart:{
+        type:'bar',
+        margin:[5,15,10,100],
+        renderTo:'tempo'
+      },
+      credits:{enabled:false},
+      exporting:{enabled:false},
+      legend:{enabled:false},
+      title:{text:''},
+      xAxis:{
+        tickLength:0,
+        lineColor:'#999',
+        lineWidth:1,
+        labels:{style:{fontWeight:'bold'}},
+        categories:['Tempo']
+      },
       yAxis:{
+        min:0,
+        minPadding:0,
+        maxPadding:0,
+        tickColor:'#ccc',
+        tickWidth:1,
+        tickLength:3,
+        gridLineWidth:0,
+        endOnTick:true,
         max:tempoMax,
-        labels:{y:10,style:{fontSize:'8px'}},
-        plotBands:[]
+        plotBands:[],
+        title:{text: ''},
+        labels:{
+          y:10,
+          style:{
+            fontSize:'8px'
+          },
+          formatter:function(){
+
+            return this.value;
+
+          }
+        }
       },
       series:[{name:'Gjennomsnitt',pointWidth:8.25,data:[tempoAvg], color: 'rgba(103,103,103,.35)', zIndex:0},
       {name:'Verdi', pointWidth:8.5, data:[verdi], zIndex:1},
       {name:'Gjennomsnitt',pointWidth:8.25,data:[tempoAvg], color: 'rgba(103,103,103,.35)', zIndex:0}],
+
       tooltip:{
         enabled:true,
         backgroundColor:'rgba(255, 255, 255, .85)',
@@ -308,23 +766,72 @@ angular.module('vgListaVizApp')
         style:{fontSize:'10px',padding:2},
         formatter:function() {
           return this.series.name + ": <strong>" + Highcharts.numberFormat(this.y,0) + "</strong>";
+        }
+      },
+      plotOptions:{
+        bar:{
+          color:'#000',
+          shadow:false,
+          borderWidth:0,
+        },
+        scatter:{
+          marker:{
+            symbol:'line',
+            lineWidth:3,
+            radius:8,
+            lineColor:'#000'
+          }
         }
       }
     });
   }
   var createTimesignature = function(verdi){
-    Highcharts.setOptions(optionsNormal);
-    var tempo = new Highcharts.Chart({
-      chart:{renderTo:'timesignature'},
-      xAxis:{categories:['Taktart']},
+
+    var duration = new Highcharts.Chart({
+      chart:{
+        type:'bar',
+        margin:[5,15,10,100],
+        renderTo:'timesignature'
+      },
+      credits:{enabled:false},
+      exporting:{enabled:false},
+      legend:{enabled:false},
+      title:{text:''},
+      xAxis:{
+        tickLength:0,
+        lineColor:'#999',
+        lineWidth:1,
+        labels:{style:{fontWeight:'bold'}},
+        categories:['Taktart']
+      },
       yAxis:{
+        min:0,
+        minPadding:0,
+        maxPadding:0,
+        tickColor:'#ccc',
+        tickWidth:1,
+        tickLength:3,
+        gridLineWidth:0,
+        endOnTick:true,
         max:timesignatureMax,
-        labels:{y:10,style:{fontSize:'8px'}},
-        plotBands:[]
+        plotBands:[],
+        title:{text: ''},
+        labels:{
+          y:10,
+          style:{
+            fontSize:'8px'
+          },
+          formatter:function(){
+
+            return this.value;
+
+          }
+        }
       },
       series:[{name:'Gjennomsnitt',pointWidth:8.25,data:[timesignatureAvg], color: 'rgba(103,103,103,.35)', zIndex:0},
       {name:'Verdi', pointWidth:8.5, data:[verdi], zIndex:1},
       {name:'Gjennomsnitt',pointWidth:8.25,data:[timesignatureAvg], color: 'rgba(103,103,103,.35)', zIndex:0}],
+
       tooltip:{
         enabled:true,
         backgroundColor:'rgba(255, 255, 255, .85)',
@@ -334,9 +841,24 @@ angular.module('vgListaVizApp')
         formatter:function() {
           return this.series.name + ": <strong>" + Highcharts.numberFormat(this.y,0) + "</strong>";
         }
+      },
+      plotOptions:{
+        bar:{
+          color:'#000',
+          shadow:false,
+          borderWidth:0,
+        },
+        scatter:{
+          marker:{
+            symbol:'line',
+            lineWidth:3,
+            radius:8,
+            lineColor:'#000'
+          }
+        }
       }
     });
-  }
+  };
   var createBulletCharts = function(obj){
     createDanceability(obj.danceability);
     createDuration(obj.duration);
@@ -510,6 +1032,7 @@ angular.module('vgListaVizApp')
       summaryYear.query({_id:{$oid:$scope.oid}}).then(function(res){
         $scope.chart = res[0];
         createBulletCharts(res[0]);
+//$scope.chart = fjerne stoppord;
         omg(res[0].lyricSummary);
         console.log(res);
         console.log("Prøver spøøring : " + $scope.chart.year);
