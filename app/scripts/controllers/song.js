@@ -1071,7 +1071,6 @@ angular.module('vgListaVizApp')
 
   songs.query({_id:{$oid: $scope.oid }}).then(function(res){
     console.log(res);
-
     $scope.song = res[0];
     related.query({$and: [{title:res[0].title},{artist:res[0].artist} ]}).then(function(res2){
       if(res2.length===0){
@@ -1226,7 +1225,7 @@ angular.module('vgListaVizApp')
     node.append("circle")
     .attr("r", 8)
     .style("fill", function(d){
-      if(d.name === $scope.related.title && !$scope.gjort1){
+      if(d.name.toLowerCase() === $scope.song.title.toLowerCase() && !$scope.gjort1){
         $scope.gjort1 = true;
         return d3.rgb('red');
       }
