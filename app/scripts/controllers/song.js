@@ -1073,30 +1073,31 @@ angular.module('vgListaVizApp')
     console.log(res);
     $scope.song = res[0];
     related.query({$and: [{title:res[0].title},{artist:res[0].artist} ]}).then(function(res2){
+  $scope.related = res2[0];
       if(res2.length===0){
         $scope.hideit = true;
       }
       related.query({title:res2[0].tekst[0].target}).then(function(res3){
         for(var a = 0 ; a < res3[0].tekst.length; a++){
-          res2[0].tekst.push(res3[0].tekst[a]);
+          $scope.related.tekst.push(res3[0].tekst[a]);
         }
         related.query({title:res2[0].tekst[1].target}).then(function(res4){
           for(var a = 0 ; a < res4[0].tekst.length; a++){
-            res2[0].tekst.push(res4[0].tekst[a]);
+            $scope.related.tekst.push(res4[0].tekst[a]);
           }
           related.query({title:res2[0].tekst[2].target}).then(function(res5){
             for(var a = 0 ; a < res5[0].tekst.length; a++){
-              res2[0].tekst.push(res5[0].tekst[a]);
+              $scope.related.tekst.push(res5[0].tekst[a]);
             }
             related.query({title:res2[0].tekst[3].target}).then(function(res6){
               for(var a = 0 ; a < res6[0].tekst.length; a++){
-                res2[0].tekst.push(res6[0].tekst[a]);
+                $scope.related.tekst.push(res6[0].tekst[a]);
               }
               related.query({title:res2[0].tekst[4].target}).then(function(res7){
                 for(var a = 0 ; a < res7[0].tekst.length; a++){
-                  res2[0].tekst.push(res7[0].tekst[a]);
+                  $scope.related.tekst.push(res7[0].tekst[a]);
                 }
-                createSim(res2[0].tekst);
+                createSim($scope.related.tekst);
               });
             });
           });
@@ -1104,30 +1105,29 @@ angular.module('vgListaVizApp')
       });
       related.query({title:res2[0].musikk[0].target}).then(function(res3){
         for(var a = 0 ; a < res3[0].musikk.length; a++){
-          res2[0].musikk.push(res3[0].musikk[a]);
+          $scope.related.musikk.push(res3[0].musikk[a]);
         }
         related.query({title:res2[0].musikk[1].target}).then(function(res4){
           for(var a = 0 ; a < res4[0].musikk.length; a++){
-            res2[0].musikk.push(res4[0].musikk[a]);
+            $scope.related.musikk.push(res4[0].musikk[a]);
           }
           related.query({title:res2[0].musikk[2].target}).then(function(res5){
             for(var a = 0 ; a < res5[0].musikk.length; a++){
-              res2[0].musikk.push(res5[0].musikk[a]);
+              $scope.related.musikk.push(res5[0].musikk[a]);
             }
             related.query({title:res2[0].musikk[3].target}).then(function(res6){
               for(var a = 0 ; a < res6[0].musikk.length; a++){
-                res2[0].musikk.push(res6[0].musikk[a]);
+                $scope.related.musikk.push(res6[0].musikk[a]);
               }
               related.query({title:res2[0].musikk[4].target}).then(function(res7){
                 for(var a = 0 ; a < res7[0].musikk.length; a++){
-                  res2[0].musikk.push(res7[0].musikk[a]);
+                  $scope.related.musikk.push(res7[0].musikk[a]);
                 }
               });
             });
           });
         });
       });
-      $scope.related = res2[0];
 
 
     });
@@ -1184,9 +1184,7 @@ angular.module('vgListaVizApp')
     var linksene = angular.copy(links);
 
     var nodes = {};
-    if(!links[0].source.hasOwnProperty('index')){
 
-    }
     // Compute the distinct nodes from the links.
     linksene.forEach(function(link) {
       link.source = nodes[link.source] || (nodes[link.source] = {name: link.source});
