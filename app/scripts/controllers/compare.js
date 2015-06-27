@@ -323,14 +323,17 @@ angular.module('vgListaVizApp')
           categorie.push('Modal Skala');
           categorie.push('Tempo');
           categorie.push('Taktart');
-          categorie.push("Uker på listen");
-          categorie.push("Antall sanger");
+
         }
         if(obj.type==="song"){
-          categorie.push("Beste plassering");
-          data.push({'y':$scope.percentageOf(Math.floor(obj.bestPos), "Beste plassering", number), 'color':color});
+          // categorie.push("Beste plassering");
+          // data.push({'y':$scope.percentageOf(obj.bestPos, "Beste plassering", number), 'color':color});
           categorie.push("Antall Uker");
-          data.push({'y':$scope.percentageOf(Math.floor(obj.antall), "Antall Uker", number), 'color':color});
+          console.log("UKER");
+          console.log(obj.antall)
+          console.log(Math.floor(obj.antall));
+          console.log($scope.percentageOf(Math.floor(obj.antall), "Antall Uker", number))
+          data.push({'y':$scope.percentageOf(obj.antall, "Antall Uker", number), 'color':color});
         }
         serie.data = data;
         serie.name=obj.title;
@@ -475,6 +478,7 @@ angular.module('vgListaVizApp')
         $scope.compareConfig.series=[];
       }
       var getValue = function(value, category){
+        console.log(category)
         if(category==='Taktart'){
           return (value/100) * timesignatureMax;
         }
@@ -500,13 +504,15 @@ angular.module('vgListaVizApp')
           return (value/100) * danceabilityMax;
         }
         else if(category==='Uker på listen'){
-          return (value/100) * artistlistetMax;
+          return Math.floor((value/100) * artistlistetMax);
         }
         else if(category==="Beste plassering"){
-          return (value/100) * bestplassMax;
+          return Math.floor((value/100) * bestplassMax);
         }
-        else if(category==='Uker på listen'){
-          return (value/100) * sanglistetMax;
+        else if(category==='Antall Uker'){
+          console.log(value);
+          console.log(sanglistetMax);
+          return Math.floor(((value/100) * sanglistetMax));
         }
         else if(category==='Unike sanger'){
           return (value/100) * antallunikesangerMax;

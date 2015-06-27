@@ -1199,7 +1199,7 @@ angular.module('vgListaVizApp')
     .links(linksene)
     .size([width, height])
     .linkDistance(175)
-    .charge(-300)
+    .charge(-400)
     .on("tick", tick)
     .start();
 
